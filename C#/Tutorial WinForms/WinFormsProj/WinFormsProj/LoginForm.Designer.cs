@@ -30,72 +30,88 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             panel1 = new Panel();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
+            textBox1 = new TextBox();
+            textBox2 = new TextBox();
+            btn_login = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(45, 45, 45);
+            panel1.Controls.Add(btn_login);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(textBox2);
+            panel1.Controls.Add(textBox1);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(label1);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(384, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(126, 361);
-            panel1.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(179, 151);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(150, 23);
-            textBox1.TabIndex = 3;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(179, 202);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(150, 23);
-            textBox2.TabIndex = 4;
+            panel1.Size = new Size(400, 361);
+            panel1.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Impact", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(12, 151);
+            label1.Location = new Point(93, 77);
             label1.Name = "label1";
-            label1.Size = new Size(106, 25);
-            label1.TabIndex = 5;
-            label1.Text = "Username:";
+            label1.Size = new Size(204, 39);
+            label1.TabIndex = 0;
+            label1.Text = "MGC Launcher";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(12, 200);
+            label2.Location = new Point(84, 147);
             label2.Name = "label2";
-            label2.Size = new Size(107, 25);
-            label2.TabIndex = 6;
-            label2.Text = "Password: ";
+            label2.Size = new Size(60, 15);
+            label2.TabIndex = 0;
+            label2.Text = "Username";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(32, 9);
+            label3.Location = new Point(84, 183);
             label3.Name = "label3";
-            label3.Size = new Size(63, 25);
-            label3.TabIndex = 7;
-            label3.Text = "Login";
+            label3.Size = new Size(60, 15);
+            label3.TabIndex = 1;
+            label3.Text = "Password ";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(167, 144);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(145, 23);
+            textBox1.TabIndex = 2;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(167, 180);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(145, 23);
+            textBox2.TabIndex = 3;
+            // 
+            // btn_login
+            // 
+            btn_login.BackColor = SystemColors.WindowFrame;
+            btn_login.FlatAppearance.BorderSize = 0;
+            btn_login.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_login.ForeColor = Color.White;
+            btn_login.Location = new Point(84, 233);
+            btn_login.Name = "btn_login";
+            btn_login.Size = new Size(228, 51);
+            btn_login.TabIndex = 4;
+            btn_login.Text = "LOGIN";
+            btn_login.UseVisualStyleBackColor = false;
             // 
             // LoginForm
             // 
@@ -103,11 +119,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.WindowFrame;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            ClientSize = new Size(384, 361);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            ClientSize = new Size(784, 361);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -115,16 +129,16 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Panel panel1;
+        private Label label1;
+        private Button btn_login;
+        private TextBox textBox2;
+        private TextBox textBox1;
         private Label label3;
         private Label label2;
-        private Label label1;
-        private TextBox textBox1;
-        private TextBox textBox2;
     }
 }
