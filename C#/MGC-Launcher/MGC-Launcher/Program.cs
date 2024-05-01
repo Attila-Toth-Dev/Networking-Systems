@@ -1,4 +1,4 @@
-namespace WinFormsProj
+namespace MGC_Launcher
 {
     internal static class Program
     {
@@ -11,7 +11,7 @@ namespace WinFormsProj
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());
+            Application.Run(new Login());
         }
     }
 }

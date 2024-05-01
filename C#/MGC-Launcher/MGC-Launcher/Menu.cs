@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormsProj
+namespace MGC_Launcher
 {
-    public partial class LoginForm : Form
+    public partial class Menu : Form
     {
-        public LoginForm()
+        public Menu()
         {
             InitializeComponent();
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

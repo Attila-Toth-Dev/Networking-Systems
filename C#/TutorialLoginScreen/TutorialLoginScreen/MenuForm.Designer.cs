@@ -1,4 +1,4 @@
-﻿namespace WinFormsProj
+﻿namespace TutorialLoginScreen
 {
     partial class MenuForm
     {
@@ -28,17 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
-            // 
-            // MenuForm
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(784, 561);
-            Name = "MenuForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "MGC Launcher Menu";
-            ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "MenuForm";
         }
 
         #endregion
