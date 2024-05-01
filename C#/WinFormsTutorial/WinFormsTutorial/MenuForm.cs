@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TutorialLoginScreen
+namespace WinFormsTutorial
 {
     public partial class MenuForm : Form
     {
-        public MenuForm()
+        private string formMessage;
+
+        public MenuForm(string _message)
         {
             InitializeComponent();
+            formMessage = _message;
+
+            stringInputLabel.Text = _message;
         }
     }
 }
