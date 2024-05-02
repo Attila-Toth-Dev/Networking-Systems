@@ -2,12 +2,17 @@
 
 public partial class MainMenuForm : Form
 {
+    private string testFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\MGC-Application\bin\Debug\net8.0-windows";
 
     public MainMenuForm(string _username)
     {
         InitializeComponent();
 
-        usernameLabel.Text = _username;
+        welecomeLabel.Text = $"Welcome {_username}!";
+        myGamesListBox.SelectedIndex = 0;
+
+        updateButton.Enabled = false;
+        installButton.Enabled = false;
     }
 
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -26,5 +31,16 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
             Application.Exit();
+    }
+
+    private void myGamesListBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        selectedGameNameLabel.Text = myGamesListBox.Text;
+    }
+
+    private void playButton_Click(object sender, EventArgs e)
+    {
+        //Process.Start("test.txt");
+        File.Open(testFilePath, FileMode.Open);
     }
 }

@@ -36,12 +36,14 @@
             loadProgressLabel = new Label();
             loadingValueLabel = new Label();
             secretPictureBox = new PictureBox();
+            backgroundPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)launcherPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)secretPictureBox).BeginInit();
             SuspendLayout();
             // 
             // launcherPictureBox
             // 
+            launcherPictureBox.BackColor = Color.LightBlue;
             launcherPictureBox.Image = (Image)resources.GetObject("launcherPictureBox.Image");
             launcherPictureBox.Location = new Point(220, 64);
             launcherPictureBox.Name = "launcherPictureBox";
@@ -65,6 +67,7 @@
             // loadProgressLabel
             // 
             loadProgressLabel.AutoSize = true;
+            loadProgressLabel.BackColor = Color.LightBlue;
             loadProgressLabel.Location = new Point(140, 254);
             loadProgressLabel.Name = "loadProgressLabel";
             loadProgressLabel.Size = new Size(234, 22);
@@ -74,6 +77,7 @@
             // loadingValueLabel
             // 
             loadingValueLabel.AutoSize = true;
+            loadingValueLabel.BackColor = Color.LightBlue;
             loadingValueLabel.Location = new Point(391, 254);
             loadingValueLabel.Name = "loadingValueLabel";
             loadingValueLabel.RightToLeft = RightToLeft.Yes;
@@ -84,12 +88,23 @@
             // 
             // secretPictureBox
             // 
+            secretPictureBox.BackColor = Color.LightBlue;
             secretPictureBox.Location = new Point(12, 12);
             secretPictureBox.Name = "secretPictureBox";
             secretPictureBox.Size = new Size(100, 50);
             secretPictureBox.TabIndex = 4;
             secretPictureBox.TabStop = false;
             secretPictureBox.Click += secretPictureBox_Click;
+            // 
+            // backgroundPanel
+            // 
+            backgroundPanel.BackColor = Color.LightBlue;
+            backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Dock = DockStyle.Fill;
+            backgroundPanel.Location = new Point(0, 0);
+            backgroundPanel.Name = "backgroundPanel";
+            backgroundPanel.Size = new Size(584, 361);
+            backgroundPanel.TabIndex = 5;
             // 
             // WelcomeForm
             // 
@@ -101,6 +116,7 @@
             Controls.Add(loadProgressLabel);
             Controls.Add(loadingProgressBar);
             Controls.Add(launcherPictureBox);
+            Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5, 4, 5, 4);
@@ -122,5 +138,6 @@
         private Label loadProgressLabel;
         private Label loadingValueLabel;
         private PictureBox secretPictureBox;
+        private Panel backgroundPanel;
     }
 }

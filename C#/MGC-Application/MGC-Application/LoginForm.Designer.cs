@@ -36,6 +36,7 @@
             passwordLabel = new Label();
             loginButton = new Button();
             signUpButton = new Button();
+            backgroundPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -106,10 +107,23 @@
             signUpButton.UseVisualStyleBackColor = true;
             signUpButton.Click += signUpButton_Click;
             // 
+            // backgroundPanel
+            // 
+            backgroundPanel.BackColor = Color.Transparent;
+            backgroundPanel.BackgroundImageLayout = ImageLayout.None;
+            backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Dock = DockStyle.Fill;
+            backgroundPanel.Location = new Point(0, 0);
+            backgroundPanel.Name = "backgroundPanel";
+            backgroundPanel.Size = new Size(584, 361);
+            backgroundPanel.TabIndex = 7;
+            backgroundPanel.Visible = false;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
             Controls.Add(signUpButton);
             Controls.Add(loginButton);
@@ -118,6 +132,7 @@
             Controls.Add(passwordTextBox);
             Controls.Add(usernameTextBox);
             Controls.Add(logoPictureBox);
+            Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5, 4, 5, 4);
@@ -139,5 +154,6 @@
         private Label passwordLabel;
         private Button loginButton;
         private Button signUpButton;
+        private Panel backgroundPanel;
     }
 }
