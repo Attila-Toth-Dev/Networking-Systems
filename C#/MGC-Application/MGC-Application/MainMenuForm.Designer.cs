@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            myGamesListBox = new ListBox();
             menuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -37,33 +36,17 @@
             topHeaderPanel = new Panel();
             profileButton = new Button();
             welecomeLabel = new Label();
-            selectedGameNameLabel = new Label();
-            panel1 = new Panel();
-            installButton = new Button();
-            updateButton = new Button();
+            addButton = new Button();
+            removeButton = new Button();
             playButton = new Button();
-            gameDescLabel = new Label();
             myGamesPanel = new Panel();
+            gameListView = new ListView();
+            fileNameHeader = new ColumnHeader();
+            filePathHeader = new ColumnHeader();
             menuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             myGamesPanel.SuspendLayout();
             SuspendLayout();
-            // 
-            // myGamesListBox
-            // 
-            myGamesListBox.BackColor = Color.Gray;
-            myGamesListBox.BorderStyle = BorderStyle.FixedSingle;
-            myGamesListBox.Cursor = Cursors.Hand;
-            myGamesListBox.Dock = DockStyle.Left;
-            myGamesListBox.FormattingEnabled = true;
-            myGamesListBox.HorizontalScrollbar = true;
-            myGamesListBox.ItemHeight = 22;
-            myGamesListBox.Items.AddRange(new object[] { "- Breakout" });
-            myGamesListBox.Location = new Point(0, 0);
-            myGamesListBox.Name = "myGamesListBox";
-            myGamesListBox.Size = new Size(140, 288);
-            myGamesListBox.TabIndex = 1;
-            myGamesListBox.SelectedIndexChanged += myGamesListBox_SelectedIndexChanged;
             // 
             // menuStrip
             // 
@@ -128,45 +111,30 @@
             welecomeLabel.TabIndex = 0;
             welecomeLabel.Text = "Welcome Test...";
             // 
-            // selectedGameNameLabel
+            // addButton
             // 
-            selectedGameNameLabel.AutoSize = true;
-            selectedGameNameLabel.Location = new Point(156, 101);
-            selectedGameNameLabel.Name = "selectedGameNameLabel";
-            selectedGameNameLabel.Size = new Size(110, 22);
-            selectedGameNameLabel.TabIndex = 4;
-            selectedGameNameLabel.Text = "game name";
+            addButton.Location = new Point(24, 184);
+            addButton.Name = "addButton";
+            addButton.Size = new Size(88, 43);
+            addButton.TabIndex = 6;
+            addButton.Text = "Add";
+            addButton.UseVisualStyleBackColor = true;
+            addButton.Click += addButton_Click;
             // 
-            // panel1
+            // removeButton
             // 
-            panel1.BackColor = SystemColors.ButtonShadow;
-            panel1.BorderStyle = BorderStyle.Fixed3D;
-            panel1.Location = new Point(156, 126);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(416, 2);
-            panel1.TabIndex = 5;
-            // 
-            // installButton
-            // 
-            installButton.Location = new Point(484, 306);
-            installButton.Name = "installButton";
-            installButton.Size = new Size(88, 43);
-            installButton.TabIndex = 6;
-            installButton.Text = "Install";
-            installButton.UseVisualStyleBackColor = true;
-            // 
-            // updateButton
-            // 
-            updateButton.Location = new Point(390, 306);
-            updateButton.Name = "updateButton";
-            updateButton.Size = new Size(88, 43);
-            updateButton.TabIndex = 7;
-            updateButton.Text = "Update";
-            updateButton.UseVisualStyleBackColor = true;
+            removeButton.AutoSize = true;
+            removeButton.Location = new Point(24, 233);
+            removeButton.Name = "removeButton";
+            removeButton.Size = new Size(92, 43);
+            removeButton.TabIndex = 7;
+            removeButton.Text = "Remove";
+            removeButton.UseVisualStyleBackColor = true;
+            removeButton.Click += removeButton_Click;
             // 
             // playButton
             // 
-            playButton.Location = new Point(156, 306);
+            playButton.Location = new Point(24, 20);
             playButton.Name = "playButton";
             playButton.Size = new Size(88, 43);
             playButton.TabIndex = 8;
@@ -174,23 +142,41 @@
             playButton.UseVisualStyleBackColor = true;
             playButton.Click += playButton_Click;
             // 
-            // gameDescLabel
-            // 
-            gameDescLabel.AutoSize = true;
-            gameDescLabel.Location = new Point(156, 131);
-            gameDescLabel.Name = "gameDescLabel";
-            gameDescLabel.Size = new Size(105, 22);
-            gameDescLabel.TabIndex = 9;
-            gameDescLabel.Text = "game desc";
-            // 
             // myGamesPanel
             // 
-            myGamesPanel.Controls.Add(myGamesListBox);
+            myGamesPanel.BackColor = Color.Gray;
+            myGamesPanel.Controls.Add(playButton);
+            myGamesPanel.Controls.Add(addButton);
+            myGamesPanel.Controls.Add(removeButton);
             myGamesPanel.Dock = DockStyle.Left;
             myGamesPanel.Location = new Point(0, 86);
             myGamesPanel.Name = "myGamesPanel";
             myGamesPanel.Size = new Size(134, 288);
             myGamesPanel.TabIndex = 10;
+            // 
+            // gameListView
+            // 
+            gameListView.BackColor = Color.Silver;
+            gameListView.BorderStyle = BorderStyle.FixedSingle;
+            gameListView.Columns.AddRange(new ColumnHeader[] { fileNameHeader, filePathHeader });
+            gameListView.Dock = DockStyle.Fill;
+            gameListView.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gameListView.Location = new Point(134, 86);
+            gameListView.Name = "gameListView";
+            gameListView.Size = new Size(450, 288);
+            gameListView.TabIndex = 11;
+            gameListView.UseCompatibleStateImageBehavior = false;
+            gameListView.View = View.Details;
+            // 
+            // fileNameHeader
+            // 
+            fileNameHeader.Text = "File Name";
+            fileNameHeader.Width = 100;
+            // 
+            // filePathHeader
+            // 
+            filePathHeader.Text = "File Path";
+            filePathHeader.Width = 500;
             // 
             // MainMenuForm
             // 
@@ -198,13 +184,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Silver;
             ClientSize = new Size(584, 374);
+            Controls.Add(gameListView);
             Controls.Add(myGamesPanel);
-            Controls.Add(gameDescLabel);
-            Controls.Add(playButton);
-            Controls.Add(updateButton);
-            Controls.Add(installButton);
-            Controls.Add(panel1);
-            Controls.Add(selectedGameNameLabel);
             Controls.Add(topHeaderPanel);
             Controls.Add(menuStrip);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -222,6 +203,7 @@
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
             myGamesPanel.ResumeLayout(false);
+            myGamesPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -233,14 +215,13 @@
         private ToolStripMenuItem exitToolStripMenuItem1;
         private Panel topHeaderPanel;
         private Label welecomeLabel;
-        private Label selectedGameNameLabel;
-        private Panel panel1;
-        private Button installButton;
-        private Button updateButton;
+        private Button addButton;
+        private Button removeButton;
         private Button playButton;
-        private Label gameDescLabel;
-        private ListBox myGamesListBox;
         private Panel myGamesPanel;
         private Button profileButton;
+        private ListView gameListView;
+        private ColumnHeader fileNameHeader;
+        private ColumnHeader filePathHeader;
     }
 }

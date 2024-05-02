@@ -7,7 +7,6 @@ public partial class MainMenuForm : Form
     public static int restrict = 0;
 
     private string breakoutFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Breakout\Breakout.exe";
-
     private string username;
 
     public MainMenuForm(string _username)
@@ -17,10 +16,9 @@ public partial class MainMenuForm : Form
         username = _username;
 
         welecomeLabel.Text = $"{_username}'s Library";
-        myGamesListBox.SelectedIndex = 0;
 
-        updateButton.Enabled = false;
-        installButton.Enabled = false;
+        removeButton.Enabled = false;
+        addButton.Enabled = false;
     }
 
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -40,11 +38,6 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
             Application.Exit();
-    }
-
-    private void myGamesListBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        selectedGameNameLabel.Text = myGamesListBox.Text;
     }
 
     private void playButton_Click(object sender, EventArgs e)
@@ -67,5 +60,18 @@ public partial class MainMenuForm : Form
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
         Application.Exit();
+    }
+
+    private void addButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void removeButton_Click(object sender, EventArgs e)
+    {
+        if (gameListView.Items.Count > 0)
+            gameListView.Items.Remove(gameListView.SelectedItems[0]);
+        else
+            MessageBox.Show("There is nothing to Remove!");
     }
 }
