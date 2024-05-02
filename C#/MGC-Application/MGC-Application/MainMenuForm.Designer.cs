@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            gamesListPanel = new Panel();
             myGamesListBox = new ListBox();
-            topLeftPanel = new Panel();
-            myGamesHeaderLabel = new Label();
             menuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -46,58 +43,28 @@
             updateButton = new Button();
             playButton = new Button();
             gameDescLabel = new Label();
-            gamesListPanel.SuspendLayout();
-            topLeftPanel.SuspendLayout();
+            myGamesPanel = new Panel();
             menuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).BeginInit();
+            myGamesPanel.SuspendLayout();
             SuspendLayout();
-            // 
-            // gamesListPanel
-            // 
-            gamesListPanel.BorderStyle = BorderStyle.Fixed3D;
-            gamesListPanel.Controls.Add(myGamesListBox);
-            gamesListPanel.Controls.Add(topLeftPanel);
-            gamesListPanel.Dock = DockStyle.Left;
-            gamesListPanel.Location = new Point(0, 24);
-            gamesListPanel.Name = "gamesListPanel";
-            gamesListPanel.Size = new Size(140, 337);
-            gamesListPanel.TabIndex = 1;
             // 
             // myGamesListBox
             // 
-            myGamesListBox.BackColor = Color.LightBlue;
+            myGamesListBox.BackColor = Color.Gray;
+            myGamesListBox.BorderStyle = BorderStyle.FixedSingle;
             myGamesListBox.Cursor = Cursors.Hand;
-            myGamesListBox.Dock = DockStyle.Fill;
+            myGamesListBox.Dock = DockStyle.Left;
             myGamesListBox.FormattingEnabled = true;
             myGamesListBox.HorizontalScrollbar = true;
             myGamesListBox.ItemHeight = 22;
             myGamesListBox.Items.AddRange(new object[] { "- Breakout" });
-            myGamesListBox.Location = new Point(0, 60);
+            myGamesListBox.Location = new Point(0, 0);
             myGamesListBox.Name = "myGamesListBox";
-            myGamesListBox.Size = new Size(136, 273);
+            myGamesListBox.Size = new Size(140, 288);
             myGamesListBox.TabIndex = 1;
             myGamesListBox.SelectedIndexChanged += myGamesListBox_SelectedIndexChanged;
-            // 
-            // topLeftPanel
-            // 
-            topLeftPanel.BackColor = Color.LightBlue;
-            topLeftPanel.BorderStyle = BorderStyle.Fixed3D;
-            topLeftPanel.Controls.Add(myGamesHeaderLabel);
-            topLeftPanel.Dock = DockStyle.Top;
-            topLeftPanel.Location = new Point(0, 0);
-            topLeftPanel.Name = "topLeftPanel";
-            topLeftPanel.Size = new Size(136, 60);
-            topLeftPanel.TabIndex = 0;
-            // 
-            // myGamesHeaderLabel
-            // 
-            myGamesHeaderLabel.AutoSize = true;
-            myGamesHeaderLabel.Location = new Point(8, 18);
-            myGamesHeaderLabel.Name = "myGamesHeaderLabel";
-            myGamesHeaderLabel.Size = new Size(111, 22);
-            myGamesHeaderLabel.TabIndex = 0;
-            myGamesHeaderLabel.Text = "MY GAMES";
             // 
             // menuStrip
             // 
@@ -132,22 +99,21 @@
             // topHeaderPanel
             // 
             topHeaderPanel.BackColor = Color.LightBlue;
-            topHeaderPanel.BorderStyle = BorderStyle.Fixed3D;
+            topHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
             topHeaderPanel.Controls.Add(profileIconPictureBox);
             topHeaderPanel.Controls.Add(welecomeLabel);
             topHeaderPanel.Dock = DockStyle.Top;
-            topHeaderPanel.Location = new Point(140, 24);
+            topHeaderPanel.Location = new Point(0, 24);
             topHeaderPanel.Name = "topHeaderPanel";
-            topHeaderPanel.Size = new Size(444, 62);
+            topHeaderPanel.Size = new Size(584, 62);
             topHeaderPanel.TabIndex = 3;
             // 
             // profileIconPictureBox
             // 
-            profileIconPictureBox.BorderStyle = BorderStyle.FixedSingle;
             profileIconPictureBox.Image = (Image)resources.GetObject("profileIconPictureBox.Image");
-            profileIconPictureBox.Location = new Point(385, 5);
+            profileIconPictureBox.Location = new Point(524, 3);
             profileIconPictureBox.Name = "profileIconPictureBox";
-            profileIconPictureBox.Size = new Size(52, 50);
+            profileIconPictureBox.Size = new Size(55, 55);
             profileIconPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             profileIconPictureBox.TabIndex = 1;
             profileIconPictureBox.TabStop = false;
@@ -217,12 +183,22 @@
             gameDescLabel.TabIndex = 9;
             gameDescLabel.Text = "game desc";
             // 
+            // myGamesPanel
+            // 
+            myGamesPanel.Controls.Add(myGamesListBox);
+            myGamesPanel.Dock = DockStyle.Left;
+            myGamesPanel.Location = new Point(0, 86);
+            myGamesPanel.Name = "myGamesPanel";
+            myGamesPanel.Size = new Size(134, 288);
+            myGamesPanel.TabIndex = 10;
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
-            ClientSize = new Size(584, 361);
+            BackColor = Color.Silver;
+            ClientSize = new Size(584, 374);
+            Controls.Add(myGamesPanel);
             Controls.Add(gameDescLabel);
             Controls.Add(playButton);
             Controls.Add(updateButton);
@@ -230,9 +206,9 @@
             Controls.Add(panel1);
             Controls.Add(selectedGameNameLabel);
             Controls.Add(topHeaderPanel);
-            Controls.Add(gamesListPanel);
             Controls.Add(menuStrip);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
             Margin = new Padding(5, 4, 5, 4);
@@ -240,27 +216,21 @@
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Menu";
-            gamesListPanel.ResumeLayout(false);
-            topLeftPanel.ResumeLayout(false);
-            topLeftPanel.PerformLayout();
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).EndInit();
+            myGamesPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private Panel gamesListPanel;
         private MenuStrip menuStrip;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem logoutToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem1;
-        private ListBox myGamesListBox;
-        private Panel topLeftPanel;
-        private Label myGamesHeaderLabel;
         private Panel topHeaderPanel;
         private Label welecomeLabel;
         private Label selectedGameNameLabel;
@@ -270,5 +240,7 @@
         private Button playButton;
         private PictureBox profileIconPictureBox;
         private Label gameDescLabel;
+        private ListBox myGamesListBox;
+        private Panel myGamesPanel;
     }
 }

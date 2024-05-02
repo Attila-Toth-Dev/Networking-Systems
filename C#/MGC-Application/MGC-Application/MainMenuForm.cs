@@ -4,11 +4,12 @@ namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
-    private string tankGameFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\TankGame\TankGame.exe";
+    public static int restrict = 0;
+
     private string breakoutFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Breakout\Breakout.exe";
-    private string dungeonCrawlerFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Dungeon Crawler\LabyrinthCrawler.exe";
 
     private string username;
+
 
     public MainMenuForm(string _username)
     {
@@ -16,7 +17,7 @@ public partial class MainMenuForm : Form
 
         username = _username;
 
-        welecomeLabel.Text = $"Welcome {_username}!";
+        welecomeLabel.Text = $"{_username} Library";
         myGamesListBox.SelectedIndex = 0;
 
         updateButton.Enabled = false;
@@ -48,12 +49,16 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
-        Process.Start(dungeonCrawlerFilePath);
+        Process.Start(breakoutFilePath);
     }
 
     private void profileIconPictureBox_Click(object sender, EventArgs e)
     {
-        ProfileForm form = new ProfileForm(username);
-        form.Show();
+        if (restrict == 0)
+        {
+            restrict++;
+            ProfileForm form = new ProfileForm(username);
+            form.Show();
+        }
     }
 }

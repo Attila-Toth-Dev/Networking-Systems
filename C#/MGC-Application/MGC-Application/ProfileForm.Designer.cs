@@ -29,123 +29,39 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
-            backgroundPanel = new Panel();
-            profilePanel = new Panel();
-            profileIconPictureBox = new PictureBox();
-            profileNameLabel = new Label();
-            menuStrip = new MenuStrip();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            logoutToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem1 = new ToolStripMenuItem();
-            backgroundPanel.SuspendLayout();
-            profilePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).BeginInit();
-            menuStrip.SuspendLayout();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // backgroundPanel
+            // pictureBox1
             // 
-            backgroundPanel.BackColor = SystemColors.Control;
-            backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
-            backgroundPanel.Controls.Add(profilePanel);
-            backgroundPanel.Dock = DockStyle.Fill;
-            backgroundPanel.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            backgroundPanel.Location = new Point(0, 0);
-            backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(284, 361);
-            backgroundPanel.TabIndex = 0;
-            // 
-            // profilePanel
-            // 
-            profilePanel.BackColor = Color.LightBlue;
-            profilePanel.BorderStyle = BorderStyle.Fixed3D;
-            profilePanel.Controls.Add(profileIconPictureBox);
-            profilePanel.Controls.Add(profileNameLabel);
-            profilePanel.Dock = DockStyle.Fill;
-            profilePanel.Location = new Point(0, 0);
-            profilePanel.Name = "profilePanel";
-            profilePanel.Size = new Size(280, 357);
-            profilePanel.TabIndex = 0;
-            // 
-            // profileIconPictureBox
-            // 
-            profileIconPictureBox.Image = (Image)resources.GetObject("profileIconPictureBox.Image");
-            profileIconPictureBox.Location = new Point(90, 50);
-            profileIconPictureBox.Name = "profileIconPictureBox";
-            profileIconPictureBox.Size = new Size(100, 100);
-            profileIconPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            profileIconPictureBox.TabIndex = 0;
-            profileIconPictureBox.TabStop = false;
-            // 
-            // profileNameLabel
-            // 
-            profileNameLabel.Dock = DockStyle.Fill;
-            profileNameLabel.Location = new Point(0, 0);
-            profileNameLabel.Name = "profileNameLabel";
-            profileNameLabel.Size = new Size(276, 353);
-            profileNameLabel.TabIndex = 1;
-            profileNameLabel.Text = "profile name";
-            profileNameLabel.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // menuStrip
-            // 
-            menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
-            menuStrip.Location = new Point(0, 0);
-            menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(284, 24);
-            menuStrip.TabIndex = 3;
-            menuStrip.Text = "menuStrip";
-            // 
-            // fileToolStripMenuItem
-            // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { logoutToolStripMenuItem, exitToolStripMenuItem1 });
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
-            fileToolStripMenuItem.Text = "&File";
-            // 
-            // logoutToolStripMenuItem
-            // 
-            logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(180, 22);
-            logoutToolStripMenuItem.Text = "&Logout";
-            logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
-            // 
-            // exitToolStripMenuItem1
-            // 
-            exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            exitToolStripMenuItem1.Size = new Size(180, 22);
-            exitToolStripMenuItem1.Text = "&Exit";
-            exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(90, 60);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(100, 100);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
             // 
             // ProfileForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightBlue;
             ClientSize = new Size(284, 361);
-            Controls.Add(menuStrip);
-            Controls.Add(backgroundPanel);
+            Controls.Add(pictureBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             Name = "ProfileForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProfileForm";
-            backgroundPanel.ResumeLayout(false);
-            profilePanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).EndInit();
-            menuStrip.ResumeLayout(false);
-            menuStrip.PerformLayout();
+            FormClosed += ProfileForm_Closed;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Panel backgroundPanel;
-        private Panel profilePanel;
-        private Label profileNameLabel;
-        private PictureBox profileIconPictureBox;
-        private MenuStrip menuStrip;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem logoutToolStripMenuItem;
-        private ToolStripMenuItem exitToolStripMenuItem1;
+        private PictureBox pictureBox1;
     }
 }

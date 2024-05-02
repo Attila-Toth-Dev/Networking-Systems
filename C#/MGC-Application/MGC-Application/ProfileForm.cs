@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,6 +36,12 @@ namespace MGC_Application
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
                 Application.Exit();
+        }
+
+        private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            this.Hide();
+            MainMenuForm.restrict = 0;
         }
     }
 }
