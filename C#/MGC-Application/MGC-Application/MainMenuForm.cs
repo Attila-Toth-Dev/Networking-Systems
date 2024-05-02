@@ -1,8 +1,11 @@
-﻿namespace MGC_Application;
+﻿using System.Diagnostics;
+
+namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
-    private string testFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\MGC-Application\bin\Debug\net8.0-windows";
+    private string tankGameFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\TankGame\TankGame.exe";
+    private string breakoutFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Breakout\Breakout.exe";
 
     public MainMenuForm(string _username)
     {
@@ -40,7 +43,6 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
-        //Process.Start("test.txt");
-        File.Open(testFilePath, FileMode.Open);
+        Process.Start(breakoutFilePath);
     }
 }

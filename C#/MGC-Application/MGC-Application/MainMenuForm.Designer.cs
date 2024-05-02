@@ -68,7 +68,7 @@
             myGamesListBox.Dock = DockStyle.Fill;
             myGamesListBox.FormattingEnabled = true;
             myGamesListBox.ItemHeight = 22;
-            myGamesListBox.Items.AddRange(new object[] { "- Red", "- Yellow", "- Green" });
+            myGamesListBox.Items.AddRange(new object[] { "- Tank Game", "- Breakout" });
             myGamesListBox.Location = new Point(0, 60);
             myGamesListBox.Name = "myGamesListBox";
             myGamesListBox.Size = new Size(136, 273);
