@@ -29,56 +29,24 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            gameIconPanel = new Panel();
-            panel1 = new Panel();
-            usernameLabel = new Label();
             gamesListPanel = new Panel();
             menuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
-            gameIconPanel.SuspendLayout();
-            panel1.SuspendLayout();
+            gamesGroupBox = new GroupBox();
+            gamesListPanel.SuspendLayout();
             menuStrip.SuspendLayout();
             SuspendLayout();
-            // 
-            // gameIconPanel
-            // 
-            gameIconPanel.BorderStyle = BorderStyle.Fixed3D;
-            gameIconPanel.Controls.Add(panel1);
-            gameIconPanel.Dock = DockStyle.Top;
-            gameIconPanel.Location = new Point(0, 24);
-            gameIconPanel.Name = "gameIconPanel";
-            gameIconPanel.Size = new Size(584, 57);
-            gameIconPanel.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            panel1.BorderStyle = BorderStyle.Fixed3D;
-            panel1.Controls.Add(usernameLabel);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(138, 53);
-            panel1.TabIndex = 0;
-            // 
-            // usernameLabel
-            // 
-            usernameLabel.AutoSize = true;
-            usernameLabel.Location = new Point(19, 15);
-            usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(94, 22);
-            usernameLabel.TabIndex = 0;
-            usernameLabel.Text = "username";
-            usernameLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // gamesListPanel
             // 
             gamesListPanel.BorderStyle = BorderStyle.Fixed3D;
+            gamesListPanel.Controls.Add(gamesGroupBox);
             gamesListPanel.Dock = DockStyle.Left;
-            gamesListPanel.Location = new Point(0, 81);
+            gamesListPanel.Location = new Point(0, 24);
             gamesListPanel.Name = "gamesListPanel";
-            gamesListPanel.Size = new Size(140, 380);
+            gamesListPanel.Size = new Size(140, 337);
             gamesListPanel.TabIndex = 1;
             // 
             // menuStrip
@@ -111,14 +79,23 @@
             exitToolStripMenuItem1.Text = "&Exit";
             exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
+            // gamesGroupBox
+            // 
+            gamesGroupBox.Dock = DockStyle.Fill;
+            gamesGroupBox.Location = new Point(0, 0);
+            gamesGroupBox.Name = "gamesGroupBox";
+            gamesGroupBox.Size = new Size(136, 333);
+            gamesGroupBox.TabIndex = 1;
+            gamesGroupBox.TabStop = false;
+            gamesGroupBox.Text = "MY GAMES";
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.AppWorkspace;
-            ClientSize = new Size(584, 461);
+            ClientSize = new Size(584, 361);
             Controls.Add(gamesListPanel);
-            Controls.Add(gameIconPanel);
             Controls.Add(menuStrip);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -128,9 +105,7 @@
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Menu";
-            gameIconPanel.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            gamesListPanel.ResumeLayout(false);
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             ResumeLayout(false);
@@ -138,14 +113,11 @@
         }
 
         #endregion
-
-        private Panel gameIconPanel;
         private Panel gamesListPanel;
         private MenuStrip menuStrip;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem logoutToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem1;
-        private Panel panel1;
-        private Label usernameLabel;
+        private GroupBox gamesGroupBox;
     }
 }
