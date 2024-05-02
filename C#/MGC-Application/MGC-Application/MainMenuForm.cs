@@ -1,12 +1,9 @@
-﻿using System.Diagnostics;
-
-namespace MGC_Application;
+﻿namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
     public static int restrict = 0;
 
-    private string breakoutFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Breakout\Breakout.exe";
     private string username;
 
     public MainMenuForm(string _username)
@@ -16,9 +13,6 @@ public partial class MainMenuForm : Form
         username = _username;
 
         welecomeLabel.Text = $"{_username}'s Library";
-
-        removeButton.Enabled = false;
-        addButton.Enabled = false;
     }
 
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,7 +36,6 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
-        Process.Start(breakoutFilePath);
     }
 
     private void profileButton_Click(object sender, EventArgs e)
@@ -64,7 +57,24 @@ public partial class MainMenuForm : Form
 
     private void addButton_Click(object sender, EventArgs e)
     {
-
+        using (OpenFileDialog ofd = new OpenFileDialog()
+        {
+            Filter = "All files|*.*",
+            ValidateNames = true,
+            Multiselect = true
+        })
+        {
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                foreach(string f in ofd.FileNames)
+                {
+                    FileInfo file = new FileInfo(f);
+                    ListViewItem item = new ListViewItem(file.Name);
+                    item.SubItems.Add(file.FullName);
+                    gameListView.Items.Add(item);
+                }
+            }
+        }
     }
 
     private void removeButton_Click(object sender, EventArgs e)

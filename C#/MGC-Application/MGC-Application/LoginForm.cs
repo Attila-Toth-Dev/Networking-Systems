@@ -7,8 +7,8 @@ public partial class LoginForm : Form
     private int counter = 1;
 
     // File paths for storing users logins and logged in users
-    private const string usersFilePath = "users.txt";
-    private const string loginsFilePath = "logins.txt";
+    private const string usersFilePath = @"\\58.169.146.100\mgc-launcher\users.txt";
+    private const string loginsFilePath = @"\\58.169.146.100\mgc-launcher\logins.txt";
 
     public LoginForm()
     {
