@@ -6,10 +6,15 @@ public partial class MainMenuForm : Form
 {
     private string tankGameFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\TankGame\TankGame.exe";
     private string breakoutFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Breakout\Breakout.exe";
+    private string dungeonCrawlerFilePath = @"C:\Users\s220306\Desktop\Github\Networking-Systems\C#\MGC-Application\Games\Dungeon Crawler\LabyrinthCrawler.exe";
+
+    private string username;
 
     public MainMenuForm(string _username)
     {
         InitializeComponent();
+
+        username = _username;
 
         welecomeLabel.Text = $"Welcome {_username}!";
         myGamesListBox.SelectedIndex = 0;
@@ -43,6 +48,12 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
-        Process.Start(breakoutFilePath);
+        Process.Start(dungeonCrawlerFilePath);
+    }
+
+    private void profileIconPictureBox_Click(object sender, EventArgs e)
+    {
+        ProfileForm form = new ProfileForm(username);
+        form.Show();
     }
 }

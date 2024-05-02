@@ -38,16 +38,19 @@
             logoutToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
             topHeaderPanel = new Panel();
+            profileIconPictureBox = new PictureBox();
             welecomeLabel = new Label();
             selectedGameNameLabel = new Label();
             panel1 = new Panel();
             installButton = new Button();
             updateButton = new Button();
             playButton = new Button();
+            gameDescLabel = new Label();
             gamesListPanel.SuspendLayout();
             topLeftPanel.SuspendLayout();
             menuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).BeginInit();
             SuspendLayout();
             // 
             // gamesListPanel
@@ -67,8 +70,9 @@
             myGamesListBox.Cursor = Cursors.Hand;
             myGamesListBox.Dock = DockStyle.Fill;
             myGamesListBox.FormattingEnabled = true;
+            myGamesListBox.HorizontalScrollbar = true;
             myGamesListBox.ItemHeight = 22;
-            myGamesListBox.Items.AddRange(new object[] { "- Tank Game", "- Breakout" });
+            myGamesListBox.Items.AddRange(new object[] { "- Breakout" });
             myGamesListBox.Location = new Point(0, 60);
             myGamesListBox.Name = "myGamesListBox";
             myGamesListBox.Size = new Size(136, 273);
@@ -129,12 +133,25 @@
             // 
             topHeaderPanel.BackColor = Color.LightBlue;
             topHeaderPanel.BorderStyle = BorderStyle.Fixed3D;
+            topHeaderPanel.Controls.Add(profileIconPictureBox);
             topHeaderPanel.Controls.Add(welecomeLabel);
             topHeaderPanel.Dock = DockStyle.Top;
             topHeaderPanel.Location = new Point(140, 24);
             topHeaderPanel.Name = "topHeaderPanel";
             topHeaderPanel.Size = new Size(444, 62);
             topHeaderPanel.TabIndex = 3;
+            // 
+            // profileIconPictureBox
+            // 
+            profileIconPictureBox.BorderStyle = BorderStyle.FixedSingle;
+            profileIconPictureBox.Image = (Image)resources.GetObject("profileIconPictureBox.Image");
+            profileIconPictureBox.Location = new Point(385, 5);
+            profileIconPictureBox.Name = "profileIconPictureBox";
+            profileIconPictureBox.Size = new Size(52, 50);
+            profileIconPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            profileIconPictureBox.TabIndex = 1;
+            profileIconPictureBox.TabStop = false;
+            profileIconPictureBox.Click += profileIconPictureBox_Click;
             // 
             // welecomeLabel
             // 
@@ -160,7 +177,7 @@
             panel1.BorderStyle = BorderStyle.Fixed3D;
             panel1.Location = new Point(156, 126);
             panel1.Name = "panel1";
-            panel1.Size = new Size(416, 10);
+            panel1.Size = new Size(416, 2);
             panel1.TabIndex = 5;
             // 
             // installButton
@@ -191,12 +208,22 @@
             playButton.UseVisualStyleBackColor = true;
             playButton.Click += playButton_Click;
             // 
+            // gameDescLabel
+            // 
+            gameDescLabel.AutoSize = true;
+            gameDescLabel.Location = new Point(156, 131);
+            gameDescLabel.Name = "gameDescLabel";
+            gameDescLabel.Size = new Size(105, 22);
+            gameDescLabel.TabIndex = 9;
+            gameDescLabel.Text = "game desc";
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.AppWorkspace;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(584, 361);
+            Controls.Add(gameDescLabel);
             Controls.Add(playButton);
             Controls.Add(updateButton);
             Controls.Add(installButton);
@@ -220,6 +247,7 @@
             menuStrip.PerformLayout();
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -240,5 +268,7 @@
         private Button installButton;
         private Button updateButton;
         private Button playButton;
+        private PictureBox profileIconPictureBox;
+        private Label gameDescLabel;
     }
 }
