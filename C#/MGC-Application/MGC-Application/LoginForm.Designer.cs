@@ -127,6 +127,7 @@
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Login";
+            FormClosed += LoginForm_Closed;
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();

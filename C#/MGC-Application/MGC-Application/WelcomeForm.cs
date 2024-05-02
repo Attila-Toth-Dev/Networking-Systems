@@ -30,7 +30,7 @@ public partial class WelcomeForm : Form
     {
         counter += 1;
 
-        if(counter == 3)
+        if (counter == 3)
         {
             loadBarTimer.Enabled = false;
             this.Hide();
@@ -38,5 +38,10 @@ public partial class WelcomeForm : Form
             LoginForm form = new LoginForm();
             form.Show();
         }
+    }
+
+    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        Application.Exit();
     }
 }

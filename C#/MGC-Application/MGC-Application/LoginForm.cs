@@ -2,6 +2,8 @@
 
 public partial class LoginForm : Form
 {
+    public static bool isLoggedIn;
+
     private int counter = 1;
 
     // File paths for storing users logins and logged in users
@@ -41,7 +43,8 @@ public partial class LoginForm : Form
         if (ValidateLogin(username, password))
         {
             // Update the login status to indicate the user is logged into the application
-            UpdateLoginStatus(username, true);
+            isLoggedIn = true;
+            UpdateLoginStatus(username, isLoggedIn);
             MessageBox.Show($"Succesfully logged in.\nWelcome {username}!");
 
             this.Hide();
@@ -129,11 +132,6 @@ public partial class LoginForm : Form
             // Add the new User to the users.txt file, update login status
             AddUser(username, password);
             MessageBox.Show($"User account created!\nWelcome {username}.");
-
-            /*this.Hide();
-
-            MainMenuForm form = new MainMenuForm(username);
-            form.Show();*/
         }
     }
 
@@ -173,5 +171,10 @@ public partial class LoginForm : Form
 
         // User does not exists
         return false;
+    }
+
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        Application.Exit();
     }
 }

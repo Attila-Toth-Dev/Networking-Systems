@@ -10,14 +10,13 @@ public partial class MainMenuForm : Form
 
     private string username;
 
-
     public MainMenuForm(string _username)
     {
         InitializeComponent();
 
         username = _username;
 
-        welecomeLabel.Text = $"{_username} Library";
+        welecomeLabel.Text = $"{_username}'s Library";
         myGamesListBox.SelectedIndex = 0;
 
         updateButton.Enabled = false;
@@ -29,15 +28,16 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
-            LoginForm form = new LoginForm();
             this.Hide();
+
+            LoginForm form = new LoginForm();
             form.Show();
         }
     }
 
     private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
     {
-        DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
+        DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
             Application.Exit();
     }
@@ -52,13 +52,20 @@ public partial class MainMenuForm : Form
         Process.Start(breakoutFilePath);
     }
 
-    private void profileIconPictureBox_Click(object sender, EventArgs e)
+    private void profileButton_Click(object sender, EventArgs e)
     {
         if (restrict == 0)
         {
+            this.Hide();
+
             restrict++;
             ProfileForm form = new ProfileForm(username);
             form.Show();
         }
+    }
+
+    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        Application.Exit();
     }
 }

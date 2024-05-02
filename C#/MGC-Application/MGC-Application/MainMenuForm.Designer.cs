@@ -35,7 +35,7 @@
             logoutToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
             topHeaderPanel = new Panel();
-            profileIconPictureBox = new PictureBox();
+            profileButton = new Button();
             welecomeLabel = new Label();
             selectedGameNameLabel = new Label();
             panel1 = new Panel();
@@ -46,7 +46,6 @@
             myGamesPanel = new Panel();
             menuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).BeginInit();
             myGamesPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -100,7 +99,7 @@
             // 
             topHeaderPanel.BackColor = Color.LightBlue;
             topHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
-            topHeaderPanel.Controls.Add(profileIconPictureBox);
+            topHeaderPanel.Controls.Add(profileButton);
             topHeaderPanel.Controls.Add(welecomeLabel);
             topHeaderPanel.Dock = DockStyle.Top;
             topHeaderPanel.Location = new Point(0, 24);
@@ -108,16 +107,17 @@
             topHeaderPanel.Size = new Size(584, 62);
             topHeaderPanel.TabIndex = 3;
             // 
-            // profileIconPictureBox
+            // profileButton
             // 
-            profileIconPictureBox.Image = (Image)resources.GetObject("profileIconPictureBox.Image");
-            profileIconPictureBox.Location = new Point(524, 3);
-            profileIconPictureBox.Name = "profileIconPictureBox";
-            profileIconPictureBox.Size = new Size(55, 55);
-            profileIconPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            profileIconPictureBox.TabIndex = 1;
-            profileIconPictureBox.TabStop = false;
-            profileIconPictureBox.Click += profileIconPictureBox_Click;
+            profileButton.BackgroundImage = (Image)resources.GetObject("profileButton.BackgroundImage");
+            profileButton.BackgroundImageLayout = ImageLayout.Stretch;
+            profileButton.FlatStyle = FlatStyle.Flat;
+            profileButton.Location = new Point(521, 6);
+            profileButton.Name = "profileButton";
+            profileButton.Size = new Size(50, 50);
+            profileButton.TabIndex = 1;
+            profileButton.UseVisualStyleBackColor = true;
+            profileButton.Click += profileButton_Click;
             // 
             // welecomeLabel
             // 
@@ -216,11 +216,11 @@
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Menu";
+            FormClosed += MainMenuForm_Closed;
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)profileIconPictureBox).EndInit();
             myGamesPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -238,9 +238,9 @@
         private Button installButton;
         private Button updateButton;
         private Button playButton;
-        private PictureBox profileIconPictureBox;
         private Label gameDescLabel;
         private ListBox myGamesListBox;
         private Panel myGamesPanel;
+        private Button profileButton;
     }
 }

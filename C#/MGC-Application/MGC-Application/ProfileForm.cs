@@ -1,47 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿namespace MGC_Application;
 
-namespace MGC_Application
+public partial class ProfileForm : Form
 {
-    public partial class ProfileForm : Form
+    private string username;
+
+    public ProfileForm(string _username)
     {
-        public ProfileForm(string _username)
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            this.Text = $"{_username} Profile";
-        }
+        username = _username;
 
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                LoginForm form = new LoginForm();
-                this.Hide();
-                form.Show();
-            }
-        }
+        this.Text = $"{_username}'s Profile";
+    }
 
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-                Application.Exit();
-        }
+    private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        this.Hide();
+        MainMenuForm.restrict = 0;
 
-        private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
-        {
-            this.Hide();
-            MainMenuForm.restrict = 0;
-        }
+        MainMenuForm form = new MainMenuForm(username);
+        form.Show();
     }
 }

@@ -114,6 +114,7 @@
             Name = "WelcomeForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC-Launcher";
+            FormClosed += WelcomeForm_Closed;
             ((System.ComponentModel.ISupportInitialize)launcherPictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)secretPictureBox).EndInit();
             ResumeLayout(false);
