@@ -5,6 +5,7 @@ public partial class MainMenuForm : Form
     public static int restrict = 0;
 
     private string username;
+    private string serverIp;
 
     public MainMenuForm(string _username)
     {
@@ -20,6 +21,8 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
+            UserStatus.UpdateStatus(username, false);
+
             this.Hide();
 
             LoginForm form = new LoginForm();
@@ -31,7 +34,10 @@ public partial class MainMenuForm : Form
     {
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
+        {
+            UserStatus.UpdateStatus(username, false);
             Application.Exit();
+        }
     }
 
     private void playButton_Click(object sender, EventArgs e)
@@ -52,6 +58,7 @@ public partial class MainMenuForm : Form
 
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
+        UserStatus.UpdateStatus(username, false);
         Application.Exit();
     }
 

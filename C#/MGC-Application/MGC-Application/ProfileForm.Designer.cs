@@ -29,39 +29,55 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            profilePictureBox = new PictureBox();
+            backToMenuButton = new Button();
+            ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
+            // profilePictureBox
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(90, 60);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(100, 100);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
+            profilePictureBox.Image = (Image)resources.GetObject("profilePictureBox.Image");
+            profilePictureBox.Location = new Point(95, 44);
+            profilePictureBox.Name = "profilePictureBox";
+            profilePictureBox.Size = new Size(100, 100);
+            profilePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            profilePictureBox.TabIndex = 0;
+            profilePictureBox.TabStop = false;
+            // 
+            // backToMenuButton
+            // 
+            backToMenuButton.Location = new Point(95, 312);
+            backToMenuButton.Name = "backToMenuButton";
+            backToMenuButton.Size = new Size(100, 37);
+            backToMenuButton.TabIndex = 1;
+            backToMenuButton.Text = "Return";
+            backToMenuButton.UseVisualStyleBackColor = true;
+            backToMenuButton.Click += backToMenuButton_Click;
             // 
             // ProfileForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(284, 361);
-            Controls.Add(pictureBox1);
+            Controls.Add(backToMenuButton);
+            Controls.Add(profilePictureBox);
+            Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(5, 4, 5, 4);
             MaximizeBox = false;
             Name = "ProfileForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProfileForm";
             FormClosed += ProfileForm_Closed;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)profilePictureBox).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private PictureBox pictureBox1;
+
+        private PictureBox profilePictureBox;
+        private Button backToMenuButton;
     }
 }

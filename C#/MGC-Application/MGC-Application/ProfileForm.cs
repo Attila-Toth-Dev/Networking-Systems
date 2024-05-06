@@ -21,4 +21,13 @@ public partial class ProfileForm : Form
         MainMenuForm form = new MainMenuForm(username);
         form.Show();
     }
+
+    private void backToMenuButton_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+        MainMenuForm.restrict = 0;
+
+        MainMenuForm form = new MainMenuForm(username);
+        form.Show();
+    }
 }

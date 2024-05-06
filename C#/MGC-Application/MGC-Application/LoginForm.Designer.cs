@@ -36,6 +36,8 @@
             passwordLabel = new Label();
             loginButton = new Button();
             signUpButton = new Button();
+            serverIpTextBox = new TextBox();
+            serverIpLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -48,11 +50,10 @@
             logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             logoPictureBox.TabIndex = 0;
             logoPictureBox.TabStop = false;
-            logoPictureBox.Click += logoPictureBox_Click;
             // 
             // usernameTextBox
             // 
-            usernameTextBox.Location = new Point(200, 170);
+            usernameTextBox.Location = new Point(200, 155);
             usernameTextBox.Name = "usernameTextBox";
             usernameTextBox.Size = new Size(200, 29);
             usernameTextBox.TabIndex = 1;
@@ -61,7 +62,7 @@
             // 
             // passwordTextBox
             // 
-            passwordTextBox.Location = new Point(200, 232);
+            passwordTextBox.Location = new Point(200, 205);
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.Size = new Size(200, 29);
             passwordTextBox.TabIndex = 2;
@@ -71,7 +72,7 @@
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
-            usernameLabel.Location = new Point(92, 173);
+            usernameLabel.Location = new Point(66, 158);
             usernameLabel.Name = "usernameLabel";
             usernameLabel.Size = new Size(102, 22);
             usernameLabel.TabIndex = 3;
@@ -80,11 +81,11 @@
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
-            passwordLabel.Location = new Point(92, 235);
+            passwordLabel.Location = new Point(64, 208);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(104, 22);
+            passwordLabel.Size = new Size(99, 22);
             passwordLabel.TabIndex = 4;
-            passwordLabel.Text = "Password: ";
+            passwordLabel.Text = "Password:";
             // 
             // loginButton
             // 
@@ -106,12 +107,31 @@
             signUpButton.UseVisualStyleBackColor = true;
             signUpButton.Click += signUpButton_Click;
             // 
+            // serverIpTextBox
+            // 
+            serverIpTextBox.Location = new Point(200, 252);
+            serverIpTextBox.Name = "serverIpTextBox";
+            serverIpTextBox.Size = new Size(200, 29);
+            serverIpTextBox.TabIndex = 3;
+            serverIpTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // serverIpLabel
+            // 
+            serverIpLabel.AutoSize = true;
+            serverIpLabel.Location = new Point(64, 255);
+            serverIpLabel.Name = "serverIpLabel";
+            serverIpLabel.Size = new Size(95, 22);
+            serverIpLabel.TabIndex = 8;
+            serverIpLabel.Text = "Server IP:";
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
+            Controls.Add(serverIpLabel);
+            Controls.Add(serverIpTextBox);
             Controls.Add(signUpButton);
             Controls.Add(loginButton);
             Controls.Add(passwordLabel);
@@ -127,7 +147,6 @@
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Login";
-            FormClosed += LoginForm_Closed;
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -142,5 +161,7 @@
         private Label passwordLabel;
         private Button loginButton;
         private Button signUpButton;
+        private TextBox serverIpTextBox;
+        private Label serverIpLabel;
     }
 }
