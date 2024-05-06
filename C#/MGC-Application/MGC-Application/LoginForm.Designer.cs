@@ -114,6 +114,7 @@
             serverIpTextBox.Size = new Size(200, 29);
             serverIpTextBox.TabIndex = 3;
             serverIpTextBox.TextAlign = HorizontalAlignment.Center;
+            serverIpTextBox.TextChanged += serverIpTextBox_TextChanged;
             // 
             // serverIpLabel
             // 
@@ -147,6 +148,7 @@
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Login";
+            FormClosed += LoginForm_Closed;
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();

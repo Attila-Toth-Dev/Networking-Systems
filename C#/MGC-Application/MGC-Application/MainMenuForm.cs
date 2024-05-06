@@ -5,7 +5,6 @@ public partial class MainMenuForm : Form
     public static int restrict = 0;
 
     private string username;
-    private string serverIp;
 
     public MainMenuForm(string _username)
     {
@@ -16,26 +15,11 @@ public partial class MainMenuForm : Form
         welecomeLabel.Text = $"{username}'s Library";
     }
 
-    private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
-        if (dialogResult == DialogResult.Yes)
-        {
-            UserStatus.UpdateStatus(username, false);
-
-            this.Hide();
-
-            LoginForm form = new LoginForm();
-            form.Show();
-        }
-    }
-
     private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
     {
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
-            UserStatus.UpdateStatus(username, false);
             Application.Exit();
         }
     }
@@ -58,7 +42,7 @@ public partial class MainMenuForm : Form
 
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
-        UserStatus.UpdateStatus(username, false);
+        UserData.UpdateStatus(username, false);
         Application.Exit();
     }
 
