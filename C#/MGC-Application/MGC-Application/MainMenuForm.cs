@@ -12,7 +12,7 @@ public partial class MainMenuForm : Form
 
         username = _username;
 
-        welecomeLabel.Text = $"{_username}'s Library";
+        welecomeLabel.Text = $"{username}'s Library";
     }
 
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)

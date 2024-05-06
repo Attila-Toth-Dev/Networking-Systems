@@ -2,13 +2,11 @@
 
 public partial class LoginForm : Form
 {
-    public static bool isLoggedIn;
-
     private int counter = 1;
 
     // File paths for storing users logins and logged in users
-    private const string usersFilePath = @"\\58.169.146.100\mgc-launcher\users.txt";
-    private const string loginsFilePath = @"\\58.169.146.100\mgc-launcher\logins.txt";
+    private const string usersFilePath  = "users.txt";
+    private const string loginsFilePath = "logins.txt";
 
     public LoginForm()
     {
@@ -43,8 +41,7 @@ public partial class LoginForm : Form
         if (ValidateLogin(username, password))
         {
             // Update the login status to indicate the user is logged into the application
-            isLoggedIn = true;
-            UpdateLoginStatus(username, isLoggedIn);
+            //UpdateLoginStatus(username, isLoggedIn);
             MessageBox.Show($"Succesfully logged in.\nWelcome {username}!");
 
             this.Hide();
@@ -57,7 +54,6 @@ public partial class LoginForm : Form
         {
             MessageBox.Show("User details were incorrect.\nPlease try again...");
 
-            usernameTextBox.Clear();
             passwordTextBox.Clear();
 
             usernameTextBox.Focus();
@@ -126,12 +122,27 @@ public partial class LoginForm : Form
         {
             // Show an error message for an existing user
             MessageBox.Show("Warning, user already exists!\nPlease try again.");
+
+            loginButton.Focus();
         }
         else
         {
-            // Add the new User to the users.txt file, update login status
-            AddUser(username, password);
-            MessageBox.Show($"User account created!\nWelcome {username}.");
+            // If the password is empty, show error message
+            if (password == "" || password[0] == ' ')
+            {
+                MessageBox.Show("Error, cannot have empty password.\nPlease try again.");
+
+                passwordTextBox.Clear();
+                usernameTextBox.Focus();
+            }
+            else
+            {
+                // Add the new User to the users.txt file, update login status
+                AddUser(username, password);
+                MessageBox.Show($"User account created!\nWelcome {username}.");
+
+                loginButton.Focus();
+            }
         }
     }
 
