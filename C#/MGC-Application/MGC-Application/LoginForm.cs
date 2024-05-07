@@ -5,6 +5,11 @@ public partial class LoginForm : Form
     public static string loginsFilePath = "";
     public static string usersFilePath = "";
 
+    private string username;
+    private string password;
+
+    private int port;
+
     private string serverIp = "";
 
     /// <summary>Login Form constructor.</summary>
@@ -18,12 +23,16 @@ public partial class LoginForm : Form
     {
         passwordTextBox.PasswordChar = '*';
         passwordTextBox.MaxLength = 15;
+
+        password = passwordTextBox.Text;
     }
 
     /// <summary>Event function for username text box text changed.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
     {
         usernameTextBox.MaxLength = 15;
+
+        username = usernameTextBox.Text;
     }
 
     /// <summary>Event function for server ip text bot text changed.</summary>
@@ -31,19 +40,15 @@ public partial class LoginForm : Form
     {
         serverIp = serverIpTextBox.Text;
 
-        loginsFilePath = $@"\\{serverIp}\mgc-launcher\logins.txt";
-        usersFilePath = $@"\\{serverIp}\mgc-launcher\users.txt";
+        //loginsFilePath = $@"\\{serverIp}\mgc-launcher\logins.txt";
+        //usersFilePath = $@"\\{serverIp}\mgc-launcher\users.txt";
     }
 
     /// <summary>Event function for login button click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
-        string username = usernameTextBox.Text;
-        string password = passwordTextBox.Text;
-        int port = 7777;
-
         // Validate Server Connection
-        if (NetworkTools.IsValidIP(serverIp, port))
+        if (NetworkTools.CheckFTPConneciton(serverIp))
         {
 
         }
