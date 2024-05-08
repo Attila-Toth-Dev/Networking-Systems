@@ -38,7 +38,6 @@
             signUpButton = new Button();
             serverIpTextBox = new TextBox();
             serverIpLabel = new Label();
-            portTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -112,7 +111,7 @@
             // 
             serverIpTextBox.Location = new Point(200, 252);
             serverIpTextBox.Name = "serverIpTextBox";
-            serverIpTextBox.Size = new Size(141, 29);
+            serverIpTextBox.Size = new Size(200, 29);
             serverIpTextBox.TabIndex = 3;
             serverIpTextBox.TextAlign = HorizontalAlignment.Center;
             serverIpTextBox.TextChanged += serverIpTextBox_TextChanged;
@@ -126,21 +125,12 @@
             serverIpLabel.TabIndex = 8;
             serverIpLabel.Text = "IP/Port:";
             // 
-            // portTextBox
-            // 
-            portTextBox.Location = new Point(347, 252);
-            portTextBox.Name = "portTextBox";
-            portTextBox.Size = new Size(53, 29);
-            portTextBox.TabIndex = 9;
-            portTextBox.Text = "7777";
-            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
-            Controls.Add(portTextBox);
             Controls.Add(serverIpLabel);
             Controls.Add(serverIpTextBox);
             Controls.Add(signUpButton);
@@ -175,6 +165,5 @@
         private Button signUpButton;
         private TextBox serverIpTextBox;
         private Label serverIpLabel;
-        private TextBox portTextBox;
     }
 }

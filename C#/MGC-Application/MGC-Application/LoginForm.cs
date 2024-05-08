@@ -39,18 +39,14 @@ public partial class LoginForm : Form
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
         serverIp = serverIpTextBox.Text;
-
-        //loginsFilePath = $@"\\{serverIp}\mgc-launcher\logins.txt";
-        //usersFilePath = $@"\\{serverIp}\mgc-launcher\users.txt";
     }
 
     /// <summary>Event function for login button click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
-        // Validate Server Connection
-        if (NetworkTools.CheckFTPConneciton(serverIp))
+        if(NetworkTools.CheckValidFTP(serverIp))
         {
-
+            MessageBox.Show("Welcome");
         }
     }
 
