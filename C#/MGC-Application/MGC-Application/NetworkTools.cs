@@ -4,17 +4,7 @@ namespace MGC_Application;
 
 public static class NetworkTools
 {
-    public static string LoginsPathFile { get; private set; }
-    public static string UsersPathFile { get; private set; }
-
-    public static bool IsConnected { get; private set; }
-
-    public static bool CheckValidIP(string _serverIP)
-    {
-        if (string.IsNullOrEmpty(_serverIP)) return false;
-
-        return true;
-    }
+    public static string ServerIP { get; set; }
 
     public static bool CheckValidFTP(string _serverIP)
     {
@@ -39,10 +29,5 @@ public static class NetworkTools
         }
 
         return false;
-    }
-
-    public static string FTPFilePath(string _serverIP)
-    {
-        return "";
     }
 }

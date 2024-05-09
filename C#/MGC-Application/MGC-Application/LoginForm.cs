@@ -2,9 +2,6 @@
 
 public partial class LoginForm : Form
 {
-    public static string loginsFilePath = "";
-    public static string usersFilePath = "";
-
     private string username;
     private string password;
 
@@ -19,13 +16,13 @@ public partial class LoginForm : Form
     }
 
     /// <summary>Event function for password text box text changed.</summary>
-    private void passwordTextBox_TextChanged(object sender, EventArgs e)
+    /*private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
         passwordTextBox.PasswordChar = '*';
         passwordTextBox.MaxLength = 15;
 
         password = passwordTextBox.Text;
-    }
+    }*/
 
     /// <summary>Event function for username text box text changed.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
@@ -44,25 +41,36 @@ public partial class LoginForm : Form
     /// <summary>Event function for login button click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
-        if(NetworkTools.CheckValidFTP(serverIp))
+        if (NetworkTools.CheckValidFTP(serverIp))
         {
-            MessageBox.Show("Welcome");
+            if (username == "" || username == " ")
+            {
+                MessageBox.Show("Username is Invalid.\nPlease try a different name.");
+                usernameTextBox.Focus();
+            }
+            else
+            {
+                MessageBox.Show($"Welcome {username}!");
+                this.Hide();
+
+                MainMenuForm form = new MainMenuForm(username);
+                form.Show();
+            }
         }
     }
 
     /// <summary>Event function for sign up button click.</summary>
-    private void signUpButton_Click(object sender, EventArgs e)
+    /*private void signUpButton_Click(object sender, EventArgs e)
     {
         // Retrieve entered usernam and password from the text boxes
         string username = usernameTextBox.Text;
-        string password = passwordTextBox.Text;
+        //string password = passwordTextBox.Text;
 
         // Check if the username is already used
-        if (UserData.UserExists(username))
+        if (UserTools.UserExists(username, serverIp))
         {
             // Show an error message for an existing user
             MessageBox.Show("Warning, user already exists!\nPlease try again.");
-
             loginButton.Focus();
         }
         else
@@ -71,20 +79,18 @@ public partial class LoginForm : Form
             if (password == "" || password[0] == ' ')
             {
                 MessageBox.Show("Error, cannot have empty password.\nPlease try again.");
-
                 passwordTextBox.Clear();
                 usernameTextBox.Focus();
             }
             else
             {
                 // Add the new User to the users.txt file, update login status
-                UserData.AddUser(username, password);
+                UserTools.AddUser(username, password, serverIp);
                 MessageBox.Show($"User account created!\nWelcome {username}.");
-
                 loginButton.Focus();
             }
         }
-    }
+    }*/
 
     /// <summary>Event function for login forms closed event.</summary>
     private void LoginForm_Closed(object sender, FormClosedEventArgs e)

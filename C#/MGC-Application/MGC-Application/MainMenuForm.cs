@@ -6,6 +6,9 @@ public partial class MainMenuForm : Form
 
     private string username;
 
+    private string executable;
+    private string gameFilePath;
+
     public MainMenuForm(string _username)
     {
         InitializeComponent();
@@ -13,6 +16,41 @@ public partial class MainMenuForm : Form
         username = _username;
 
         welecomeLabel.Text = $"{username}'s Library";
+
+        updateButton.Enabled = false;
+        uninstallButton.Enabled = false;
+    }
+    
+    private void playButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void updateButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void installButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void uninstallButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
+        if (dialogResult == DialogResult.Yes)
+        {
+            this.Hide();
+
+            LoginForm form = new LoginForm();
+            form.Show();
+        }
     }
 
     private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -22,10 +60,6 @@ public partial class MainMenuForm : Form
         {
             Application.Exit();
         }
-    }
-
-    private void playButton_Click(object sender, EventArgs e)
-    {
     }
 
     private void profileButton_Click(object sender, EventArgs e)
@@ -42,37 +76,6 @@ public partial class MainMenuForm : Form
 
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
-        UserData.UpdateStatus(username, false);
         Application.Exit();
-    }
-
-    private void addButton_Click(object sender, EventArgs e)
-    {
-        using (OpenFileDialog ofd = new OpenFileDialog()
-        {
-            Filter = "All files|*.*",
-            ValidateNames = true,
-            Multiselect = true
-        })
-        {
-            if(ofd.ShowDialog() == DialogResult.OK)
-            {
-                foreach(string f in ofd.FileNames)
-                {
-                    FileInfo file = new FileInfo(f);
-                    ListViewItem item = new ListViewItem(file.Name);
-                    item.SubItems.Add(file.FullName);
-                    gameListView.Items.Add(item);
-                }
-            }
-        }
-    }
-
-    private void removeButton_Click(object sender, EventArgs e)
-    {
-        if (gameListView.Items.Count > 0)
-            gameListView.Items.Remove(gameListView.SelectedItems[0]);
-        else
-            MessageBox.Show("There is nothing to Remove!");
     }
 }

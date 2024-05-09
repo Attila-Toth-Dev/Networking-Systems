@@ -36,10 +36,11 @@
             topHeaderPanel = new Panel();
             profileButton = new Button();
             welecomeLabel = new Label();
-            addButton = new Button();
-            removeButton = new Button();
             playButton = new Button();
             myGamesPanel = new Panel();
+            updateButton = new Button();
+            uninstallButton = new Button();
+            installButton = new Button();
             gameListView = new ListView();
             fileNameHeader = new ColumnHeader();
             filePathHeader = new ColumnHeader();
@@ -67,13 +68,14 @@
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(180, 22);
+            logoutToolStripMenuItem.Size = new Size(112, 22);
             logoutToolStripMenuItem.Text = "&Logout";
+            logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem1
             // 
             exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            exitToolStripMenuItem1.Size = new Size(180, 22);
+            exitToolStripMenuItem1.Size = new Size(112, 22);
             exitToolStripMenuItem1.Text = "&Exit";
             exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
@@ -110,30 +112,9 @@
             welecomeLabel.TabIndex = 0;
             welecomeLabel.Text = "Welcome Test...";
             // 
-            // addButton
-            // 
-            addButton.Location = new Point(24, 184);
-            addButton.Name = "addButton";
-            addButton.Size = new Size(88, 43);
-            addButton.TabIndex = 6;
-            addButton.Text = "Add";
-            addButton.UseVisualStyleBackColor = true;
-            addButton.Click += addButton_Click;
-            // 
-            // removeButton
-            // 
-            removeButton.AutoSize = true;
-            removeButton.Location = new Point(24, 233);
-            removeButton.Name = "removeButton";
-            removeButton.Size = new Size(92, 43);
-            removeButton.TabIndex = 7;
-            removeButton.Text = "Remove";
-            removeButton.UseVisualStyleBackColor = true;
-            removeButton.Click += removeButton_Click;
-            // 
             // playButton
             // 
-            playButton.Location = new Point(24, 20);
+            playButton.Location = new Point(24, 15);
             playButton.Name = "playButton";
             playButton.Size = new Size(88, 43);
             playButton.TabIndex = 8;
@@ -144,14 +125,45 @@
             // myGamesPanel
             // 
             myGamesPanel.BackColor = Color.Gray;
+            myGamesPanel.Controls.Add(updateButton);
+            myGamesPanel.Controls.Add(uninstallButton);
+            myGamesPanel.Controls.Add(installButton);
             myGamesPanel.Controls.Add(playButton);
-            myGamesPanel.Controls.Add(addButton);
-            myGamesPanel.Controls.Add(removeButton);
             myGamesPanel.Dock = DockStyle.Left;
             myGamesPanel.Location = new Point(0, 86);
             myGamesPanel.Name = "myGamesPanel";
             myGamesPanel.Size = new Size(134, 288);
             myGamesPanel.TabIndex = 10;
+            // 
+            // updateButton
+            // 
+            updateButton.Location = new Point(24, 126);
+            updateButton.Name = "updateButton";
+            updateButton.Size = new Size(88, 46);
+            updateButton.TabIndex = 11;
+            updateButton.Text = "Update";
+            updateButton.UseVisualStyleBackColor = true;
+            updateButton.Click += updateButton_Click;
+            // 
+            // uninstallButton
+            // 
+            uninstallButton.Location = new Point(24, 230);
+            uninstallButton.Name = "uninstallButton";
+            uninstallButton.Size = new Size(88, 46);
+            uninstallButton.TabIndex = 10;
+            uninstallButton.Text = "Uninstall";
+            uninstallButton.UseVisualStyleBackColor = true;
+            uninstallButton.Click += uninstallButton_Click;
+            // 
+            // installButton
+            // 
+            installButton.Location = new Point(24, 178);
+            installButton.Name = "installButton";
+            installButton.Size = new Size(88, 46);
+            installButton.TabIndex = 9;
+            installButton.Text = "Install";
+            installButton.UseVisualStyleBackColor = true;
+            installButton.Click += installButton_Click;
             // 
             // gameListView
             // 
@@ -201,7 +213,6 @@
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
             myGamesPanel.ResumeLayout(false);
-            myGamesPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -213,13 +224,14 @@
         private ToolStripMenuItem exitToolStripMenuItem1;
         private Panel topHeaderPanel;
         private Label welecomeLabel;
-        private Button addButton;
-        private Button removeButton;
         private Button playButton;
         private Panel myGamesPanel;
         private Button profileButton;
         private ListView gameListView;
         private ColumnHeader fileNameHeader;
         private ColumnHeader filePathHeader;
+        private Button updateButton;
+        private Button uninstallButton;
+        private Button installButton;
     }
 }
