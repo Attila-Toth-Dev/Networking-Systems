@@ -17,10 +17,10 @@ public partial class MainMenuForm : Form
 
         welecomeLabel.Text = $"{username}'s Library";
 
-        updateButton.Enabled = false;
-        uninstallButton.Enabled = false;
+        //updateButton.Enabled = false;
+        //uninstallButton.Enabled = false;
     }
-    
+
     private void playButton_Click(object sender, EventArgs e)
     {
 

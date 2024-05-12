@@ -36,17 +36,15 @@
             topHeaderPanel = new Panel();
             profileButton = new Button();
             welecomeLabel = new Label();
-            playButton = new Button();
-            myGamesPanel = new Panel();
-            updateButton = new Button();
-            uninstallButton = new Button();
-            installButton = new Button();
             gameListView = new ListView();
             fileNameHeader = new ColumnHeader();
             filePathHeader = new ColumnHeader();
+            bottomPanel = new Panel();
+            downloadProgressBar = new ProgressBar();
+            leftPanel = new Panel();
             menuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
-            myGamesPanel.SuspendLayout();
+            bottomPanel.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip
@@ -54,7 +52,7 @@
             menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(584, 24);
+            menuStrip.Size = new Size(684, 24);
             menuStrip.TabIndex = 2;
             menuStrip.Text = "menuStrip";
             // 
@@ -88,7 +86,7 @@
             topHeaderPanel.Dock = DockStyle.Top;
             topHeaderPanel.Location = new Point(0, 24);
             topHeaderPanel.Name = "topHeaderPanel";
-            topHeaderPanel.Size = new Size(584, 62);
+            topHeaderPanel.Size = new Size(684, 62);
             topHeaderPanel.TabIndex = 3;
             // 
             // profileButton
@@ -96,7 +94,7 @@
             profileButton.BackgroundImage = (Image)resources.GetObject("profileButton.BackgroundImage");
             profileButton.BackgroundImageLayout = ImageLayout.Stretch;
             profileButton.FlatStyle = FlatStyle.Flat;
-            profileButton.Location = new Point(521, 6);
+            profileButton.Location = new Point(621, 6);
             profileButton.Name = "profileButton";
             profileButton.Size = new Size(50, 50);
             profileButton.TabIndex = 1;
@@ -112,69 +110,15 @@
             welecomeLabel.TabIndex = 0;
             welecomeLabel.Text = "Welcome Test...";
             // 
-            // playButton
-            // 
-            playButton.Location = new Point(24, 15);
-            playButton.Name = "playButton";
-            playButton.Size = new Size(88, 43);
-            playButton.TabIndex = 8;
-            playButton.Text = "Play";
-            playButton.UseVisualStyleBackColor = true;
-            playButton.Click += playButton_Click;
-            // 
-            // myGamesPanel
-            // 
-            myGamesPanel.BackColor = Color.Gray;
-            myGamesPanel.Controls.Add(updateButton);
-            myGamesPanel.Controls.Add(uninstallButton);
-            myGamesPanel.Controls.Add(installButton);
-            myGamesPanel.Controls.Add(playButton);
-            myGamesPanel.Dock = DockStyle.Left;
-            myGamesPanel.Location = new Point(0, 86);
-            myGamesPanel.Name = "myGamesPanel";
-            myGamesPanel.Size = new Size(134, 288);
-            myGamesPanel.TabIndex = 10;
-            // 
-            // updateButton
-            // 
-            updateButton.Location = new Point(24, 126);
-            updateButton.Name = "updateButton";
-            updateButton.Size = new Size(88, 46);
-            updateButton.TabIndex = 11;
-            updateButton.Text = "Update";
-            updateButton.UseVisualStyleBackColor = true;
-            updateButton.Click += updateButton_Click;
-            // 
-            // uninstallButton
-            // 
-            uninstallButton.Location = new Point(24, 230);
-            uninstallButton.Name = "uninstallButton";
-            uninstallButton.Size = new Size(88, 46);
-            uninstallButton.TabIndex = 10;
-            uninstallButton.Text = "Uninstall";
-            uninstallButton.UseVisualStyleBackColor = true;
-            uninstallButton.Click += uninstallButton_Click;
-            // 
-            // installButton
-            // 
-            installButton.Location = new Point(24, 178);
-            installButton.Name = "installButton";
-            installButton.Size = new Size(88, 46);
-            installButton.TabIndex = 9;
-            installButton.Text = "Install";
-            installButton.UseVisualStyleBackColor = true;
-            installButton.Click += installButton_Click;
-            // 
             // gameListView
             // 
             gameListView.BackColor = Color.Silver;
             gameListView.BorderStyle = BorderStyle.FixedSingle;
             gameListView.Columns.AddRange(new ColumnHeader[] { fileNameHeader, filePathHeader });
-            gameListView.Dock = DockStyle.Fill;
             gameListView.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            gameListView.Location = new Point(134, 86);
+            gameListView.Location = new Point(125, 86);
             gameListView.Name = "gameListView";
-            gameListView.Size = new Size(450, 288);
+            gameListView.Size = new Size(559, 308);
             gameListView.TabIndex = 11;
             gameListView.UseCompatibleStateImageBehavior = false;
             gameListView.View = View.Details;
@@ -189,14 +133,43 @@
             filePathHeader.Text = "File Path";
             filePathHeader.Width = 500;
             // 
+            // bottomPanel
+            // 
+            bottomPanel.BackColor = Color.Gray;
+            bottomPanel.BorderStyle = BorderStyle.FixedSingle;
+            bottomPanel.Controls.Add(downloadProgressBar);
+            bottomPanel.Dock = DockStyle.Bottom;
+            bottomPanel.Location = new Point(0, 394);
+            bottomPanel.Name = "bottomPanel";
+            bottomPanel.Size = new Size(684, 67);
+            bottomPanel.TabIndex = 11;
+            // 
+            // downloadProgressBar
+            // 
+            downloadProgressBar.Location = new Point(0, 57);
+            downloadProgressBar.Name = "downloadProgressBar";
+            downloadProgressBar.Size = new Size(684, 10);
+            downloadProgressBar.TabIndex = 0;
+            // 
+            // leftPanel
+            // 
+            leftPanel.BackColor = Color.Gray;
+            leftPanel.BorderStyle = BorderStyle.FixedSingle;
+            leftPanel.Dock = DockStyle.Left;
+            leftPanel.Location = new Point(0, 86);
+            leftPanel.Name = "leftPanel";
+            leftPanel.Size = new Size(128, 308);
+            leftPanel.TabIndex = 12;
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Silver;
-            ClientSize = new Size(584, 374);
+            ClientSize = new Size(684, 461);
+            Controls.Add(leftPanel);
             Controls.Add(gameListView);
-            Controls.Add(myGamesPanel);
+            Controls.Add(bottomPanel);
             Controls.Add(topHeaderPanel);
             Controls.Add(menuStrip);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -208,11 +181,12 @@
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MGC Launcher Menu";
+            FormClosed += MainMenuForm_Closed;
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
-            myGamesPanel.ResumeLayout(false);
+            bottomPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -224,14 +198,15 @@
         private ToolStripMenuItem exitToolStripMenuItem1;
         private Panel topHeaderPanel;
         private Label welecomeLabel;
-        private Button playButton;
         private Panel myGamesPanel;
         private Button profileButton;
         private ListView gameListView;
         private ColumnHeader fileNameHeader;
         private ColumnHeader filePathHeader;
-        private Button updateButton;
-        private Button uninstallButton;
-        private Button installButton;
+        private Panel bottomPanel;
+        private ProgressBar downloadBar;
+        private Label downloadLabel;
+        private Panel leftPanel;
+        private ProgressBar downloadProgressBar;
     }
 }
