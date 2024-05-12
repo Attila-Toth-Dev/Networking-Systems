@@ -88,11 +88,11 @@
             // serverIpLabel
             // 
             serverIpLabel.AutoSize = true;
-            serverIpLabel.Location = new Point(89, 218);
+            serverIpLabel.Location = new Point(66, 218);
             serverIpLabel.Name = "serverIpLabel";
-            serverIpLabel.Size = new Size(74, 22);
+            serverIpLabel.Size = new Size(128, 22);
             serverIpLabel.TabIndex = 8;
-            serverIpLabel.Text = "IP/Port:";
+            serverIpLabel.Text = "FTP Address:";
             // 
             // LoginForm
             // 

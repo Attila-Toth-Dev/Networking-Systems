@@ -5,14 +5,16 @@ public partial class LoginForm : Form
     private string username;
     private string password;
 
-    private int port;
-
-    private string serverIp = "";
+    private string serverIp;
 
     /// <summary>Login Form constructor.</summary>
     public LoginForm()
     {
         InitializeComponent();
+        serverIp = "";
+
+        username = "";
+        password = "";
     }
 
     /// <summary>Event function for password text box text changed.</summary>
