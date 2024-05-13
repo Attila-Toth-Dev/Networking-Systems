@@ -5,12 +5,16 @@ public partial class ProfileForm : Form
     private string username;
     private string password;
 
-    public ProfileForm(string _username, string _password)
+    private string serverIP;
+
+    public ProfileForm(string _username, string _password, string _serverIP)
     {
         InitializeComponent();
 
         username = _username;
         password = _password;
+
+        serverIP = _serverIP;
 
         this.Text = $"{_username}'s Profile";
     }
@@ -20,7 +24,7 @@ public partial class ProfileForm : Form
         this.Hide();
         MainMenuForm.restrict = 0;
 
-        MainMenuForm form = new MainMenuForm(username, password);
+        MainMenuForm form = new MainMenuForm(username, password, serverIP);
         form.Show();
     }
 
@@ -29,7 +33,7 @@ public partial class ProfileForm : Form
         this.Hide();
         MainMenuForm.restrict = 0;
 
-        MainMenuForm form = new MainMenuForm(username, password);
+        MainMenuForm form = new MainMenuForm(username, password, serverIP);
         form.Show();
     }
 }

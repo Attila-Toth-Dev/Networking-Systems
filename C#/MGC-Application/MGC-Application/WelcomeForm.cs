@@ -4,20 +4,29 @@ public partial class WelcomeForm : Form
 {
     private int counter = 1;
 
-    public WelcomeForm() => InitializeComponent();
+    public WelcomeForm()
+    {
+        InitializeComponent();
+    }
+
+    private void CreateGameDirectory()
+    {
+        string dir = @"Games";
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+    }
 
     private void loadBarTimer_Tick(object sender, EventArgs e)
     {
-        if (loadingProgressBar.Value <= 70)
-            loadingProgressBar.Value += 4;
-
-        if (loadingProgressBar.Value > 70)
-            loadingProgressBar.Value += 1;
+        if (loadingProgressBar.Value <= loadingProgressBar.Maximum)
+            loadingProgressBar.Value += 5;
 
         loadingValueLabel.Text = $"{loadingProgressBar.Value}%";
 
         if (loadingProgressBar.Value >= loadingProgressBar.Maximum)
         {
+            CreateGameDirectory();
+
             loadBarTimer.Enabled = false;
             this.Hide();
 

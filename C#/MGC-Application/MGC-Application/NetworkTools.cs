@@ -38,27 +38,32 @@ public static class NetworkTools
 
     public static void DownloadFTPFile(string _serverIP, string _username, string _password, string _game)
     {
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games/{_game}");
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games/{_game}.zip");
         request.Method = WebRequestMethods.Ftp.DownloadFile;
 
-        var stopwatch = Stopwatch.StartNew();
+        request.Credentials = new NetworkCredential(_username, _password);
+    }
+
+    public static bool IsGameDownloaded(string _severIP, string _username, string _password, string _game)
+    {
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_severIP}/Games/{_game}");
+        request.Method = WebRequestMethods.Ftp.GetFileSize;
 
         request.Credentials = new NetworkCredential(_username, _password);
 
-        FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-
-        Stream responseStream = response.GetResponseStream();
-        StreamReader reader = new StreamReader(responseStream);
-
-        MessageBox.Show($"Download Complete: {response.StatusDescription}\nDownload Time: {stopwatch.Elapsed}");
-
-        using (StreamWriter file = File.CreateText(_game))
+        try
         {
-            file.WriteLine(reader.ReadToEnd());
-            file.Close();
+            request.GetResponse();
+            return true;
         }
+        catch
+        {
+            return false;
+        }
+    }
 
-        reader.Close();
-        response.Close();
+    public static void RunInstalledGame(string _serverIP, string _username, string _password, string _game)
+    {
+
     }
 }

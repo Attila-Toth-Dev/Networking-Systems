@@ -5,7 +5,7 @@ public partial class LoginForm : Form
     private string username;
     private string password;
 
-    private string serverIp;
+    private string serverIP;
 
     /// <summary>Login Form constructor.</summary>
     public LoginForm() => InitializeComponent();
@@ -29,17 +29,17 @@ public partial class LoginForm : Form
     /// <summary>Event function for server ip text bot text changed.</summary>
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
-        serverIp = serverIpTextBox.Text;
+        serverIP = serverIpTextBox.Text;
     }
 
     /// <summary>Event function for login button click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
-        if (NetworkTools.CheckValidFTP(serverIp, username, password))
+        if (NetworkTools.CheckValidFTP(serverIP, username, password))
         {
             Hide();
 
-            MainMenuForm form = new MainMenuForm(username, password);
+            MainMenuForm form = new MainMenuForm(username, password, serverIP);
             form.Show();
         }
         else

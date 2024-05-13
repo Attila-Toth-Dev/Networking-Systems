@@ -7,24 +7,56 @@ public partial class MainMenuForm : Form
     private string username;
     private string password;
 
-    public MainMenuForm(string _username, string _password)
+    private string serverIP;
+
+    private string currentSelectedGame;
+
+    public MainMenuForm(string _username, string _password, string _serverIP)
     {
         InitializeComponent();
 
         username = _username;
         password = _password;
 
+        serverIP = _serverIP;
+
+        currentSelectedGame = "";
+
         welecomeLabel.Text = $"{username}'s Library";
     }
 
     private void playButton_Click(object sender, EventArgs e)
     {
+        if (NetworkTools.IsGameDownloaded(serverIP, username, password, currentSelectedGame))
+            NetworkTools.RunInstalledGame(serverIP, username, password, currentSelectedGame);
+        else
+        {
+            MessageBox.Show($"{currentSelectedGame} has not been installed.\nPlease install and try again.");
+
+        }
+    }
+
+    private void updateButton_Click(object sender, EventArgs e)
+    {
 
     }
 
-    private void installButton_Click(object sender, EventArgs e)
+    private void addButton_Click(object sender, EventArgs e)
     {
-        NetworkTools.DownloadFTPFile(NetworkTools.ServerIP, username, password, "Breakout.zip");
+        if (NetworkTools.IsGameDownloaded(serverIP, username, password, currentSelectedGame))
+            MessageBox.Show($"{currentSelectedGame} is already installed.");
+
+        else
+        {
+            DialogResult dialogResult = MessageBox.Show($"{currentSelectedGame} has not been installed.\nWould you like to install it?", "", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+                NetworkTools.DownloadFTPFile(serverIP, username, password, currentSelectedGame);
+        }
+    }
+
+    private void removeButton_Click(object sender, EventArgs e)
+    {
+
     }
 
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -55,7 +87,7 @@ public partial class MainMenuForm : Form
             this.Hide();
 
             restrict++;
-            ProfileForm form = new ProfileForm(username, password);
+            ProfileForm form = new ProfileForm(username, password, serverIP);
             form.Show();
         }
     }
@@ -63,5 +95,17 @@ public partial class MainMenuForm : Form
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
         Application.Exit();
+    }
+
+    private void gameListView_Click(object sender, EventArgs e)
+    {
+        ListViewItem item = gameListView.SelectedItems[0];
+
+        currentSelectedGame = item.Text;
+    }
+
+    private void gameListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+    {
+
     }
 }
