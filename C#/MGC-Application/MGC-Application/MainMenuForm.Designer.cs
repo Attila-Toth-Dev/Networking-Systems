@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            ListViewItem listViewItem1 = new ListViewItem("Breakout");
-            ListViewItem listViewItem2 = new ListViewItem("Chaddius Maximus");
-            ListViewItem listViewItem3 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem4 = new ListViewItem("Island Maker");
-            ListViewItem listViewItem5 = new ListViewItem("Mini Doom");
-            ListViewItem listViewItem6 = new ListViewItem("Space Janitor");
-            ListViewItem listViewItem7 = new ListViewItem("Steel Breakers");
-            ListViewItem listViewItem8 = new ListViewItem("Thrones Tale");
+            ListViewItem listViewItem9 = new ListViewItem("Breakout");
+            ListViewItem listViewItem10 = new ListViewItem("Chaddius Maximus");
+            ListViewItem listViewItem11 = new ListViewItem("Hell Bullet");
+            ListViewItem listViewItem12 = new ListViewItem("Island Maker");
+            ListViewItem listViewItem13 = new ListViewItem("Mini Doom");
+            ListViewItem listViewItem14 = new ListViewItem("Space Janitor");
+            ListViewItem listViewItem15 = new ListViewItem("Steel Breakers");
+            ListViewItem listViewItem16 = new ListViewItem("Thrones Tale");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -51,10 +51,10 @@
             gameListView = new ListView();
             gameListHeader = new ColumnHeader();
             buttonPanel = new Panel();
-            removeButton = new Button();
+            uninstallButton = new Button();
             updateButton = new Button();
             playButton = new Button();
-            addButton = new Button();
+            installButton = new Button();
             progressPanel = new Panel();
             downSpeedLabel = new Label();
             downProgressLabel = new Label();
@@ -166,15 +166,15 @@
             gameListView.Columns.AddRange(new ColumnHeader[] { gameListHeader });
             gameListView.Dock = DockStyle.Fill;
             gameListView.GridLines = true;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.StateImageIndex = 0;
-            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6, listViewItem7, listViewItem8 });
+            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
+            listViewItem13.StateImageIndex = 0;
+            listViewItem14.StateImageIndex = 0;
+            listViewItem15.StateImageIndex = 0;
+            listViewItem16.StateImageIndex = 0;
+            gameListView.Items.AddRange(new ListViewItem[] { listViewItem9, listViewItem10, listViewItem11, listViewItem12, listViewItem13, listViewItem14, listViewItem15, listViewItem16 });
             gameListView.Location = new Point(0, 0);
             gameListView.Name = "gameListView";
             gameListView.Size = new Size(299, 473);
@@ -194,26 +194,26 @@
             buttonPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             buttonPanel.BackColor = Color.LightBlue;
             buttonPanel.BorderStyle = BorderStyle.Fixed3D;
-            buttonPanel.Controls.Add(removeButton);
+            buttonPanel.Controls.Add(uninstallButton);
             buttonPanel.Controls.Add(updateButton);
             buttonPanel.Controls.Add(playButton);
-            buttonPanel.Controls.Add(addButton);
+            buttonPanel.Controls.Add(installButton);
             buttonPanel.Location = new Point(6, 583);
             buttonPanel.Name = "buttonPanel";
             buttonPanel.Size = new Size(411, 74);
             buttonPanel.TabIndex = 6;
             // 
-            // removeButton
+            // uninstallButton
             // 
-            removeButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            removeButton.Location = new Point(307, 3);
-            removeButton.Name = "removeButton";
-            removeButton.RightToLeft = RightToLeft.No;
-            removeButton.Size = new Size(95, 63);
-            removeButton.TabIndex = 3;
-            removeButton.Text = "Remove";
-            removeButton.UseVisualStyleBackColor = true;
-            removeButton.Click += removeButton_Click;
+            uninstallButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            uninstallButton.Location = new Point(307, 3);
+            uninstallButton.Name = "uninstallButton";
+            uninstallButton.RightToLeft = RightToLeft.No;
+            uninstallButton.Size = new Size(95, 63);
+            uninstallButton.TabIndex = 3;
+            uninstallButton.Text = "Uninstall";
+            uninstallButton.UseVisualStyleBackColor = true;
+            uninstallButton.Click += removeButton_Click;
             // 
             // updateButton
             // 
@@ -237,16 +237,16 @@
             playButton.UseVisualStyleBackColor = true;
             playButton.Click += playButton_Click;
             // 
-            // addButton
+            // installButton
             // 
-            addButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            addButton.Location = new Point(206, 3);
-            addButton.Name = "addButton";
-            addButton.Size = new Size(95, 63);
-            addButton.TabIndex = 0;
-            addButton.Text = "Add";
-            addButton.UseVisualStyleBackColor = true;
-            addButton.Click += addButton_Click;
+            installButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            installButton.Location = new Point(206, 3);
+            installButton.Name = "installButton";
+            installButton.Size = new Size(95, 63);
+            installButton.TabIndex = 0;
+            installButton.Text = "Install";
+            installButton.UseVisualStyleBackColor = true;
+            installButton.Click += addButton_Click;
             // 
             // progressPanel
             // 
@@ -349,13 +349,13 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private Panel gameListPanel;
         private Panel buttonPanel;
-        private Button addButton;
+        private Button installButton;
         private Button playButton;
         private Panel progressPanel;
         private Label downSpeedLabel;
         private Label downProgressLabel;
         private ProgressBar downProgressBar;
-        private Button removeButton;
+        private Button uninstallButton;
         private Button updateButton;
         private ListView gameListView;
         private Panel gameInfoPanel;
