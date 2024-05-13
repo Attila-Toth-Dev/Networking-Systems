@@ -5,20 +5,16 @@ public partial class MainMenuForm : Form
     public static int restrict = 0;
 
     private string username;
+    private string password;
 
-    private string executable;
-    private string gameFilePath;
-
-    public MainMenuForm(string _username)
+    public MainMenuForm(string _username, string _password)
     {
         InitializeComponent();
 
         username = _username;
+        password = _password;
 
         welecomeLabel.Text = $"{username}'s Library";
-
-        //updateButton.Enabled = false;
-        //uninstallButton.Enabled = false;
     }
 
     private void playButton_Click(object sender, EventArgs e)
@@ -26,19 +22,9 @@ public partial class MainMenuForm : Form
 
     }
 
-    private void updateButton_Click(object sender, EventArgs e)
-    {
-
-    }
-
     private void installButton_Click(object sender, EventArgs e)
     {
-
-    }
-
-    private void uninstallButton_Click(object sender, EventArgs e)
-    {
-
+        NetworkTools.DownloadFTPFile(NetworkTools.ServerIP, username, password, "Breakout.zip");
     }
 
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,7 +55,7 @@ public partial class MainMenuForm : Form
             this.Hide();
 
             restrict++;
-            ProfileForm form = new ProfileForm(username);
+            ProfileForm form = new ProfileForm(username, password);
             form.Show();
         }
     }

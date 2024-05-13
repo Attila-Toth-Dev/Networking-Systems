@@ -8,23 +8,15 @@ public partial class LoginForm : Form
     private string serverIp;
 
     /// <summary>Login Form constructor.</summary>
-    public LoginForm()
-    {
-        InitializeComponent();
-        serverIp = "";
+    public LoginForm() => InitializeComponent();
 
-        username = "";
-        password = "";
-    }
-
-    /// <summary>Event function for password text box text changed.</summary>
-    /*private void passwordTextBox_TextChanged(object sender, EventArgs e)
+    private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
         passwordTextBox.PasswordChar = '*';
         passwordTextBox.MaxLength = 15;
 
         password = passwordTextBox.Text;
-    }*/
+    }
 
     /// <summary>Event function for username text box text changed.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
@@ -43,21 +35,17 @@ public partial class LoginForm : Form
     /// <summary>Event function for login button click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
-        if (NetworkTools.CheckValidFTP(serverIp))
+        if (NetworkTools.CheckValidFTP(serverIp, username, password))
         {
-            if (username == "" || username == " ")
-            {
-                MessageBox.Show("Username is Invalid.\nPlease try a different name.");
-                usernameTextBox.Focus();
-            }
-            else
-            {
-                MessageBox.Show($"Welcome {username}!");
-                this.Hide();
+            Hide();
 
-                MainMenuForm form = new MainMenuForm(username);
-                form.Show();
-            }
+            MainMenuForm form = new MainMenuForm(username, password);
+            form.Show();
+        }
+        else
+        {
+            passwordTextBox.Clear();
+            usernameTextBox.Focus();
         }
     }
 
@@ -95,8 +83,5 @@ public partial class LoginForm : Form
     }*/
 
     /// <summary>Event function for login forms closed event.</summary>
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        Application.Exit();
-    }
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
 }

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
             profilePictureBox = new PictureBox();
             backToMenuButton = new Button();
+            backgroundPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -54,6 +55,15 @@
             backToMenuButton.UseVisualStyleBackColor = true;
             backToMenuButton.Click += backToMenuButton_Click;
             // 
+            // backgroundPanel
+            // 
+            backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Dock = DockStyle.Fill;
+            backgroundPanel.Location = new Point(0, 0);
+            backgroundPanel.Name = "backgroundPanel";
+            backgroundPanel.Size = new Size(284, 361);
+            backgroundPanel.TabIndex = 2;
+            // 
             // ProfileForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -62,6 +72,7 @@
             ClientSize = new Size(284, 361);
             Controls.Add(backToMenuButton);
             Controls.Add(profilePictureBox);
+            Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -79,5 +90,6 @@
 
         private PictureBox profilePictureBox;
         private Button backToMenuButton;
+        private Panel backgroundPanel;
     }
 }

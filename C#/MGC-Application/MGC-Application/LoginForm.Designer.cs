@@ -35,6 +35,9 @@
             loginButton = new Button();
             serverIpTextBox = new TextBox();
             serverIpLabel = new Label();
+            passwordTextBox = new TextBox();
+            passwordLabel = new Label();
+            backgroundPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -50,7 +53,7 @@
             // 
             // usernameTextBox
             // 
-            usernameTextBox.Location = new Point(200, 162);
+            usernameTextBox.Location = new Point(200, 145);
             usernameTextBox.Name = "usernameTextBox";
             usernameTextBox.Size = new Size(200, 29);
             usernameTextBox.TabIndex = 1;
@@ -60,7 +63,7 @@
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
-            usernameLabel.Location = new Point(66, 165);
+            usernameLabel.Location = new Point(66, 152);
             usernameLabel.Name = "usernameLabel";
             usernameLabel.Size = new Size(102, 22);
             usernameLabel.TabIndex = 3;
@@ -68,17 +71,17 @@
             // 
             // loginButton
             // 
-            loginButton.Location = new Point(250, 277);
+            loginButton.Location = new Point(250, 290);
             loginButton.Name = "loginButton";
             loginButton.Size = new Size(100, 40);
-            loginButton.TabIndex = 5;
+            loginButton.TabIndex = 4;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
             // 
             // serverIpTextBox
             // 
-            serverIpTextBox.Location = new Point(200, 215);
+            serverIpTextBox.Location = new Point(200, 242);
             serverIpTextBox.Name = "serverIpTextBox";
             serverIpTextBox.Size = new Size(200, 29);
             serverIpTextBox.TabIndex = 3;
@@ -88,11 +91,38 @@
             // serverIpLabel
             // 
             serverIpLabel.AutoSize = true;
-            serverIpLabel.Location = new Point(66, 218);
+            serverIpLabel.Location = new Point(66, 245);
             serverIpLabel.Name = "serverIpLabel";
             serverIpLabel.Size = new Size(128, 22);
             serverIpLabel.TabIndex = 8;
             serverIpLabel.Text = "FTP Address:";
+            // 
+            // passwordTextBox
+            // 
+            passwordTextBox.Location = new Point(200, 194);
+            passwordTextBox.Name = "passwordTextBox";
+            passwordTextBox.Size = new Size(200, 29);
+            passwordTextBox.TabIndex = 2;
+            passwordTextBox.TextAlign = HorizontalAlignment.Center;
+            passwordTextBox.TextChanged += passwordTextBox_TextChanged;
+            // 
+            // passwordLabel
+            // 
+            passwordLabel.AutoSize = true;
+            passwordLabel.Location = new Point(66, 197);
+            passwordLabel.Name = "passwordLabel";
+            passwordLabel.Size = new Size(99, 22);
+            passwordLabel.TabIndex = 10;
+            passwordLabel.Text = "Password:";
+            // 
+            // backgroundPanel
+            // 
+            backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Dock = DockStyle.Fill;
+            backgroundPanel.Location = new Point(0, 0);
+            backgroundPanel.Name = "backgroundPanel";
+            backgroundPanel.Size = new Size(584, 361);
+            backgroundPanel.TabIndex = 11;
             // 
             // LoginForm
             // 
@@ -100,12 +130,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
+            Controls.Add(passwordLabel);
+            Controls.Add(passwordTextBox);
             Controls.Add(serverIpLabel);
             Controls.Add(serverIpTextBox);
             Controls.Add(loginButton);
             Controls.Add(usernameLabel);
             Controls.Add(usernameTextBox);
             Controls.Add(logoPictureBox);
+            Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -113,7 +146,7 @@
             MaximizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MGC Launcher Login";
+            Text = "MGC-Launcher Login";
             FormClosed += LoginForm_Closed;
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             ResumeLayout(false);
@@ -128,5 +161,8 @@
         private Button loginButton;
         private TextBox serverIpTextBox;
         private Label serverIpLabel;
+        private TextBox passwordTextBox;
+        private Label passwordLabel;
+        private Panel backgroundPanel;
     }
 }
