@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO.Compression;
 
 namespace MGC_Application;
 
@@ -8,8 +9,6 @@ public static class LocalFiles
     {
         if(IsGameInstalled(_game, _pathfile))
         {
-            MessageBox.Show($"Starting up {_game}.\nHave fun!!");
-         
             Process process = new Process();
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}/{_game}.exe";
@@ -26,8 +25,15 @@ public static class LocalFiles
                 DialogResult dialogResult = MessageBox.Show($"Would you like to install {_game}?", "", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    NetworkTools.DownloadGameFromFtp(_game, _pathfile);
+                    if(NetworkTools.DownloadGameFromFtp(_game, _pathfile))
+                    {
+                        Thread.Sleep(5000);
 
+                        if (ExtractDownloadedGame(_game, _pathfile))
+                            MessageBox.Show($"{_game} has been successfully installed");
+                        else
+                            MessageBox.Show($"Error installing {_game}.\nPlease try again.");
+                    }
                 }
             }
         }
@@ -63,8 +69,13 @@ public static class LocalFiles
         }
     }
 
-    private static void ExtractDownloadedGame(string _game, string _pathfile)
+    private static bool ExtractDownloadedGame(string _game, string _pathfile)
     {
+        string start = $"{_pathfile}/{_game}.zip";
+        string end = $"{_pathfile}/{_game}";
 
+        ZipFile.ExtractToDirectory(start, end);
+
+        return true;
     }
 }
