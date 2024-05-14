@@ -5,11 +5,13 @@ namespace MGC_Application;
 
 public static class NetworkTools
 {
-    public static string ServerIP { get; set; }
+    public static string? ServerIP { get; set; }
+    public static string? Username { get; set; }
+    public static string? Password { get; set; }
 
     public static bool CheckValidFTP(string _serverIP, string _username, string _password)
     {
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/");
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
         request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
         request.Credentials = new NetworkCredential(_username, _password);
@@ -23,7 +25,7 @@ public static class NetworkTools
             MessageBox.Show($"FTP request recieved after {stopwatch.Elapsed}.\n" +
                 $"Connection established with {_serverIP}.");
 
-            ServerIP = _serverIP;
+            stopwatch.Stop();
 
             return true;
         }
@@ -32,38 +34,16 @@ public static class NetworkTools
             MessageBox.Show($"FTP request failed after {stopwatch.Elapsed}.\n" +
                 $"{ex.Message}");
 
+            stopwatch.Stop();
+
             return false;
         }
     }
 
-    public static void DownloadFTPFile(string _serverIP, string _username, string _password, string _game)
+    public static void DownloadGameFromFtp(string _game, string _pathFile)
     {
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games/{_game}.zip");
-        request.Method = WebRequestMethods.Ftp.DownloadFile;
+        string dir = $"{_pathFile}/";
 
-        request.Credentials = new NetworkCredential(_username, _password);
-    }
-
-    public static bool IsGameDownloaded(string _severIP, string _username, string _password, string _game)
-    {
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_severIP}/Games/{_game}");
-        request.Method = WebRequestMethods.Ftp.GetFileSize;
-
-        request.Credentials = new NetworkCredential(_username, _password);
-
-        try
-        {
-            request.GetResponse();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public static void RunInstalledGame(string _serverIP, string _username, string _password, string _game)
-    {
-
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/");
     }
 }

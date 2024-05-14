@@ -37,9 +37,13 @@ public partial class LoginForm : Form
     {
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
         {
+            NetworkTools.Username = username;
+            NetworkTools.Password = password;
+            NetworkTools.ServerIP = serverIP;
+
             Hide();
 
-            MainMenuForm form = new MainMenuForm(username, password, serverIP);
+            MainMenuForm form = new MainMenuForm();
             form.Show();
         }
         else

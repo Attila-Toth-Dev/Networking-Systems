@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            ListViewItem listViewItem9 = new ListViewItem("Breakout");
-            ListViewItem listViewItem10 = new ListViewItem("Chaddius Maximus");
-            ListViewItem listViewItem11 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem12 = new ListViewItem("Island Maker");
-            ListViewItem listViewItem13 = new ListViewItem("Mini Doom");
-            ListViewItem listViewItem14 = new ListViewItem("Space Janitor");
-            ListViewItem listViewItem15 = new ListViewItem("Steel Breakers");
-            ListViewItem listViewItem16 = new ListViewItem("Thrones Tale");
+            ListViewItem listViewItem1 = new ListViewItem("Breakout");
+            ListViewItem listViewItem2 = new ListViewItem("Chaddius Maximus");
+            ListViewItem listViewItem3 = new ListViewItem("Hell Bullet");
+            ListViewItem listViewItem4 = new ListViewItem("Island Maker");
+            ListViewItem listViewItem5 = new ListViewItem("Mini Doom");
+            ListViewItem listViewItem6 = new ListViewItem("Space Janitor");
+            ListViewItem listViewItem7 = new ListViewItem("Steel Breakers");
+            ListViewItem listViewItem8 = new ListViewItem("Thrones Tale");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -60,11 +60,16 @@
             downProgressLabel = new Label();
             downProgressBar = new ProgressBar();
             gameInfoPanel = new Panel();
+            gameFolderPathLabel = new Label();
+            panel1 = new Panel();
+            gameFolderPathButton = new Button();
+            gameFolderPathTextBox = new TextBox();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             gameListPanel.SuspendLayout();
             buttonPanel.SuspendLayout();
             progressPanel.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // toolMenuStrip
@@ -166,15 +171,15 @@
             gameListView.Columns.AddRange(new ColumnHeader[] { gameListHeader });
             gameListView.Dock = DockStyle.Fill;
             gameListView.GridLines = true;
-            listViewItem9.StateImageIndex = 0;
-            listViewItem10.StateImageIndex = 0;
-            listViewItem11.StateImageIndex = 0;
-            listViewItem12.StateImageIndex = 0;
-            listViewItem13.StateImageIndex = 0;
-            listViewItem14.StateImageIndex = 0;
-            listViewItem15.StateImageIndex = 0;
-            listViewItem16.StateImageIndex = 0;
-            gameListView.Items.AddRange(new ListViewItem[] { listViewItem9, listViewItem10, listViewItem11, listViewItem12, listViewItem13, listViewItem14, listViewItem15, listViewItem16 });
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.StateImageIndex = 0;
+            listViewItem6.StateImageIndex = 0;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6, listViewItem7, listViewItem8 });
             gameListView.Location = new Point(0, 0);
             gameListView.Name = "gameListView";
             gameListView.Size = new Size(299, 473);
@@ -209,18 +214,18 @@
             uninstallButton.Location = new Point(307, 3);
             uninstallButton.Name = "uninstallButton";
             uninstallButton.RightToLeft = RightToLeft.No;
-            uninstallButton.Size = new Size(95, 63);
-            uninstallButton.TabIndex = 3;
+            uninstallButton.Size = new Size(95, 65);
+            uninstallButton.TabIndex = 4;
             uninstallButton.Text = "Uninstall";
             uninstallButton.UseVisualStyleBackColor = true;
-            uninstallButton.Click += removeButton_Click;
+            uninstallButton.Click += uninstallButton_Click;
             // 
             // updateButton
             // 
             updateButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             updateButton.Location = new Point(105, 3);
             updateButton.Name = "updateButton";
-            updateButton.Size = new Size(95, 63);
+            updateButton.Size = new Size(95, 65);
             updateButton.TabIndex = 2;
             updateButton.Text = "Update";
             updateButton.UseVisualStyleBackColor = true;
@@ -231,7 +236,7 @@
             playButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             playButton.Location = new Point(4, 3);
             playButton.Name = "playButton";
-            playButton.Size = new Size(95, 63);
+            playButton.Size = new Size(95, 65);
             playButton.TabIndex = 1;
             playButton.Text = "Play";
             playButton.UseVisualStyleBackColor = true;
@@ -242,11 +247,11 @@
             installButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             installButton.Location = new Point(206, 3);
             installButton.Name = "installButton";
-            installButton.Size = new Size(95, 63);
-            installButton.TabIndex = 0;
+            installButton.Size = new Size(95, 65);
+            installButton.TabIndex = 3;
             installButton.Text = "Install";
             installButton.UseVisualStyleBackColor = true;
-            installButton.Click += addButton_Click;
+            installButton.Click += installButton_Click;
             // 
             // progressPanel
             // 
@@ -257,7 +262,7 @@
             progressPanel.Controls.Add(downProgressBar);
             progressPanel.Location = new Point(423, 583);
             progressPanel.Name = "progressPanel";
-            progressPanel.Size = new Size(557, 74);
+            progressPanel.Size = new Size(311, 74);
             progressPanel.TabIndex = 7;
             // 
             // downSpeedLabel
@@ -265,7 +270,7 @@
             downSpeedLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             downSpeedLabel.AutoSize = true;
             downSpeedLabel.ImageAlign = ContentAlignment.MiddleRight;
-            downSpeedLabel.Location = new Point(411, 20);
+            downSpeedLabel.Location = new Point(3, 25);
             downSpeedLabel.Name = "downSpeedLabel";
             downSpeedLabel.RightToLeft = RightToLeft.Yes;
             downSpeedLabel.Size = new Size(136, 22);
@@ -276,7 +281,7 @@
             // 
             downProgressLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             downProgressLabel.AutoSize = true;
-            downProgressLabel.Location = new Point(3, 20);
+            downProgressLabel.Location = new Point(3, 3);
             downProgressLabel.Name = "downProgressLabel";
             downProgressLabel.Size = new Size(215, 22);
             downProgressLabel.TabIndex = 1;
@@ -284,20 +289,61 @@
             // 
             // downProgressBar
             // 
-            downProgressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            downProgressBar.Location = new Point(3, 45);
+            downProgressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            downProgressBar.Location = new Point(3, 48);
             downProgressBar.Name = "downProgressBar";
-            downProgressBar.Size = new Size(547, 19);
+            downProgressBar.Size = new Size(301, 19);
             downProgressBar.TabIndex = 0;
             // 
             // gameInfoPanel
             // 
             gameInfoPanel.BackColor = Color.LightBlue;
             gameInfoPanel.BorderStyle = BorderStyle.Fixed3D;
+            gameInfoPanel.Enabled = false;
             gameInfoPanel.Location = new Point(315, 100);
             gameInfoPanel.Name = "gameInfoPanel";
             gameInfoPanel.Size = new Size(665, 477);
             gameInfoPanel.TabIndex = 8;
+            // 
+            // gameFolderPathLabel
+            // 
+            gameFolderPathLabel.AutoSize = true;
+            gameFolderPathLabel.Location = new Point(3, 6);
+            gameFolderPathLabel.Name = "gameFolderPathLabel";
+            gameFolderPathLabel.Size = new Size(108, 22);
+            gameFolderPathLabel.TabIndex = 0;
+            gameFolderPathLabel.Text = "Folder Path";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.LightBlue;
+            panel1.BorderStyle = BorderStyle.Fixed3D;
+            panel1.Controls.Add(gameFolderPathButton);
+            panel1.Controls.Add(gameFolderPathTextBox);
+            panel1.Controls.Add(gameFolderPathLabel);
+            panel1.Location = new Point(740, 583);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(240, 74);
+            panel1.TabIndex = 9;
+            // 
+            // gameFolderPathButton
+            // 
+            gameFolderPathButton.Location = new Point(117, 3);
+            gameFolderPathButton.Name = "gameFolderPathButton";
+            gameFolderPathButton.Size = new Size(113, 29);
+            gameFolderPathButton.TabIndex = 0;
+            gameFolderPathButton.Text = "Folder";
+            gameFolderPathButton.UseVisualStyleBackColor = true;
+            gameFolderPathButton.Click += gameFolderPathButton_Click;
+            // 
+            // gameFolderPathTextBox
+            // 
+            gameFolderPathTextBox.Enabled = false;
+            gameFolderPathTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gameFolderPathTextBox.Location = new Point(3, 41);
+            gameFolderPathTextBox.Name = "gameFolderPathTextBox";
+            gameFolderPathTextBox.Size = new Size(230, 26);
+            gameFolderPathTextBox.TabIndex = 0;
             // 
             // MainMenuForm
             // 
@@ -305,6 +351,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonFace;
             ClientSize = new Size(984, 661);
+            Controls.Add(panel1);
             Controls.Add(gameInfoPanel);
             Controls.Add(progressPanel);
             Controls.Add(buttonPanel);
@@ -329,6 +376,8 @@
             buttonPanel.ResumeLayout(false);
             progressPanel.ResumeLayout(false);
             progressPanel.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -360,5 +409,9 @@
         private ListView gameListView;
         private Panel gameInfoPanel;
         public ColumnHeader gameListHeader;
+        private Label gameFolderPathLabel;
+        private Panel panel1;
+        private TextBox gameFolderPathTextBox;
+        private Button gameFolderPathButton;
     }
 }
