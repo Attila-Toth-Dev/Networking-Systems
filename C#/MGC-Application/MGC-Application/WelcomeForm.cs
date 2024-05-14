@@ -4,20 +4,21 @@ public partial class WelcomeForm : Form
 {
     private int counter = 1;
 
-    public WelcomeForm()
-    {
-        InitializeComponent();
-    }
+    public WelcomeForm() => InitializeComponent();
 
-    private void CreateGameDirectory()
+    private void CreateGameDirectory(string _folderName)
     {
-        string dir = @"Games";
+        string dir = @$"{_folderName}";
+
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
     }
 
     private void loadBarTimer_Tick(object sender, EventArgs e)
     {
+        CreateGameDirectory("Games");
+        CreateGameDirectory("Log Files");
+        
         if (loadingProgressBar.Value <= loadingProgressBar.Maximum)
             loadingProgressBar.Value += 5;
 
@@ -25,8 +26,6 @@ public partial class WelcomeForm : Form
 
         if (loadingProgressBar.Value >= loadingProgressBar.Maximum)
         {
-            CreateGameDirectory();
-
             loadBarTimer.Enabled = false;
             this.Hide();
 
@@ -49,8 +48,5 @@ public partial class WelcomeForm : Form
         }
     }
 
-    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        Application.Exit();
-    }
+    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
 }

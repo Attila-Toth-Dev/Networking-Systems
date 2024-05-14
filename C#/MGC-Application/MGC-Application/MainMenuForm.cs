@@ -7,7 +7,9 @@ public partial class MainMenuForm : Form
     public MainMenuForm()
     {
         InitializeComponent();
+
         gameListView.Items[0].Selected = true;
+        gameFolderPathTextBox.Text = @"Games";
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
     }
@@ -15,11 +17,6 @@ public partial class MainMenuForm : Form
     private void playButton_Click(object sender, EventArgs e)
     {
         LocalFiles.ExecuteGame(currentSelectedGame, gameFolderPathTextBox.Text);
-    }
-
-    private void updateButton_Click(object sender, EventArgs e)
-    {
-
     }
 
     private void installButton_Click(object sender, EventArgs e)
@@ -44,13 +41,17 @@ public partial class MainMenuForm : Form
         }
     }
 
-    private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+    private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
             Application.Exit();
         }
+    }
+
+    private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+    {
     }
 
     private void profileButton_Click(object sender, EventArgs e)
@@ -61,11 +62,6 @@ public partial class MainMenuForm : Form
         form.Show();
     }
 
-    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        Application.Exit();
-    }
-
     private void gameListView_Click(object sender, EventArgs e)
     {
         ListViewItem item = gameListView.SelectedItems[0];
@@ -73,21 +69,15 @@ public partial class MainMenuForm : Form
         currentSelectedGame = item.Text;
     }
 
-    private void gameListView_ItemChecked(object sender, ItemCheckedEventArgs e)
-    {
-
-    }
-
     private void gameFolderPathButton_Click(object sender, EventArgs e)
     {
         FolderBrowserDialog diag = new FolderBrowserDialog();
         if (diag.ShowDialog() == DialogResult.OK)
-        {
             gameFolderPathTextBox.Text = diag.SelectedPath;
-        }
     }
 
-    private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
+        Application.Exit();
     }
 }

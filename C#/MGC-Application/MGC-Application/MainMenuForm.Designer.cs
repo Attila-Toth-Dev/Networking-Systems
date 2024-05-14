@@ -41,7 +41,7 @@
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem1 = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
             viewToolStripMenuItem = new ToolStripMenuItem();
             consoleToolStripMenuItem = new ToolStripMenuItem();
             gamesToolStripMenuItem = new ToolStripMenuItem();
@@ -62,6 +62,7 @@
             downProgressLabel = new Label();
             downProgressBar = new ProgressBar();
             gameInfoPanel = new Panel();
+            consoleTextBox = new TextBox();
             gameFolderPathLabel = new Label();
             panel1 = new Panel();
             gameFolderPathButton = new Button();
@@ -72,6 +73,7 @@
             gameListPanel.SuspendLayout();
             buttonPanel.SuspendLayout();
             progressPanel.SuspendLayout();
+            gameInfoPanel.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -86,7 +88,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { logoutToolStripMenuItem, exitToolStripMenuItem1 });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { logoutToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "&File";
@@ -98,12 +100,12 @@
             logoutToolStripMenuItem.Text = "&Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
-            // exitToolStripMenuItem1
+            // exitToolStripMenuItem
             // 
-            exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            exitToolStripMenuItem1.Size = new Size(112, 22);
-            exitToolStripMenuItem1.Text = "&Exit";
-            exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(112, 22);
+            exitToolStripMenuItem.Text = "&Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // viewToolStripMenuItem
             // 
@@ -197,7 +199,6 @@
             gameListView.TabIndex = 0;
             gameListView.UseCompatibleStateImageBehavior = false;
             gameListView.View = View.Details;
-            gameListView.ItemChecked += gameListView_ItemChecked;
             gameListView.Click += gameListView_Click;
             // 
             // gameListHeader
@@ -234,13 +235,13 @@
             // updateButton
             // 
             updateButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            updateButton.Enabled = false;
             updateButton.Location = new Point(105, 3);
             updateButton.Name = "updateButton";
             updateButton.Size = new Size(95, 65);
             updateButton.TabIndex = 2;
             updateButton.Text = "Update";
             updateButton.UseVisualStyleBackColor = true;
-            updateButton.Click += updateButton_Click;
             // 
             // playButton
             // 
@@ -310,11 +311,21 @@
             // 
             gameInfoPanel.BackColor = Color.LightBlue;
             gameInfoPanel.BorderStyle = BorderStyle.Fixed3D;
+            gameInfoPanel.Controls.Add(consoleTextBox);
             gameInfoPanel.Enabled = false;
             gameInfoPanel.Location = new Point(315, 100);
             gameInfoPanel.Name = "gameInfoPanel";
             gameInfoPanel.Size = new Size(665, 477);
             gameInfoPanel.TabIndex = 8;
+            // 
+            // consoleTextBox
+            // 
+            consoleTextBox.BackColor = SystemColors.InactiveCaption;
+            consoleTextBox.Location = new Point(505, 3);
+            consoleTextBox.Multiline = true;
+            consoleTextBox.Name = "consoleTextBox";
+            consoleTextBox.Size = new Size(153, 467);
+            consoleTextBox.TabIndex = 0;
             // 
             // gameFolderPathLabel
             // 
@@ -392,6 +403,8 @@
             buttonPanel.ResumeLayout(false);
             progressPanel.ResumeLayout(false);
             progressPanel.PerformLayout();
+            gameInfoPanel.ResumeLayout(false);
+            gameInfoPanel.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -402,7 +415,7 @@
         private MenuStrip toolMenuStrip;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem logoutToolStripMenuItem;
-        private ToolStripMenuItem exitToolStripMenuItem1;
+        private ToolStripMenuItem exitToolStripMenuItem;
         private Panel topHeaderPanel;
         private Label welecomeLabel;
         private Panel myGamesPanel;
@@ -431,5 +444,6 @@
         private Button gameFolderPathButton;
         private ToolStripMenuItem consoleToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
+        public TextBox consoleTextBox;
     }
 }

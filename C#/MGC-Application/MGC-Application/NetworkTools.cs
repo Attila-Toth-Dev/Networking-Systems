@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Net;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace MGC_Application;
 
@@ -18,25 +17,13 @@ public static class NetworkTools
         request.Credentials = new NetworkCredential(_username, _password);
         request.Timeout = 1000;
 
-        var stopwatch = Stopwatch.StartNew();
-
         try
         {
             request.GetResponse();
-            MessageBox.Show($"FTP request recieved after {stopwatch.Elapsed}.\n" +
-                $"Connection established with {_serverIP}.");
-
-            stopwatch.Stop();
-
             return true;
         }
-        catch (WebException ex)
+        catch
         {
-            MessageBox.Show($"FTP request failed after {stopwatch.Elapsed}.\n" +
-                $"{ex.Message}");
-
-            stopwatch.Stop();
-
             return false;
         }
     }
@@ -75,15 +62,12 @@ public static class NetworkTools
             response.Close();
             writer.Close();
 
-            MessageBox.Show($"Successfully downloaded {_game} files from server.");
-
             Thread.Sleep(1000);
 
             return true;
         }
-        catch(WebException ex)
+        catch
         {
-            MessageBox.Show($"Unable to download {_game}.zip.\nStatus: {ex.Message}");
             return false;
         }
     }
