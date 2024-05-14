@@ -62,7 +62,6 @@
             downProgressLabel = new Label();
             downProgressBar = new ProgressBar();
             gameInfoPanel = new Panel();
-            consoleTextBox = new TextBox();
             gameFolderPathLabel = new Label();
             panel1 = new Panel();
             gameFolderPathButton = new Button();
@@ -73,7 +72,6 @@
             gameListPanel.SuspendLayout();
             buttonPanel.SuspendLayout();
             progressPanel.SuspendLayout();
-            gameInfoPanel.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -119,7 +117,6 @@
             consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
             consoleToolStripMenuItem.Size = new Size(117, 22);
             consoleToolStripMenuItem.Text = "&Console";
-            consoleToolStripMenuItem.Click += consoleToolStripMenuItem_Click;
             // 
             // gamesToolStripMenuItem
             // 
@@ -311,21 +308,11 @@
             // 
             gameInfoPanel.BackColor = Color.LightBlue;
             gameInfoPanel.BorderStyle = BorderStyle.Fixed3D;
-            gameInfoPanel.Controls.Add(consoleTextBox);
             gameInfoPanel.Enabled = false;
             gameInfoPanel.Location = new Point(315, 100);
             gameInfoPanel.Name = "gameInfoPanel";
             gameInfoPanel.Size = new Size(665, 477);
             gameInfoPanel.TabIndex = 8;
-            // 
-            // consoleTextBox
-            // 
-            consoleTextBox.BackColor = SystemColors.InactiveCaption;
-            consoleTextBox.Location = new Point(505, 3);
-            consoleTextBox.Multiline = true;
-            consoleTextBox.Name = "consoleTextBox";
-            consoleTextBox.Size = new Size(153, 467);
-            consoleTextBox.TabIndex = 0;
             // 
             // gameFolderPathLabel
             // 
@@ -403,8 +390,6 @@
             buttonPanel.ResumeLayout(false);
             progressPanel.ResumeLayout(false);
             progressPanel.PerformLayout();
-            gameInfoPanel.ResumeLayout(false);
-            gameInfoPanel.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -444,6 +429,5 @@
         private Button gameFolderPathButton;
         private ToolStripMenuItem consoleToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
-        public TextBox consoleTextBox;
     }
 }

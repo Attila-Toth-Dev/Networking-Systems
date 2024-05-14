@@ -1,11 +1,13 @@
-﻿using System.Data.SqlTypes;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO.Compression;
 
 namespace MGC_Application;
 
 public static class LocalFiles
 {
+    /// <summary>Function for running the exe file of installed game.</summary>
+    /// <param name="_game">The game to run the .exe of.</param>
+    /// <param name="_pathfile">The pathfile of said game.</param>
     public static void ExecuteGame(string _game, string _pathfile)
     {
         if (IsGameInstalled(_game, _pathfile))
@@ -21,6 +23,9 @@ public static class LocalFiles
             MessageBox.Show($"Cannot run {_game}.exe.\nGame files appear to be missing.");
     }
 
+    /// <summary>Function for downloading and installing the game files.</summary>
+    /// <param name="_game">The game to download and install.</param>
+    /// <param name="_pathfile">The path of which to install the game in.</param>
     public static void InstallGame(string _game, string _pathfile)
     {
         if (!IsGameInstalled(_game, _pathfile))
@@ -37,6 +42,9 @@ public static class LocalFiles
             MessageBox.Show($"{_game} is already installed.\nAborting install process.");
     }
 
+    /// <summary>Function for uninstalling game</summary>
+    /// <param name="_game">The game that will be uninstalled.</param>
+    /// <param name="_pathfile">The path of game.</param>
     public static void UninstallGame(string _game, string _pathfile)
     {
         if(IsGameInstalled(_game, _pathfile))
@@ -56,6 +64,10 @@ public static class LocalFiles
             MessageBox.Show($"{_game} is not installed.\nAborting uninstall process.");
     }
 
+    /// <summary>Function that returns if a game is installed or not.</summary>
+    /// <param name="_game">The game to check if installed.</param>
+    /// <param name="_pathfile">The pathfile of game.</param>
+    /// <returns>Returns bool value for if game is installed or not.</returns>
     public static bool IsGameInstalled(string _game, string _pathfile)
     {
         if (Directory.Exists($"{_pathfile}/{_game}"))
@@ -64,6 +76,9 @@ public static class LocalFiles
             return false;
     }
 
+    /// <summary>Function for extracting newly downloaded files from FTP server.</summary>
+    /// <param name="_game">The game of which to extract files from.</param>
+    /// <param name="_pathfile">The pathfile of said game zip.</param>
     private static void ExtractDownloadedGame(string _game, string _pathfile)
     {
         string start = $"{_pathfile}/{_game}.zip";

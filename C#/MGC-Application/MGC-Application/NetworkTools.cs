@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 
 namespace MGC_Application;
 
@@ -9,6 +8,11 @@ public static class NetworkTools
     public static string? Username { get; set; }
     public static string? Password { get; set; }
 
+    /// <summary>Function that checks if there is a valid connection to FTP server.</summary>
+    /// <param name="_serverIP">The IP that is used to create a gateway to FTP server.</param>
+    /// <param name="_username">The username of the FTP account.</param>
+    /// <param name="_password">The password of the FTP account.</param>
+    /// <returns>Returns a bool value if the connection was successful to the server.</returns>
     public static bool CheckValidFTP(string _serverIP, string _username, string _password)
     {
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
@@ -28,6 +32,10 @@ public static class NetworkTools
         }
     }
 
+    /// <summary>Function that makes a request to FTP server to allow for downloading of game zip files.</summary>
+    /// <param name="_game">The game that is requested to be downloaded.</param>
+    /// <param name="_pathFile">The path file the game will be installed to.</param>
+    /// <returns>Returns a bool of either true or false if the file was able to be downloaded.</returns>
     public static bool DownloadGameFromFtp(string _game, string _pathFile)
     {
         string dir = $"{_pathFile}/{_game}.zip";
