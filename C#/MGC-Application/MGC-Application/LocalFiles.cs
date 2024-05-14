@@ -14,7 +14,7 @@ public static class LocalFiles
         {
             Process process = new Process();
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}/{_game}.exe";
+            process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
             process.Start();
 
             MessageBox.Show($"Launching {_game}.exe");
