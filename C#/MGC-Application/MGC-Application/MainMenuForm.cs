@@ -1,11 +1,7 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-
-namespace MGC_Application;
+﻿namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
-    public static int restrict = 0;
-
     private string currentSelectedGame;
 
     public MainMenuForm()
@@ -59,14 +55,10 @@ public partial class MainMenuForm : Form
 
     private void profileButton_Click(object sender, EventArgs e)
     {
-        if (restrict == 0)
-        {
-            this.Hide();
+        this.Hide();
 
-            restrict++;
-            ProfileForm form = new ProfileForm();
-            form.Show();
-        }
+        ProfileForm form = new ProfileForm();
+        form.Show();
     }
 
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
@@ -93,5 +85,9 @@ public partial class MainMenuForm : Form
         {
             gameFolderPathTextBox.Text = diag.SelectedPath;
         }
+    }
+
+    private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+    {
     }
 }

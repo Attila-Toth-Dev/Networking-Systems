@@ -12,7 +12,6 @@ public partial class ProfileForm : Form
     private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
     {
         this.Hide();
-        MainMenuForm.restrict = 0;
 
         MainMenuForm form = new MainMenuForm();
         form.Show();
@@ -21,7 +20,6 @@ public partial class ProfileForm : Form
     private void backToMenuButton_Click(object sender, EventArgs e)
     {
         this.Hide();
-        MainMenuForm.restrict = 0;
 
         MainMenuForm form = new MainMenuForm();
         form.Show();

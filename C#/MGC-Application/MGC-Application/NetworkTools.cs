@@ -77,6 +77,8 @@ public static class NetworkTools
 
             MessageBox.Show($"Successfully downloaded {_game} files from server.");
 
+            Thread.Sleep(1000);
+
             return true;
         }
         catch(WebException ex)

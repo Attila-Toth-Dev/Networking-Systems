@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
             ListViewItem listViewItem1 = new ListViewItem("Breakout");
             ListViewItem listViewItem2 = new ListViewItem("Chaddius Maximus");
@@ -42,6 +43,7 @@
             logoutToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
             viewToolStripMenuItem = new ToolStripMenuItem();
+            consoleToolStripMenuItem = new ToolStripMenuItem();
             gamesToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             topHeaderPanel = new Panel();
@@ -64,6 +66,7 @@
             panel1 = new Panel();
             gameFolderPathButton = new Button();
             gameFolderPathTextBox = new TextBox();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             gameListPanel.SuspendLayout();
@@ -104,9 +107,17 @@
             // 
             // viewToolStripMenuItem
             // 
+            viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { consoleToolStripMenuItem });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new Size(44, 20);
             viewToolStripMenuItem.Text = "&View";
+            // 
+            // consoleToolStripMenuItem
+            // 
+            consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
+            consoleToolStripMenuItem.Size = new Size(117, 22);
+            consoleToolStripMenuItem.Text = "&Console";
+            consoleToolStripMenuItem.Click += consoleToolStripMenuItem_Click;
             // 
             // gamesToolStripMenuItem
             // 
@@ -345,6 +356,11 @@
             gameFolderPathTextBox.Size = new Size(230, 26);
             gameFolderPathTextBox.TabIndex = 0;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -413,5 +429,7 @@
         private Panel panel1;
         private TextBox gameFolderPathTextBox;
         private Button gameFolderPathButton;
+        private ToolStripMenuItem consoleToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }

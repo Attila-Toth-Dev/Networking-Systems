@@ -27,12 +27,10 @@ public static class LocalFiles
                 {
                     if(NetworkTools.DownloadGameFromFtp(_game, _pathfile))
                     {
-                        Thread.Sleep(5000);
-
                         if (ExtractDownloadedGame(_game, _pathfile))
-                            MessageBox.Show($"{_game} has been successfully installed");
-                        else
-                            MessageBox.Show($"Error installing {_game}.\nPlease try again.");
+                            MessageBox.Show("Balls");
+                        //MainMenuForm.consoleLogs.Add($"{_game} has been successfully installed");
+                            //MainMenuForm.consoleLogs.Add($"Error installing {_game}.\nPlease try again.");
                     }
                 }
             }
@@ -75,6 +73,10 @@ public static class LocalFiles
         string end = $"{_pathfile}/{_game}";
 
         ZipFile.ExtractToDirectory(start, end);
+
+        Thread.Sleep(1000);
+
+        File.Delete(start);
 
         return true;
     }
