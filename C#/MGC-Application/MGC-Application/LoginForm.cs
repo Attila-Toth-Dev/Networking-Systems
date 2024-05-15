@@ -45,8 +45,6 @@ public partial class LoginForm : Form
     {
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
         {
-            DebugLogger.WriteLog($"Welcome {username}.");
-
             NetworkTools.Username = username;
             NetworkTools.Password = password;
             NetworkTools.ServerIP = serverIP;

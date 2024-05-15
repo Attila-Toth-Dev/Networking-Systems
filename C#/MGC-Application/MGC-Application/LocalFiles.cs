@@ -10,10 +10,19 @@ public static class LocalFiles
     /// <param name="_pathfile">The pathfile of said game.</param>
     public static void ExecuteGame(string _game, string _pathfile)
     {
-        Process process = new Process();
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
-        process.Start();
+        try
+        {
+            DebugLogger.WriteLog($"{_game} spooling up game.");
+
+            Process process = new Process();
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
+            process.Start();
+        }
+        catch(FileLoadException ex)
+        {
+            DebugLogger.WriteLog($"Error starting up {_game}, {ex.Message}.");
+        }
     }
 
     /// <summary>Function for extracting newly downloaded files from FTP server.</summary>
@@ -34,7 +43,7 @@ public static class LocalFiles
     /// <summary>Function for uninstalling game</summary>
     /// <param name="_game">The game that will be uninstalled.</param>
     /// <param name="_pathfile">The path of game.</param>
-    public static void UninstallGame(string _game, string _pathfile)
+    public static bool UninstallGame(string _game, string _pathfile)
     {
         DialogResult dialogResult = MessageBox.Show($"Are you sure you would like to uninstall {_game}?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
@@ -43,7 +52,11 @@ public static class LocalFiles
 
             File.Delete($"{_pathfile}/{_game}.zip");
             Directory.Delete(dir, true);
+
+            return true;
         }
+
+        return false;
     }
 
     /// <summary>Function that returns if a game is installed or not.</summary>
@@ -54,12 +67,12 @@ public static class LocalFiles
     {
         if (Directory.Exists($"{_pathfile}/{_game}"))
         {
-
+            DebugLogger.WriteLog($"{_game} Status: INSTALLED");
             return true;
         }
         else
         {
-
+            DebugLogger.WriteLog($"{_game} Status: NOT-INSTALLED");
             return false;
         }
     }

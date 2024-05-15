@@ -29,12 +29,10 @@ public partial class MainMenuForm : Form
         {
             LocalFiles.ExecuteGame(currentSelectedGame, gameFolderPathTextBox.Text);
 
-            DebugLogger.WriteLog($"{currentSelectedGame} Status: RUNNING (Line 20)");
             MessageBox.Show($"Launching {currentSelectedGame}.exe");
         }
         else
         {
-            DebugLogger.WriteLog($"{currentSelectedGame} Status: MISSING FILES (Line 25)");
             MessageBox.Show($"Cannot run {currentSelectedGame}.exe.\nGame files appear to be missing.");
         }
     }
@@ -48,7 +46,6 @@ public partial class MainMenuForm : Form
             {
                 if(LocalFiles.InstallGame(currentSelectedGame, gameFolderPathTextBox.Text))
                 {
-                    DebugLogger.WriteLog($"{currentSelectedGame} Status: GAME SUCCESSFULY INSTALLED (Line 51)");
                     MessageBox.Show($"{currentSelectedGame} has been successfuly downloaded and installed.");
                 }
             }
@@ -62,12 +59,10 @@ public partial class MainMenuForm : Form
         {
             LocalFiles.UninstallGame(currentSelectedGame, gameFolderPathTextBox.Text);
 
-            DebugLogger.WriteLog($"{currentSelectedGame} Status: UNINSTALLED AND REMOVED (Line 69)");
             MessageBox.Show($"Uninstalled {currentSelectedGame} and corresponding files.");
         }
         else
         {
-            DebugLogger.WriteLog($"{currentSelectedGame} Status: GAME NOT INSTALLED (Line 75)");
             MessageBox.Show($"{currentSelectedGame} is not installed.\nAborting uninstall process.");
         }
     }
