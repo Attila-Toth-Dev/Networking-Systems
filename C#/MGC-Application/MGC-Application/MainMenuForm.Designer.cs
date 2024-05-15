@@ -68,6 +68,7 @@
             gameFolderPathButton = new Button();
             gameFolderPathTextBox = new TextBox();
             contextMenuStrip1 = new ContextMenuStrip(components);
+            downloadTimer = new System.Windows.Forms.Timer(components);
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             gameListPanel.SuspendLayout();
@@ -361,6 +362,10 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
+            // downloadTimer
+            // 
+            downloadTimer.Tick += downloadTimer_Tick;
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -431,5 +436,6 @@
         private Button gameFolderPathButton;
         private ToolStripMenuItem consoleToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Timer downloadTimer;
     }
 }

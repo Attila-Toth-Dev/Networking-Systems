@@ -30,25 +30,30 @@ public static class LocalFiles
     /// <summary>Function for downloading and installing the game files.</summary>
     /// <param name="_game">The game to download and install.</param>
     /// <param name="_pathfile">The path of which to install the game in.</param>
-    public static void InstallGame(string _game, string _pathfile)
+    public static bool DownloadGame(string _game, string _pathfile)
     {
-        if (!IsGameInstalled(_game, _pathfile))
-        {
-            DialogResult dialogResult = MessageBox.Show($"Would you like to install {_game}?", "", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                NetworkTools.DownloadGameFromFtp(_game, _pathfile);
-                ExtractDownloadedGame(_game, _pathfile);
+        NetworkTools.DownloadGameFromFtp(_game, _pathfile);
 
-                DebugLogger.WriteLog($"{_game} Status: INSTALLED (Line 43)");
-                MessageBox.Show($"Downloaded and Installed {_game}");
-            }
-        }
-        else
-        {
-            DebugLogger.WriteLog($"{_game} Status: NO INSTALLED FILES (Line 49)");
-            MessageBox.Show($"{_game} is already installed.\nAborting install process.");
-        }
+        DebugLogger.WriteLog($"{_game} Status: DOWNLOADED (Line 43)");
+        MessageBox.Show($"Downloaded {_game}");
+
+        return true;
+    }
+
+    /// <summary>Function for extracting newly downloaded files from FTP server.</summary>
+    /// <param name="_game">The game of which to extract files from.</param>
+    /// <param name="_pathfile">The pathfile of said game zip.</param>
+    public static bool ExtractInstallGame(string _game, string _pathfile)
+    {
+        string start = $"{_pathfile}/{_game}.zip";
+        string end = $"{_pathfile}/{_game}";
+
+        ZipFile.ExtractToDirectory(start, end);
+        Thread.Sleep(1000);
+        File.Delete(start);
+
+        DebugLogger.WriteLog($"{_game} Status: DOWNLOADED|EXTRACTING (Line 110)");
+        return true;
     }
 
     /// <summary>Function for uninstalling game</summary>
@@ -87,20 +92,5 @@ public static class LocalFiles
             return true;
         else
             return false;
-    }
-
-    /// <summary>Function for extracting newly downloaded files from FTP server.</summary>
-    /// <param name="_game">The game of which to extract files from.</param>
-    /// <param name="_pathfile">The pathfile of said game zip.</param>
-    private static void ExtractDownloadedGame(string _game, string _pathfile)
-    {
-        string start = $"{_pathfile}/{_game}.zip";
-        string end = $"{_pathfile}/{_game}";
-
-        ZipFile.ExtractToDirectory(start, end);
-        Thread.Sleep(1000);
-        File.Delete(start);
-
-        DebugLogger.WriteLog($"{_game} Status: DOWNLOADED|EXTRACTING (Line 110)");
     }
 }

@@ -3,6 +3,7 @@
 public partial class MainMenuForm : Form
 {
     private string currentSelectedGame;
+    private bool isGameDownloaded;
 
     /// <summary>Constructor for MainMenuForm.</summary>
     public MainMenuForm()
@@ -11,7 +12,9 @@ public partial class MainMenuForm : Form
 
         gameListView.Items[0].Selected = true;
         currentSelectedGame = gameListView.Items[0].Name;
-        
+
+        downloadTimer.Stop();
+
         gameFolderPathTextBox.Text = @"Games";
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
@@ -21,7 +24,19 @@ public partial class MainMenuForm : Form
     private void playButton_Click(object sender, EventArgs e) => LocalFiles.ExecuteGame(currentSelectedGame, gameFolderPathTextBox.Text);
 
     /// <summary>Event function for install button click.</summary>
-    private void installButton_Click(object sender, EventArgs e) => LocalFiles.InstallGame(currentSelectedGame, gameFolderPathTextBox.Text);
+    private void installButton_Click(object sender, EventArgs e)
+    {
+        if(!LocalFiles.IsGameInstalled(currentSelectedGame, gameFolderPathTextBox.Text))
+        {
+            if(LocalFiles.DownloadGame(currentSelectedGame, gameFolderPathTextBox.Text))
+            {
+                if(LocalFiles.ExtractInstallGame(currentSelectedGame, gameFolderPathTextBox.Text))
+                {
+
+                }
+            }
+        }
+    }
 
     /// <summary>Event function for uninstall button click.</summary>
     private void uninstallButton_Click(object sender, EventArgs e) => LocalFiles.UninstallGame(currentSelectedGame, gameFolderPathTextBox.Text);
@@ -86,5 +101,11 @@ public partial class MainMenuForm : Form
     {
         DebugLogger.WriteClosingLog();
         Application.Exit();
+    }
+
+    /// <summary>Event function for download timer tick count.</summary>
+    private void downloadTimer_Tick(object? sender, EventArgs e)
+    {
+
     }
 }
