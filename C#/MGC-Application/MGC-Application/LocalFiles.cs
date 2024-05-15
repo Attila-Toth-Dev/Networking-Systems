@@ -17,10 +17,14 @@ public static class LocalFiles
             process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
             process.Start();
 
+            DebugLogger.WriteLog($"{_game} Status: RUNNING (Line 20)");
             MessageBox.Show($"Launching {_game}.exe");
         }
         else
+        {
+            DebugLogger.WriteLog($"{_game} Status: MISSING FILES (Line 25)");
             MessageBox.Show($"Cannot run {_game}.exe.\nGame files appear to be missing.");
+        }
     }
 
     /// <summary>Function for downloading and installing the game files.</summary>
@@ -35,11 +39,16 @@ public static class LocalFiles
             {
                 NetworkTools.DownloadGameFromFtp(_game, _pathfile);
                 ExtractDownloadedGame(_game, _pathfile);
+
+                DebugLogger.WriteLog($"{_game} Status: INSTALLED (Line 43)");
                 MessageBox.Show($"Downloaded and Installed {_game}");
             }
         }
         else
+        {
+            DebugLogger.WriteLog($"{_game} Status: NO INSTALLED FILES (Line 49)");
             MessageBox.Show($"{_game} is already installed.\nAborting install process.");
+        }
     }
 
     /// <summary>Function for uninstalling game</summary>
@@ -57,11 +66,15 @@ public static class LocalFiles
                 File.Delete($"{_pathfile}/{_game}.zip");
                 Directory.Delete(dir, true);
 
+                DebugLogger.WriteLog($"{_game} Status: UNINSTALLED AND REMOVED (Line 69)");
                 MessageBox.Show($"Uninstalled {_game} and corresponding files.");
             }
         }
         else
+        {
+            DebugLogger.WriteLog($"{_game} Status: GAME NOT INSTALLED (Line 75)");
             MessageBox.Show($"{_game} is not installed.\nAborting uninstall process.");
+        }
     }
 
     /// <summary>Function that returns if a game is installed or not.</summary>
@@ -85,9 +98,9 @@ public static class LocalFiles
         string end = $"{_pathfile}/{_game}";
 
         ZipFile.ExtractToDirectory(start, end);
-
         Thread.Sleep(1000);
-
         File.Delete(start);
+
+        DebugLogger.WriteLog($"{_game} Status: DOWNLOADED|EXTRACTING (Line 110)");
     }
 }

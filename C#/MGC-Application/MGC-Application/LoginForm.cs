@@ -45,6 +45,8 @@ public partial class LoginForm : Form
     {
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
         {
+            DebugLogger.WriteLog($"Welcome {username}.");
+
             NetworkTools.Username = username;
             NetworkTools.Password = password;
             NetworkTools.ServerIP = serverIP;
@@ -62,5 +64,9 @@ public partial class LoginForm : Form
     }
 
     /// <summary>Event function for login forms closed event.</summary>
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        DebugLogger.WriteClosingLog();
+        Application.Exit();
+    }
 }

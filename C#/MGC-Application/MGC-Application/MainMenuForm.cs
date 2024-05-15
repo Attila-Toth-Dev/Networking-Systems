@@ -9,9 +9,9 @@ public partial class MainMenuForm : Form
     {
         InitializeComponent();
 
-        currentSelectedGame = "";
-
         gameListView.Items[0].Selected = true;
+        currentSelectedGame = gameListView.Items[0].Name;
+        
         gameFolderPathTextBox.Text = @"Games";
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
@@ -32,6 +32,8 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
+            DebugLogger.WriteLog($"{NetworkTools.Username} has logged out");
+
             this.Hide();
 
             LoginForm form = new LoginForm();
@@ -44,7 +46,10 @@ public partial class MainMenuForm : Form
     {
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
+        {
+            DebugLogger.WriteClosingLog();
             Application.Exit();
+        }
     }
 
     /// <summary>Event function for profile button click.</summary>
@@ -59,6 +64,8 @@ public partial class MainMenuForm : Form
     /// <summary>Event function for game list view click.</summary>
     private void gameListView_Click(object sender, EventArgs e)
     {
+        DebugLogger.WriteLog($"{currentSelectedGame} selected.");
+
         ListViewItem item = gameListView.SelectedItems[0];
         currentSelectedGame = item.Text;
     }
@@ -68,9 +75,16 @@ public partial class MainMenuForm : Form
     {
         FolderBrowserDialog diag = new FolderBrowserDialog();
         if (diag.ShowDialog() == DialogResult.OK)
+        {
+            DebugLogger.WriteLog($"Current Pathfile: {diag.SelectedPath}");
             gameFolderPathTextBox.Text = diag.SelectedPath;
+        }
     }
 
     /// <summary>Event function for main menu form close.</summary>
-    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
+    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        DebugLogger.WriteClosingLog();
+        Application.Exit();
+    }
 }

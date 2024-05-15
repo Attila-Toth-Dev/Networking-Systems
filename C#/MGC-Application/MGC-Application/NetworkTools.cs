@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 
 namespace MGC_Application;
 
@@ -21,13 +22,17 @@ public static class NetworkTools
         request.Credentials = new NetworkCredential(_username, _password);
         request.Timeout = 1000;
 
+        var stopwatch = Stopwatch.StartNew();
+
         try
         {
             request.GetResponse();
+            DebugLogger.WriteLog($"{_serverIP} Network Status: Connection to server valid (Line 30)");
             return true;
         }
-        catch
+        catch (WebException ex)
         {
+            DebugLogger.WriteLog($"{_serverIP} Network Status: Connection not found (Line 35)\n{ex.Message}");
             return false;
         }
     }
@@ -72,10 +77,13 @@ public static class NetworkTools
 
             Thread.Sleep(1000);
 
+            DebugLogger.WriteLog($"{_game} Download Status: Game files downloaded successfuly (Line 80)");
+
             return true;
         }
-        catch
+        catch (WebException ex)
         {
+            DebugLogger.WriteLog($"{_game} Status: Game files did not download correctly (Line 86)\n{ex.Message}");
             return false;
         }
     }
