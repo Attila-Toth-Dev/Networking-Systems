@@ -2,45 +2,34 @@
 
 public partial class LoginForm : Form
 {
-    private string username;
-    private string password;
-    private string serverIP;
+    private string username = "";
+    private string password = "";
+    private string serverIP = "";
 
-    /// <summary>Login Form constructor.</summary>
     public LoginForm()
     {
         InitializeComponent();
 
-        username = "";
-        password = "";
-
-        serverIP = "";
+        passwordTextBox.UseSystemPasswordChar = true;
     }
 
-    /// <summary>Event function for password text box text changed.</summary>
     private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
-        passwordTextBox.PasswordChar = '*';
         passwordTextBox.MaxLength = 15;
-
         password = passwordTextBox.Text;
     }
 
-    /// <summary>Event function for username text box text changed.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
     {
         usernameTextBox.MaxLength = 15;
-
         username = usernameTextBox.Text;
     }
 
-    /// <summary>Event function for server ip text bot text changed.</summary>
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
         serverIP = serverIpTextBox.Text;
     }
 
-    /// <summary>Event function for login button click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
@@ -61,10 +50,18 @@ public partial class LoginForm : Form
         }
     }
 
-    /// <summary>Event function for login forms closed event.</summary>
     private void LoginForm_Closed(object sender, FormClosedEventArgs e)
     {
-        DebugLogger.WriteClosingLog();
         Application.Exit();
+    }
+
+    private void passwordPitureBox_MouseDown(object sender, MouseEventArgs e)
+    {
+        passwordTextBox.UseSystemPasswordChar = false;
+    }
+
+    private void passwordPitureBox_MouseUp(object sender, MouseEventArgs e)
+    {
+        passwordTextBox.UseSystemPasswordChar = true;
     }
 }

@@ -35,10 +35,8 @@
             loadBarTimer = new System.Windows.Forms.Timer(components);
             loadProgressLabel = new Label();
             loadingValueLabel = new Label();
-            secretPictureBox = new PictureBox();
             backgroundPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)launcherPictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)secretPictureBox).BeginInit();
             SuspendLayout();
             // 
             // launcherPictureBox
@@ -86,16 +84,6 @@
             loadingValueLabel.Text = "00%";
             loadingValueLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // secretPictureBox
-            // 
-            secretPictureBox.BackColor = Color.LightBlue;
-            secretPictureBox.Location = new Point(12, 12);
-            secretPictureBox.Name = "secretPictureBox";
-            secretPictureBox.Size = new Size(100, 50);
-            secretPictureBox.TabIndex = 4;
-            secretPictureBox.TabStop = false;
-            secretPictureBox.Click += secretPictureBox_Click;
-            // 
             // backgroundPanel
             // 
             backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
@@ -111,7 +99,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
-            Controls.Add(secretPictureBox);
             Controls.Add(loadingValueLabel);
             Controls.Add(loadProgressLabel);
             Controls.Add(loadingProgressBar);
@@ -127,7 +114,6 @@
             Text = "MGC-Launcher";
             FormClosed += WelcomeForm_Closed;
             ((System.ComponentModel.ISupportInitialize)launcherPictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)secretPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -139,7 +125,6 @@
         private System.Windows.Forms.Timer loadBarTimer;
         private Label loadProgressLabel;
         private Label loadingValueLabel;
-        private PictureBox secretPictureBox;
         private Panel backgroundPanel;
     }
 }

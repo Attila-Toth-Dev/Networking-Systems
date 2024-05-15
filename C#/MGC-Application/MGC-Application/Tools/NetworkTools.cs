@@ -9,11 +9,10 @@ public static class NetworkTools
     public static string? Username { get; set; }
     public static string? Password { get; set; }
 
-    /// <summary>Function that checks if there is a valid connection to FTP server.</summary>
-    /// <param name="_serverIP">The IP that is used to create a gateway to FTP server.</param>
-    /// <param name="_username">The username of the FTP account.</param>
-    /// <param name="_password">The password of the FTP account.</param>
-    /// <returns>Returns a bool value if the connection was successful to the server.</returns>
+    /// <summary>Checks if there is a valid connection between client and server.</summary>
+    /// <param name="_serverIP">The server IP.</param>
+    /// <param name="_username">The username of the client.</param>
+    /// <param name="_password">The password of the client.</param>
     public static bool CheckValidFTP(string _serverIP, string _username, string _password)
     {
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
@@ -27,20 +26,21 @@ public static class NetworkTools
         try
         {
             request.GetResponse();
-            DebugLogger.WriteLog($"{_serverIP} Network Status: Connection to server valid (Line 30)");
+            stopwatch.Stop();
+
             return true;
         }
         catch (WebException ex)
         {
-            DebugLogger.WriteLog($"{_serverIP} Network Status: Connection not found (Line 35)\n{ex.Message}");
+            stopwatch.Stop();
+
             return false;
         }
     }
 
-    /// <summary>Function that makes a request to FTP server to allow for downloading of game zip files.</summary>
-    /// <param name="_game">The game that is requested to be downloaded.</param>
-    /// <param name="_pathFile">The path file the game will be installed to.</param>
-    /// <returns>Returns a bool of either true or false if the file was able to be downloaded.</returns>
+    /// <summary>Grabs the .zip files of the games from the server.</summary>
+    /// <param name="_game">The game of which to grab the files for.</param>
+    /// <param name="_pathFile">The path of which to install the game to.</param>
     public static bool DownloadGameFromFtp(string _game, string _pathFile)
     {
         string dir = $"{_pathFile}/{_game}.zip";
@@ -52,6 +52,8 @@ public static class NetworkTools
         request.Credentials = new NetworkCredential(Username, Password);
         request.UseBinary = true;
         request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+        var stopwatch = Stopwatch.StartNew();
 
         try
         {
@@ -75,15 +77,16 @@ public static class NetworkTools
             response.Close();
             writer.Close();
 
-            Thread.Sleep(1000);
+            stopwatch.Stop();
 
-            DebugLogger.WriteLog($"{_game} Download Status: GAME FILES HAVE SUCCESSFULY DOWNLOADED (Line 80)");
+            Thread.Sleep(1000);
 
             return true;
         }
         catch (WebException ex)
         {
-            DebugLogger.WriteLog($"{_game} Status: GAME FILES DIDN'T DOWNLOAD CORRECTLY (Line 86)\n{ex.Message}");
+            stopwatch.Stop();
+
             return false;
         }
     }

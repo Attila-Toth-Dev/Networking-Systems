@@ -38,7 +38,10 @@
             passwordTextBox = new TextBox();
             passwordLabel = new Label();
             backgroundPanel = new Panel();
+            passwordPictureBox = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
+            backgroundPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)passwordPictureBox).BeginInit();
             SuspendLayout();
             // 
             // logoPictureBox
@@ -118,11 +121,24 @@
             // backgroundPanel
             // 
             backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Controls.Add(passwordPictureBox);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(584, 361);
             backgroundPanel.TabIndex = 11;
+            // 
+            // passwordPictureBox
+            // 
+            passwordPictureBox.Image = (Image)resources.GetObject("passwordPictureBox.Image");
+            passwordPictureBox.Location = new Point(404, 192);
+            passwordPictureBox.Name = "passwordPictureBox";
+            passwordPictureBox.Size = new Size(30, 30);
+            passwordPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            passwordPictureBox.TabIndex = 0;
+            passwordPictureBox.TabStop = false;
+            passwordPictureBox.MouseDown += passwordPitureBox_MouseDown;
+            passwordPictureBox.MouseUp += passwordPitureBox_MouseUp;
             // 
             // LoginForm
             // 
@@ -149,6 +165,8 @@
             Text = "MGC-Launcher Login";
             FormClosed += LoginForm_Closed;
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
+            backgroundPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)passwordPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -164,5 +182,6 @@
         private TextBox passwordTextBox;
         private Label passwordLabel;
         private Panel backgroundPanel;
+        private PictureBox passwordPictureBox;
     }
 }
