@@ -50,7 +50,7 @@ public static class NetworkTools
 
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverDir);
         request.Credentials = new NetworkCredential(Username, Password);
-        request.UseBinary = true; // Use binary to ensure correct dlv!
+        request.UseBinary = true;
         request.Method = WebRequestMethods.Ftp.DownloadFile;
 
         try
@@ -77,13 +77,13 @@ public static class NetworkTools
 
             Thread.Sleep(1000);
 
-            DebugLogger.WriteLog($"{_game} Download Status: Game files downloaded successfuly (Line 80)");
+            DebugLogger.WriteLog($"{_game} Download Status: GAME FILES HAVE SUCCESSFULY DOWNLOADED (Line 80)");
 
             return true;
         }
         catch (WebException ex)
         {
-            DebugLogger.WriteLog($"{_game} Status: Game files did not download correctly (Line 86)\n{ex.Message}");
+            DebugLogger.WriteLog($"{_game} Status: GAME FILES DIDN'T DOWNLOAD CORRECTLY (Line 86)\n{ex.Message}");
             return false;
         }
     }

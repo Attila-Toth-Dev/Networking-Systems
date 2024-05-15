@@ -44,7 +44,11 @@ public partial class WelcomeForm : Form
     }
 
     /// <summary>Event function for welcome form closed.</summary>
-    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
+    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        DebugLogger.WriteClosingLog();
+        Application.Exit();
+    }
 
     /// <summary>Function for Creating Directories upon intialization of launcher.</summary>
     /// <param name="_folderName">The name of the folder to be made.</param>

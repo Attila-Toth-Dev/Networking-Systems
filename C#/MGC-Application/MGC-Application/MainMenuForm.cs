@@ -1,9 +1,11 @@
-﻿namespace MGC_Application;
+﻿using System.Xml;
+using System.Xml.Linq;
+
+namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
     private string currentSelectedGame;
-    private bool isGameDownloaded;
 
     /// <summary>Constructor for MainMenuForm.</summary>
     public MainMenuForm()
@@ -21,25 +23,54 @@ public partial class MainMenuForm : Form
     }
 
     /// <summary>Event function for play button click.</summary>
-    private void playButton_Click(object sender, EventArgs e) => LocalFiles.ExecuteGame(currentSelectedGame, gameFolderPathTextBox.Text);
+    private void playButton_Click(object sender, EventArgs e)
+    {
+        if (LocalFiles.IsGameInstalled(currentSelectedGame, gameFolderPathTextBox.Text))
+        {
+            LocalFiles.ExecuteGame(currentSelectedGame, gameFolderPathTextBox.Text);
+
+            DebugLogger.WriteLog($"{currentSelectedGame} Status: RUNNING (Line 20)");
+            MessageBox.Show($"Launching {currentSelectedGame}.exe");
+        }
+        else
+        {
+            DebugLogger.WriteLog($"{currentSelectedGame} Status: MISSING FILES (Line 25)");
+            MessageBox.Show($"Cannot run {currentSelectedGame}.exe.\nGame files appear to be missing.");
+        }
+    }
 
     /// <summary>Event function for install button click.</summary>
     private void installButton_Click(object sender, EventArgs e)
     {
         if(!LocalFiles.IsGameInstalled(currentSelectedGame, gameFolderPathTextBox.Text))
         {
-            if(LocalFiles.DownloadGame(currentSelectedGame, gameFolderPathTextBox.Text))
+            if(NetworkTools.DownloadGameFromFtp(currentSelectedGame, gameFolderPathTextBox.Text))
             {
-                if(LocalFiles.ExtractInstallGame(currentSelectedGame, gameFolderPathTextBox.Text))
+                if(LocalFiles.InstallGame(currentSelectedGame, gameFolderPathTextBox.Text))
                 {
-
+                    DebugLogger.WriteLog($"{currentSelectedGame} Status: GAME SUCCESSFULY INSTALLED (Line 51)");
+                    MessageBox.Show($"{currentSelectedGame} has been successfuly downloaded and installed.");
                 }
             }
         }
     }
 
     /// <summary>Event function for uninstall button click.</summary>
-    private void uninstallButton_Click(object sender, EventArgs e) => LocalFiles.UninstallGame(currentSelectedGame, gameFolderPathTextBox.Text);
+    private void uninstallButton_Click(object sender, EventArgs e)
+    {
+        if (LocalFiles.IsGameInstalled(currentSelectedGame, gameFolderPathTextBox.Text))
+        {
+            LocalFiles.UninstallGame(currentSelectedGame, gameFolderPathTextBox.Text);
+
+            DebugLogger.WriteLog($"{currentSelectedGame} Status: UNINSTALLED AND REMOVED (Line 69)");
+            MessageBox.Show($"Uninstalled {currentSelectedGame} and corresponding files.");
+        }
+        else
+        {
+            DebugLogger.WriteLog($"{currentSelectedGame} Status: GAME NOT INSTALLED (Line 75)");
+            MessageBox.Show($"{currentSelectedGame} is not installed.\nAborting uninstall process.");
+        }
+    }
 
     /// <summary>Event function for logout tool strip menu item click.</summary>
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
