@@ -16,6 +16,13 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
+        if(FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        {
+            DebugLogger.Log($"{currentSelectedGame} files have been found.");
+            
+            if(FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
+                DebugLogger.Log($"Running .exe file now.");
+        }
     }
 
     private void updateButton_Click(object sender, EventArgs e)
@@ -24,10 +31,24 @@ public partial class MainMenuForm : Form
 
     private void installButton_Click(object sender, EventArgs e)
     {
+        if(!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        {
+            DebugLogger.Log($"{currentSelectedGame} has not been installed.");
+            
+            if(FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
+                DebugLogger.Log($"Installing {currentSelectedGame} files now.");
+        }
     }
 
     private void uninstallButton_Click(object sender, EventArgs e)
     {
+        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        {
+            DebugLogger.Log($"{currentSelectedGame} have been found.");
+            
+            if(FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
+                DebugLogger.Log($"Uninstalling {currentSelectedGame} and files now.");
+        }
     }
 
     private void gameListView_Click(object sender, EventArgs e)

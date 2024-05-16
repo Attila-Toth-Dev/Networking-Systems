@@ -21,6 +21,7 @@ public static class FileTools
         }
         catch(FileLoadException ex)
         {
+            DebugLogger.Log($"Error running {_game}.exe: {ex.Message}");
             return false;
         }
     }
@@ -43,6 +44,7 @@ public static class FileTools
         }
         catch(DirectoryNotFoundException ex)
         {
+            DebugLogger.Log($"Error installing {_game} files: {ex.Message}");
             return false;
         }
     }
@@ -63,6 +65,7 @@ public static class FileTools
         }
         catch(DirectoryNotFoundException ex)
         {
+            DebugLogger.Log($"Error uninstalling {_game} files: {ex.Message}");
             return false;
         }
     }
