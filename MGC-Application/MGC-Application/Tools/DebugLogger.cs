@@ -13,6 +13,7 @@ public static class DebugLogger
             writer.WriteLine($"{DateTime.Now} : {_message}");
     }
 
+    /// <summary>Break makes a empty line of space in log files for ease of reading.</summary>
     public static void Break()
     {
         string logFileName = $"Logs.txt";

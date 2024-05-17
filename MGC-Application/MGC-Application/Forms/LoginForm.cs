@@ -34,6 +34,8 @@ public partial class LoginForm : Form
     {
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
         {
+            DebugLogger.Log($"Successfully logged into server {serverIP}.");
+
             NetworkTools.Username = username;
             NetworkTools.Password = password;
             NetworkTools.ServerIP = serverIP;
@@ -45,9 +47,14 @@ public partial class LoginForm : Form
         }
         else
         {
+            MessageBox.Show($"Error logging into server.\nPlease try again.");
+            DebugLogger.Log("$Error logging into server.");
+
             passwordTextBox.Clear();
             usernameTextBox.Focus();
         }
+
+        DebugLogger.Break();
     }
 
     private void LoginForm_Closed(object sender, FormClosedEventArgs e)

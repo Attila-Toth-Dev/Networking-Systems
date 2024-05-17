@@ -34,12 +34,14 @@ public partial class MainMenuForm : Form
 
     private void updateButton_Click(object sender, EventArgs e)
     {
-        if(FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
             DebugLogger.Log($"{currentSelectedGame} has been found.");
 
             //if()
         }
+        else
+            MessageBox.Show($"{currentSelectedGame} is not installed or files are missing.");
 
         DebugLogger.Break();
     }
@@ -51,6 +53,7 @@ public partial class MainMenuForm : Form
             DebugLogger.Log($"{currentSelectedGame} has not been installed.");
             if (NetworkTools.DownloadGameFromFtp(currentSelectedGame, gameFilePathTextBox.Text))
             {
+                MessageBox.Show($"Installing game files now.");
                 DebugLogger.Log($"Game files have been downloaded from {NetworkTools.ServerIP}.");
 
                 if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
@@ -84,7 +87,7 @@ public partial class MainMenuForm : Form
             }
         }
         else
-            MessageBox.Show($"{currentSelectedGame} files are missing.\nAborting uninstall.");
+            MessageBox.Show($"{currentSelectedGame} is not installed or files are missing.");
 
         DebugLogger.Break();
     }
@@ -93,6 +96,8 @@ public partial class MainMenuForm : Form
     {
         ListViewItem item = gameListView.SelectedItems[0];
         currentSelectedGame = item.Text;
+
+        DebugLogger.Log($"Current game selected: {item.Text}");
     }
 
     private void gameFolderPathButton_Click(object sender, EventArgs e)
@@ -101,6 +106,7 @@ public partial class MainMenuForm : Form
         if (diag.ShowDialog() == DialogResult.OK)
         {
             gameFilePathTextBox.Text = diag.SelectedPath;
+            DebugLogger.Log($"Current game filepath: {diag.SelectedPath}");
         }
     }
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,6 +114,8 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
+            DebugLogger.Log($"{NetworkTools.Username} logged out from application.");
+
             this.Hide();
 
             LoginForm form = new LoginForm();
@@ -127,10 +135,5 @@ public partial class MainMenuForm : Form
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
         Application.Exit();
-    }
-
-    private void downloadTimer_Tick(object? sender, EventArgs e)
-    {
-
     }
 }
