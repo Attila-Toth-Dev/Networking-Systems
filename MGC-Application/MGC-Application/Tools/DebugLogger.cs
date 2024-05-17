@@ -6,10 +6,19 @@ public static class DebugLogger
     /// <param name="_message">The message of which to log.</param>
     public static void Log(string _message)
     {
-        string logFileName = $"logs.txt";
-        string logPath = $"../Logs/{logFileName}";
+        string logFileName = $"Logs.txt";
+        string logPath = $"Logs/{logFileName}";
 
         using (StreamWriter writer = new StreamWriter(logPath, true))
             writer.WriteLine($"{DateTime.Now} : {_message}");
+    }
+
+    public static void Break()
+    {
+        string logFileName = $"Logs.txt";
+        string logPath = $"Logs/{logFileName}";
+
+        using (StreamWriter write = new StreamWriter(logPath, true))
+            write.WriteLine("\n");
     }
 }

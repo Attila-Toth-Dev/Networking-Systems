@@ -26,14 +26,19 @@ public static class NetworkTools
         try
         {
             request.GetResponse();
+            
+            DebugLogger.Log($"FTP connection is valid with {_serverIP}.");
+            DebugLogger.Log($"Connection time: {stopwatch.Elapsed}");
+            
             stopwatch.Stop();
-
+            
             return true;
         }
         catch (WebException ex)
         {
             stopwatch.Stop();
 
+            DebugLogger.Log($"Error initializing connection with server: {ex.Message}");
             return false;
         }
     }
@@ -85,6 +90,7 @@ public static class NetworkTools
         }
         catch (WebException ex)
         {
+            DebugLogger.Log($"Error downloading files from server: {ex.Message}");
             stopwatch.Stop();
 
             return false;

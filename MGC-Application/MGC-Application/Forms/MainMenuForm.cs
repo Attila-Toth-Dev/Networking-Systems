@@ -16,28 +16,55 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
-        if(FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
             DebugLogger.Log($"{currentSelectedGame} files have been found.");
-            
-            if(FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
+
+            if (FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
+            {
                 DebugLogger.Log($"Running .exe file now.");
+                MessageBox.Show($"Running {currentSelectedGame}.exe");
+            }
         }
+        else
+            MessageBox.Show($"{currentSelectedGame} is not installed or files are missing.");
+
+        DebugLogger.Break();
     }
 
     private void updateButton_Click(object sender, EventArgs e)
     {
+        if(FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        {
+            DebugLogger.Log($"{currentSelectedGame} has been found.");
+
+            //if()
+        }
+
+        DebugLogger.Break();
     }
 
     private void installButton_Click(object sender, EventArgs e)
     {
-        if(!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
             DebugLogger.Log($"{currentSelectedGame} has not been installed.");
-            
-            if(FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
-                DebugLogger.Log($"Installing {currentSelectedGame} files now.");
+            if (NetworkTools.DownloadGameFromFtp(currentSelectedGame, gameFilePathTextBox.Text))
+            {
+                DebugLogger.Log($"Game files have been downloaded from {NetworkTools.ServerIP}.");
+
+                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
+                {
+                    DebugLogger.Log($"Installing {currentSelectedGame} files now.");
+                    MessageBox.Show($"{currentSelectedGame} has now been installed.");
+                }
+            }
         }
+        else
+            MessageBox.Show($"{currentSelectedGame} is already installed.\nAborting install process.");
+
+        // Add the ability to reinstall files for games.
+        DebugLogger.Break();
     }
 
     private void uninstallButton_Click(object sender, EventArgs e)
@@ -45,10 +72,21 @@ public partial class MainMenuForm : Form
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
             DebugLogger.Log($"{currentSelectedGame} have been found.");
-            
-            if(FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
-                DebugLogger.Log($"Uninstalling {currentSelectedGame} and files now.");
+
+            DialogResult result = MessageBox.Show($"Are you sure you would like to uninstall {currentSelectedGame}?", "", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
+                {
+                    DebugLogger.Log($"Uninstalling {currentSelectedGame} and files now.");
+                    MessageBox.Show($"{currentSelectedGame} has been uninstalled.");
+                }
+            }
         }
+        else
+            MessageBox.Show($"{currentSelectedGame} files are missing.\nAborting uninstall.");
+
+        DebugLogger.Break();
     }
 
     private void gameListView_Click(object sender, EventArgs e)

@@ -70,6 +70,24 @@ public static class FileTools
         }
     }
 
+    /// <summary>Update compares file from server to local machine and updates files when necessary.</summary>
+    /// <param name="_game">The game of which to update.</param>
+    /// <param name="_pathfile">The filepath of said game.</param>
+    public static bool Update(string _game, string _pathfile)
+    {
+        string dir = $"{_pathfile}/{_game}";
+
+        try
+        {
+            return true;
+        }
+        catch (FileLoadException ex)
+        {
+            DebugLogger.Log($"Error updating locals files: {ex.Message}");
+            return false;
+        }
+    }
+
     /// <summary>Verifys if the game is installed.</summary>
     /// <param name="_game">The game of which to check installation of.</param>
     /// <param name="_pathfile">The pathfile of the installed game.</param>
@@ -79,21 +97,30 @@ public static class FileTools
 
         if (Directory.Exists(dir))
         {
+            DebugLogger.Log($"{_game} files exist: TRUE");
             return true;
         }
         else
         {
+            DebugLogger.Log($"{_game} files missing: FALSE");
             return false;
         }
     }
 
     /// <summary>Creates a directory in the system files.</summary>
     /// <param name="_folderName">The name for the directory.</param>
-    public static void CreateDirectory(string _folderName)
+    /// <param name="_toReCreate">If the directory needs to be re-made on load.</param>
+    public static void CreateDirectory(string _folderName, bool _toReCreate = false)
     {
-        if (Directory.Exists($"../{_folderName}"))
-            DebugLogger.Log("Directory already exists.");
-        else
+        if (!Directory.Exists(_folderName))
+        {
             Directory.CreateDirectory(_folderName);
+        }
+
+        else if (Directory.Exists(_folderName) && _toReCreate)
+        {
+            Directory.Delete(_folderName, true);
+            Directory.CreateDirectory(_folderName);
+        }
     }
 }

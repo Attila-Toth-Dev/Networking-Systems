@@ -7,7 +7,7 @@ public partial class WelcomeForm : Form
         InitializeComponent();
 
         FileTools.CreateDirectory("Games");
-        FileTools.CreateDirectory("Logs");
+        FileTools.CreateDirectory("Logs", true);
     }
 
     private void loadBarTimer_Tick(object sender, EventArgs e)
