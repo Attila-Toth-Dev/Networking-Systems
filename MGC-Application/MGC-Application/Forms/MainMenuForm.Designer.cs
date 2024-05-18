@@ -28,21 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ListViewItem listViewItem10 = new ListViewItem("Breakout");
-            ListViewItem listViewItem11 = new ListViewItem("Cursorblade");
-            ListViewItem listViewItem12 = new ListViewItem("Force Reboot");
-            ListViewItem listViewItem13 = new ListViewItem("Hardware Tycoon");
-            ListViewItem listViewItem14 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem15 = new ListViewItem("Mindustry");
-            ListViewItem listViewItem16 = new ListViewItem("Mini Doom");
-            ListViewItem listViewItem17 = new ListViewItem("Pathogen-X");
-            ListViewItem listViewItem18 = new ListViewItem("Space Janitor");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
+            ListViewItem listViewItem1 = new ListViewItem("Breakout");
+            ListViewItem listViewItem2 = new ListViewItem("Cursorblade");
+            ListViewItem listViewItem3 = new ListViewItem("Force Reboot");
+            ListViewItem listViewItem4 = new ListViewItem("Hardware Tycoon");
+            ListViewItem listViewItem5 = new ListViewItem("Hell Bullet");
+            ListViewItem listViewItem6 = new ListViewItem("Mindustry");
+            ListViewItem listViewItem7 = new ListViewItem("Mini Doom");
+            ListViewItem listViewItem8 = new ListViewItem("Pathogen-X");
+            ListViewItem listViewItem9 = new ListViewItem("Space Janitor");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             topHeaderPanel = new Panel();
+            profilePictureBox = new PictureBox();
             welecomeLabel = new Label();
             gameListPanel = new Panel();
             gameListView = new ListView();
@@ -63,6 +64,7 @@
             gameFilePathTextBox = new TextBox();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
             gameListPanel.SuspendLayout();
             buttonLayoutPanel.SuspendLayout();
             progressLayoutPanel.SuspendLayout();
@@ -88,14 +90,14 @@
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(180, 22);
+            logoutToolStripMenuItem.Size = new Size(112, 22);
             logoutToolStripMenuItem.Text = "&Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(112, 22);
             exitToolStripMenuItem.Text = "&Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -103,11 +105,23 @@
             // 
             topHeaderPanel.BackColor = Color.PowderBlue;
             topHeaderPanel.BorderStyle = BorderStyle.Fixed3D;
+            topHeaderPanel.Controls.Add(profilePictureBox);
             topHeaderPanel.Controls.Add(welecomeLabel);
             topHeaderPanel.Location = new Point(6, 27);
             topHeaderPanel.Name = "topHeaderPanel";
             topHeaderPanel.Size = new Size(974, 67);
             topHeaderPanel.TabIndex = 3;
+            // 
+            // profilePictureBox
+            // 
+            profilePictureBox.Image = (Image)resources.GetObject("profilePictureBox.Image");
+            profilePictureBox.Location = new Point(911, 3);
+            profilePictureBox.Name = "profilePictureBox";
+            profilePictureBox.Size = new Size(56, 56);
+            profilePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            profilePictureBox.TabIndex = 0;
+            profilePictureBox.TabStop = false;
+            profilePictureBox.Click += profilePictureBox_Click;
             // 
             // welecomeLabel
             // 
@@ -136,16 +150,16 @@
             gameListView.Columns.AddRange(new ColumnHeader[] { gameListHeader });
             gameListView.Dock = DockStyle.Fill;
             gameListView.GridLines = true;
-            listViewItem10.StateImageIndex = 0;
-            listViewItem11.StateImageIndex = 0;
-            listViewItem12.StateImageIndex = 0;
-            listViewItem13.StateImageIndex = 0;
-            listViewItem14.StateImageIndex = 0;
-            listViewItem15.StateImageIndex = 0;
-            listViewItem16.StateImageIndex = 0;
-            listViewItem17.StateImageIndex = 0;
-            listViewItem18.StateImageIndex = 0;
-            gameListView.Items.AddRange(new ListViewItem[] { listViewItem10, listViewItem11, listViewItem12, listViewItem13, listViewItem14, listViewItem15, listViewItem16, listViewItem17, listViewItem18 });
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.StateImageIndex = 0;
+            listViewItem6.StateImageIndex = 0;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
+            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6, listViewItem7, listViewItem8, listViewItem9 });
             gameListView.Location = new Point(0, 0);
             gameListView.Name = "gameListView";
             gameListView.Size = new Size(299, 473);
@@ -338,6 +352,7 @@
             toolMenuStrip.PerformLayout();
             topHeaderPanel.ResumeLayout(false);
             topHeaderPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)profilePictureBox).EndInit();
             gameListPanel.ResumeLayout(false);
             buttonLayoutPanel.ResumeLayout(false);
             progressLayoutPanel.ResumeLayout(false);
@@ -375,5 +390,6 @@
         private Panel filePathLayoutPanel;
         private TextBox gameFilePathTextBox;
         private Button gameFilePathButton;
+        private PictureBox profilePictureBox;
     }
 }

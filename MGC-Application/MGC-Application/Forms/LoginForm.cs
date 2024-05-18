@@ -27,7 +27,6 @@ public partial class LoginForm : Form
 
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
-        serverIpTextBox.UseSystemPasswordChar = true;
         serverIP = serverIpTextBox.Text;
     }
 

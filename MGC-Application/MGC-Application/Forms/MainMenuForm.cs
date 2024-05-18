@@ -1,12 +1,20 @@
-﻿namespace MGC_Application;
+﻿using MGC_Application.Forms;
+
+namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
+    public static int restrict = 0;
+    
     private string currentSelectedGame = "";
+
+    private ProfileForm profileForm;
 
     public MainMenuForm()
     {
         InitializeComponent();
+
+        profileForm = new ProfileForm();
 
         gameListView.Items[0].Selected = true;
         gameFilePathTextBox.Text = @"./Games";
@@ -132,6 +140,20 @@ public partial class MainMenuForm : Form
         }
     }
 
+    private void profilePictureBox_Click(object sender, EventArgs e)
+    {
+        if(profileForm != null)
+        {
+            if (restrict == 0)
+            {
+                restrict++;
+                profileForm.ShowDialog();
+            }
+            else
+                profileForm.Hide();
+        }
+    }
+    
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
         Application.Exit();
