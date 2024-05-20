@@ -2,13 +2,17 @@
 
 public partial class LoginForm : Form
 {
-    private string username = "";
-    private string password = "";
-    private string serverIP = "";
+    private string username;
+    private string password;
+    private string serverIP;
 
     public LoginForm()
     {
         InitializeComponent();
+
+        username = string.Empty;
+        password = string.Empty;
+        serverIP = string.Empty;
 
         passwordTextBox.UseSystemPasswordChar = true;
     }
@@ -57,11 +61,6 @@ public partial class LoginForm : Form
         DebugLogger.Break();
     }
 
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        Application.Exit();
-    }
-
     private void passwordPitureBox_MouseDown(object sender, MouseEventArgs e)
     {
         passwordTextBox.UseSystemPasswordChar = false;
@@ -70,5 +69,10 @@ public partial class LoginForm : Form
     private void passwordPitureBox_MouseUp(object sender, MouseEventArgs e)
     {
         passwordTextBox.UseSystemPasswordChar = true;
+    }
+
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        Application.Exit();
     }
 }

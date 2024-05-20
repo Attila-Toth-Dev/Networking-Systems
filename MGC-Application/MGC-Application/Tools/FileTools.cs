@@ -1,7 +1,6 @@
 ﻿using IWshRuntimeLibrary;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Reflection;
 
 namespace MGC_Application;
 
@@ -98,15 +97,9 @@ public static class FileTools
         string dir = $"{_pathfile}/{_game}";
 
         if (Directory.Exists(dir))
-        {
-            DebugLogger.Log($"{_game} files exist: TRUE");
             return true;
-        }
         else
-        {
-            DebugLogger.Log($"{_game} files missing: FALSE");
             return false;
-        }
     }
 
     /// <summary>Creates a directory in the system files.</summary>
@@ -126,6 +119,9 @@ public static class FileTools
         }
     }
 
+    /// <summary>Creates a Desktop shortcut for the game.exe file.</summary>
+    /// <param name="_game">The game of which to create a shortcut path for.</param>
+    /// <param name="_pathFile">The pathfile of which linking the exe shortcut to.</param>
     public static void CreateDesktopShortcut(string _game, string _pathFile)
     {
         string desktopDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
