@@ -20,6 +20,6 @@ public static class DebugLogger
         string logPath = $"Logs/{logFileName}";
 
         using (StreamWriter write = new StreamWriter(logPath, true))
-            write.WriteLine("\n");
+            write.WriteLine(" ");
     }
 }

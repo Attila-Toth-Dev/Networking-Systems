@@ -18,6 +18,8 @@ public partial class ProfileForm : Form
 
     private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
     {
+        this.Close();
+
         MainMenuForm.restrict = 0;
     }
 }

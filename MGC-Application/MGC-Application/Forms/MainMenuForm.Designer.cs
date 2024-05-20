@@ -54,7 +54,7 @@
             playButton = new Button();
             installButton = new Button();
             progressLayoutPanel = new Panel();
-            downloadSpeedLabel = new Label();
+            downloadPercentLabel = new Label();
             downloadProgressLabel = new Label();
             downloadProgressbar = new ProgressBar();
             gameInfoPanel = new Panel();
@@ -62,6 +62,8 @@
             filePathLayoutPanel = new Panel();
             gameFilePathButton = new Button();
             gameFilePathTextBox = new TextBox();
+            extractProgressLabel = new Label();
+            extractPercentLabel = new Label();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
@@ -237,7 +239,9 @@
             // 
             progressLayoutPanel.BackColor = Color.LightBlue;
             progressLayoutPanel.BorderStyle = BorderStyle.Fixed3D;
-            progressLayoutPanel.Controls.Add(downloadSpeedLabel);
+            progressLayoutPanel.Controls.Add(extractPercentLabel);
+            progressLayoutPanel.Controls.Add(extractProgressLabel);
+            progressLayoutPanel.Controls.Add(downloadPercentLabel);
             progressLayoutPanel.Controls.Add(downloadProgressLabel);
             progressLayoutPanel.Controls.Add(downloadProgressbar);
             progressLayoutPanel.Location = new Point(423, 583);
@@ -245,17 +249,14 @@
             progressLayoutPanel.Size = new Size(311, 74);
             progressLayoutPanel.TabIndex = 7;
             // 
-            // downloadSpeedLabel
+            // downloadPercentLabel
             // 
-            downloadSpeedLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            downloadSpeedLabel.AutoSize = true;
-            downloadSpeedLabel.ImageAlign = ContentAlignment.MiddleRight;
-            downloadSpeedLabel.Location = new Point(3, 25);
-            downloadSpeedLabel.Name = "downloadSpeedLabel";
-            downloadSpeedLabel.RightToLeft = RightToLeft.Yes;
-            downloadSpeedLabel.Size = new Size(136, 22);
-            downloadSpeedLabel.TabIndex = 2;
-            downloadSpeedLabel.Text = "Speed: 0 MB/s";
+            downloadPercentLabel.AutoSize = true;
+            downloadPercentLabel.Location = new Point(181, 3);
+            downloadPercentLabel.Name = "downloadPercentLabel";
+            downloadPercentLabel.Size = new Size(38, 22);
+            downloadPercentLabel.TabIndex = 3;
+            downloadPercentLabel.Text = "0%";
             // 
             // downloadProgressLabel
             // 
@@ -263,9 +264,9 @@
             downloadProgressLabel.AutoSize = true;
             downloadProgressLabel.Location = new Point(3, 3);
             downloadProgressLabel.Name = "downloadProgressLabel";
-            downloadProgressLabel.Size = new Size(215, 22);
+            downloadProgressLabel.Size = new Size(182, 22);
             downloadProgressLabel.TabIndex = 1;
-            downloadProgressLabel.Text = "Download Progress: 0%";
+            downloadProgressLabel.Text = "Download Progress:";
             // 
             // downloadProgressbar
             // 
@@ -325,6 +326,24 @@
             gameFilePathTextBox.Size = new Size(230, 26);
             gameFilePathTextBox.TabIndex = 0;
             // 
+            // extractProgressLabel
+            // 
+            extractProgressLabel.AutoSize = true;
+            extractProgressLabel.Location = new Point(3, 25);
+            extractProgressLabel.Name = "extractProgressLabel";
+            extractProgressLabel.Size = new Size(156, 22);
+            extractProgressLabel.TabIndex = 0;
+            extractProgressLabel.Text = "Extract Progress:";
+            // 
+            // extractPercentLabel
+            // 
+            extractPercentLabel.AutoSize = true;
+            extractPercentLabel.Location = new Point(158, 25);
+            extractPercentLabel.Name = "extractPercentLabel";
+            extractPercentLabel.Size = new Size(38, 22);
+            extractPercentLabel.TabIndex = 0;
+            extractPercentLabel.Text = "0%";
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -378,7 +397,6 @@
         private Button installButton;
         private Button playButton;
         private Panel progressLayoutPanel;
-        private Label downloadSpeedLabel;
         private Label downloadProgressLabel;
         private ProgressBar downloadProgressbar;
         private Button uninstallButton;
@@ -391,5 +409,8 @@
         private TextBox gameFilePathTextBox;
         private Button gameFilePathButton;
         private PictureBox profilePictureBox;
+        private Label downloadPercentLabel;
+        private Label extractPercentLabel;
+        private Label extractProgressLabel;
     }
 }

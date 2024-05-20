@@ -1,5 +1,7 @@
-﻿using System.Diagnostics;
+﻿using IWshRuntimeLibrary;
+using System.Diagnostics;
 using System.IO.Compression;
+using System.Reflection;
 
 namespace MGC_Application;
 
@@ -38,7 +40,7 @@ public static class FileTools
 
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
-            File.Delete(startFile);
+            System.IO.File.Delete(startFile);
             
             return true;
         }
@@ -58,7 +60,7 @@ public static class FileTools
         {
             string dir = $"{_pathfile}/{_game}";
 
-            File.Delete($"{_pathfile}/{_game}.zip");
+            System.IO.File.Delete($"{_pathfile}/{_game}.zip");
             Directory.Delete(dir, true);
 
             return true;
@@ -122,5 +124,21 @@ public static class FileTools
             Directory.Delete(_folderName, true);
             Directory.CreateDirectory(_folderName);
         }
+    }
+
+    public static void CreateDesktopShortcut(string _game, string _pathFile)
+    {
+        string desktopDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        string shortCutDir = Path.Combine(desktopDir, $"{_game}.lnk");
+        string pathFile = @$"{_pathFile}/{_game}/{_game}.exe";
+        
+        WshShell shell = new WshShell();
+        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortCutDir);
+
+        shortcut.Description = $"{_game} shortcut.";
+        shortcut.TargetPath = pathFile;
+        DebugLogger.Log(shortcut.TargetPath);
+
+        shortcut.Save();
     }
 }

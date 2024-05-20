@@ -6,7 +6,7 @@ public partial class MainMenuForm : Form
 {
     public static int restrict = 0;
     
-    private string currentSelectedGame = "";
+    private string currentSelectedGame = string.Empty;
 
     private ProfileForm profileForm;
 
@@ -16,7 +16,6 @@ public partial class MainMenuForm : Form
 
         profileForm = new ProfileForm();
 
-        gameListView.Items[0].Selected = true;
         gameFilePathTextBox.Text = @"./Games";
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
@@ -24,78 +23,131 @@ public partial class MainMenuForm : Form
 
     private void playButton_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(currentSelectedGame))
+        {
+            DebugLogger.Log($"Please select a game before proceeding.");
+            MessageBox.Show("Please select a game before proceeding.");
+
+            return;
+        }
+
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
             DebugLogger.Log($"{currentSelectedGame} files have been found.");
 
             if (FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
             {
-                DebugLogger.Log($"Running .exe file now.");
+                DebugLogger.Log($"Running {currentSelectedGame}.exe");
                 MessageBox.Show($"Running {currentSelectedGame}.exe");
             }
         }
         else
-            MessageBox.Show($"{currentSelectedGame} is not installed or files are missing.");
+        {
+            DebugLogger.Log($"{currentSelectedGame} files are missing.");
+            MessageBox.Show($"{currentSelectedGame} files are missing.");
+        }
 
         DebugLogger.Break();
     }
 
     private void updateButton_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(currentSelectedGame))
+        {
+            DebugLogger.Log($"Please select a game before proceeding.");
+            MessageBox.Show("Please select a game before proceeding.");
+
+            return;
+        }
+
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            DebugLogger.Log($"{currentSelectedGame} has been found.");
-
-            //if()
+            DebugLogger.Log($"{currentSelectedGame} files have been found.");
         }
         else
-            MessageBox.Show($"{currentSelectedGame} is not installed or files are missing.");
+        {
+            DebugLogger.Log($"{currentSelectedGame} files are missing.");
+            MessageBox.Show($"{currentSelectedGame} files are missing.");
+        }
 
         DebugLogger.Break();
     }
 
     private void installButton_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(currentSelectedGame))
+        {
+            DebugLogger.Log($"Please select a game before proceeding.");
+            MessageBox.Show("Please select a game before proceeding.");
+
+            return;
+        }
+
+        DebugLogger.Log($"Preparing {currentSelectedGame} install process.");
+
         if (!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
             DebugLogger.Log($"{currentSelectedGame} has not been installed.");
+            DebugLogger.Log($"Starting download now.");
+
+            MessageBox.Show($"Starting {currentSelectedGame} download and install.");
+
             if (NetworkTools.DownloadGameFromFtp(currentSelectedGame, gameFilePathTextBox.Text))
             {
-                MessageBox.Show($"Installing game files now.");
-                DebugLogger.Log($"Game files have been downloaded from {NetworkTools.ServerIP}.");
+                DebugLogger.Log($"Successfuly downloaded files from server.");
+                DebugLogger.Log($"Starting install now.");
 
                 if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
                 {
-                    DebugLogger.Log($"Installing {currentSelectedGame} files now.");
-                    MessageBox.Show($"{currentSelectedGame} has now been installed.");
+                    DebugLogger.Log($"Successfully installed {currentSelectedGame} files.");
+
+                    MessageBox.Show($"{currentSelectedGame} has been fully installed.");
                 }
             }
         }
         else
-            MessageBox.Show($"{currentSelectedGame} is already installed.\nAborting install process.");
+        {
+            DebugLogger.Log($"{currentSelectedGame} files have already been installed.");
+            MessageBox.Show($"{currentSelectedGame} files have already been installed.");
+        }
 
-        // Add the ability to reinstall files for games.
         DebugLogger.Break();
     }
 
     private void uninstallButton_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(currentSelectedGame))
+        {
+            DebugLogger.Log($"Please select a game before proceeding.");
+            MessageBox.Show("Please select a game before proceeding.");
+
+            return;
+        }
+
+        DebugLogger.Log($"Preparing {currentSelectedGame} uninstall process.");
+
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            DebugLogger.Log($"{currentSelectedGame} have been found.");
+            DebugLogger.Log($"{currentSelectedGame} directory has been found.");
 
             DialogResult result = MessageBox.Show($"Are you sure you would like to uninstall {currentSelectedGame}?", "", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
+                DebugLogger.Log($"Starting uninstall now.");
+
                 if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
                 {
-                    DebugLogger.Log($"Uninstalling {currentSelectedGame} and files now.");
-                    MessageBox.Show($"{currentSelectedGame} has been uninstalled.");
+                    DebugLogger.Log($"Successfuly uninstalled {currentSelectedGame} files");
+
+                    MessageBox.Show($"{currentSelectedGame} has been fully uninstalled.");
                 }
             }
         }
         else
-            MessageBox.Show($"{currentSelectedGame} is not installed or files are missing.");
+        {
+            DebugLogger.Log($"{currentSelectedGame} has not been installed");
+            MessageBox.Show($"{currentSelectedGame} has not been installed");
+        }
 
         DebugLogger.Break();
     }
@@ -122,7 +174,7 @@ public partial class MainMenuForm : Form
         DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
         if (dialogResult == DialogResult.Yes)
         {
-            DebugLogger.Log($"{NetworkTools.Username} logged out from application.");
+            DebugLogger.Log($"{NetworkTools.Username} disconnected from {NetworkTools.ServerIP}.");
 
             this.Hide();
 
@@ -146,14 +198,18 @@ public partial class MainMenuForm : Form
         {
             if (restrict == 0)
             {
+                DebugLogger.Log($"Accessing {NetworkTools.Username} profile.");
+
                 restrict++;
                 profileForm.ShowDialog();
             }
             else
-                profileForm.Hide();
+                profileForm.Close();
         }
+
+        DebugLogger.Break();
     }
-    
+
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
         Application.Exit();
