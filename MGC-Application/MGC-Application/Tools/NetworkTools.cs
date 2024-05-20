@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Net;
+using System.Net.NetworkInformation;
 
 namespace MGC_Application;
 
@@ -15,30 +16,56 @@ public static class NetworkTools
     /// <param name="_password">The password of the client.</param>
     public static bool CheckValidFTP(string _serverIP, string _username, string _password)
     {
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
-        request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+        if(IsValidIP(_serverIP, 5))
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
+            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
-        request.Credentials = new NetworkCredential(_username, _password);
-        request.Timeout = 1000;
+            request.Credentials = new NetworkCredential(_username, _password);
+            request.Timeout = 1000;
 
-        var stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
 
+            try
+            {
+                request.GetResponse();
+            
+                DebugLogger.Log($"FTP connection is valid with {_serverIP}.");
+                DebugLogger.Log($"Connection time: {stopwatch.Elapsed}");
+            
+                stopwatch.Stop();
+            
+                return true;
+            }
+            catch (WebException ex)
+            {
+                stopwatch.Stop();
+
+                DebugLogger.Log($"Error initializing connection with server: {ex.Message}");
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
+    /// <param name="_serverIP">The IP address to check validation.</param>
+    /// <param name="_timeout">The timeout time for the ping.</param>
+    public static bool IsValidIP(string _serverIP, int _timeout)
+    {
         try
         {
-            request.GetResponse();
-            
-            DebugLogger.Log($"FTP connection is valid with {_serverIP}.");
-            DebugLogger.Log($"Connection time: {stopwatch.Elapsed}");
-            
-            stopwatch.Stop();
-            
+            Ping ping = new Ping();
+            PingReply pingReply = ping.Send(_serverIP, _timeout);
+
+            DebugLogger.Log($"Successful connection from {_serverIP}.");
+
             return true;
         }
-        catch (WebException ex)
+        catch(PingException ex)
         {
-            stopwatch.Stop();
-
-            DebugLogger.Log($"Error initializing connection with server: {ex.Message}");
+            DebugLogger.Log($"Error validating connection to address. {ex.Message}");
             return false;
         }
     }

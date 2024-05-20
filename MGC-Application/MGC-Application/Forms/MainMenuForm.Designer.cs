@@ -29,15 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            ListViewItem listViewItem1 = new ListViewItem("Breakout");
-            ListViewItem listViewItem2 = new ListViewItem("Cursorblade");
-            ListViewItem listViewItem3 = new ListViewItem("Force Reboot");
-            ListViewItem listViewItem4 = new ListViewItem("Hardware Tycoon");
-            ListViewItem listViewItem5 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem6 = new ListViewItem("Mindustry");
-            ListViewItem listViewItem7 = new ListViewItem("Mini Doom");
-            ListViewItem listViewItem8 = new ListViewItem("Pathogen-X");
-            ListViewItem listViewItem9 = new ListViewItem("Space Janitor");
+            ListViewItem listViewItem1 = new ListViewItem("Cursorblade");
+            ListViewItem listViewItem2 = new ListViewItem("Force Reboot");
+            ListViewItem listViewItem3 = new ListViewItem("Hardware Tycoon");
+            ListViewItem listViewItem4 = new ListViewItem("Hell Bullet");
+            ListViewItem listViewItem5 = new ListViewItem("Mindustry");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -46,6 +42,7 @@
             profilePictureBox = new PictureBox();
             welecomeLabel = new Label();
             gameListPanel = new Panel();
+            installedIcon = new Panel();
             gameListView = new ListView();
             gameListHeader = new ColumnHeader();
             buttonLayoutPanel = new Panel();
@@ -54,16 +51,14 @@
             playButton = new Button();
             installButton = new Button();
             progressLayoutPanel = new Panel();
-            downloadPercentLabel = new Label();
-            downloadProgressLabel = new Label();
-            downloadProgressbar = new ProgressBar();
+            installPercentLabel = new Label();
+            installProgressLabel = new Label();
+            progressBar = new ProgressBar();
             gameInfoPanel = new Panel();
             gameFilePathLabel = new Label();
             filePathLayoutPanel = new Panel();
             gameFilePathButton = new Button();
             gameFilePathTextBox = new TextBox();
-            extractProgressLabel = new Label();
-            extractPercentLabel = new Label();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
@@ -139,16 +134,25 @@
             // 
             gameListPanel.BackColor = Color.LightBlue;
             gameListPanel.BorderStyle = BorderStyle.Fixed3D;
+            gameListPanel.Controls.Add(installedIcon);
             gameListPanel.Controls.Add(gameListView);
             gameListPanel.Location = new Point(6, 100);
             gameListPanel.Name = "gameListPanel";
             gameListPanel.Size = new Size(303, 477);
             gameListPanel.TabIndex = 5;
             // 
+            // installedIcon
+            // 
+            installedIcon.BackColor = SystemColors.ButtonShadow;
+            installedIcon.BorderStyle = BorderStyle.Fixed3D;
+            installedIcon.Location = new Point(273, 5);
+            installedIcon.Name = "installedIcon";
+            installedIcon.Size = new Size(20, 20);
+            installedIcon.TabIndex = 0;
+            // 
             // gameListView
             // 
             gameListView.BackColor = SystemColors.InactiveCaption;
-            gameListView.CheckBoxes = true;
             gameListView.Columns.AddRange(new ColumnHeader[] { gameListHeader });
             gameListView.Dock = DockStyle.Fill;
             gameListView.GridLines = true;
@@ -157,11 +161,7 @@
             listViewItem3.StateImageIndex = 0;
             listViewItem4.StateImageIndex = 0;
             listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.StateImageIndex = 0;
-            listViewItem9.StateImageIndex = 0;
-            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6, listViewItem7, listViewItem8, listViewItem9 });
+            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5 });
             gameListView.Location = new Point(0, 0);
             gameListView.Name = "gameListView";
             gameListView.Size = new Size(299, 473);
@@ -239,42 +239,39 @@
             // 
             progressLayoutPanel.BackColor = Color.LightBlue;
             progressLayoutPanel.BorderStyle = BorderStyle.Fixed3D;
-            progressLayoutPanel.Controls.Add(extractPercentLabel);
-            progressLayoutPanel.Controls.Add(extractProgressLabel);
-            progressLayoutPanel.Controls.Add(downloadPercentLabel);
-            progressLayoutPanel.Controls.Add(downloadProgressLabel);
-            progressLayoutPanel.Controls.Add(downloadProgressbar);
+            progressLayoutPanel.Controls.Add(installPercentLabel);
+            progressLayoutPanel.Controls.Add(installProgressLabel);
+            progressLayoutPanel.Controls.Add(progressBar);
             progressLayoutPanel.Location = new Point(423, 583);
             progressLayoutPanel.Name = "progressLayoutPanel";
             progressLayoutPanel.Size = new Size(311, 74);
             progressLayoutPanel.TabIndex = 7;
             // 
-            // downloadPercentLabel
+            // installPercentLabel
             // 
-            downloadPercentLabel.AutoSize = true;
-            downloadPercentLabel.Location = new Point(181, 3);
-            downloadPercentLabel.Name = "downloadPercentLabel";
-            downloadPercentLabel.Size = new Size(38, 22);
-            downloadPercentLabel.TabIndex = 3;
-            downloadPercentLabel.Text = "0%";
+            installPercentLabel.AutoSize = true;
+            installPercentLabel.Location = new Point(144, 10);
+            installPercentLabel.Name = "installPercentLabel";
+            installPercentLabel.Size = new Size(38, 22);
+            installPercentLabel.TabIndex = 2;
+            installPercentLabel.Text = "0%";
             // 
-            // downloadProgressLabel
+            // installProgressLabel
             // 
-            downloadProgressLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            downloadProgressLabel.AutoSize = true;
-            downloadProgressLabel.Location = new Point(3, 3);
-            downloadProgressLabel.Name = "downloadProgressLabel";
-            downloadProgressLabel.Size = new Size(182, 22);
-            downloadProgressLabel.TabIndex = 1;
-            downloadProgressLabel.Text = "Download Progress:";
+            installProgressLabel.AutoSize = true;
+            installProgressLabel.Location = new Point(3, 10);
+            installProgressLabel.Name = "installProgressLabel";
+            installProgressLabel.Size = new Size(147, 22);
+            installProgressLabel.TabIndex = 1;
+            installProgressLabel.Text = "Install Progress:";
             // 
-            // downloadProgressbar
+            // progressBar
             // 
-            downloadProgressbar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            downloadProgressbar.Location = new Point(3, 48);
-            downloadProgressbar.Name = "downloadProgressbar";
-            downloadProgressbar.Size = new Size(301, 19);
-            downloadProgressbar.TabIndex = 0;
+            progressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            progressBar.Location = new Point(3, 41);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(301, 26);
+            progressBar.TabIndex = 0;
             // 
             // gameInfoPanel
             // 
@@ -289,7 +286,7 @@
             // gameFilePathLabel
             // 
             gameFilePathLabel.AutoSize = true;
-            gameFilePathLabel.Location = new Point(3, 6);
+            gameFilePathLabel.Location = new Point(3, 10);
             gameFilePathLabel.Name = "gameFilePathLabel";
             gameFilePathLabel.Size = new Size(108, 22);
             gameFilePathLabel.TabIndex = 0;
@@ -309,7 +306,7 @@
             // 
             // gameFilePathButton
             // 
-            gameFilePathButton.Location = new Point(117, 3);
+            gameFilePathButton.Location = new Point(117, 7);
             gameFilePathButton.Name = "gameFilePathButton";
             gameFilePathButton.Size = new Size(113, 29);
             gameFilePathButton.TabIndex = 0;
@@ -325,24 +322,6 @@
             gameFilePathTextBox.Name = "gameFilePathTextBox";
             gameFilePathTextBox.Size = new Size(230, 26);
             gameFilePathTextBox.TabIndex = 0;
-            // 
-            // extractProgressLabel
-            // 
-            extractProgressLabel.AutoSize = true;
-            extractProgressLabel.Location = new Point(3, 25);
-            extractProgressLabel.Name = "extractProgressLabel";
-            extractProgressLabel.Size = new Size(156, 22);
-            extractProgressLabel.TabIndex = 0;
-            extractProgressLabel.Text = "Extract Progress:";
-            // 
-            // extractPercentLabel
-            // 
-            extractPercentLabel.AutoSize = true;
-            extractPercentLabel.Location = new Point(158, 25);
-            extractPercentLabel.Name = "extractPercentLabel";
-            extractPercentLabel.Size = new Size(38, 22);
-            extractPercentLabel.TabIndex = 0;
-            extractPercentLabel.Text = "0%";
             // 
             // MainMenuForm
             // 
@@ -397,8 +376,7 @@
         private Button installButton;
         private Button playButton;
         private Panel progressLayoutPanel;
-        private Label downloadProgressLabel;
-        private ProgressBar downloadProgressbar;
+        private ProgressBar progressBar;
         private Button uninstallButton;
         private Button updateButton;
         private ListView gameListView;
@@ -409,8 +387,8 @@
         private TextBox gameFilePathTextBox;
         private Button gameFilePathButton;
         private PictureBox profilePictureBox;
-        private Label downloadPercentLabel;
-        private Label extractPercentLabel;
-        private Label extractProgressLabel;
+        private Label installProgressLabel;
+        private Label installPercentLabel;
+        private Panel installedIcon;
     }
 }

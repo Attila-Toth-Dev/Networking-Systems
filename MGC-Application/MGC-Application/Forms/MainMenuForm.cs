@@ -5,7 +5,7 @@ namespace MGC_Application;
 public partial class MainMenuForm : Form
 {
     public static int restrict = 0;
-    
+
     private string currentSelectedGame = string.Empty;
 
     private ProfileForm profileForm;
@@ -17,6 +17,7 @@ public partial class MainMenuForm : Form
         profileForm = new ProfileForm();
 
         gameFilePathTextBox.Text = @"./Games";
+        installedIcon.BackColor = Color.Gray;
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
     }
@@ -83,7 +84,11 @@ public partial class MainMenuForm : Form
             return;
         }
 
+
         DebugLogger.Log($"Preparing {currentSelectedGame} install process.");
+
+        progressBar.Value = 10;
+        installPercentLabel.Text = $"{progressBar.Value}%";
 
         if (!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
@@ -92,13 +97,22 @@ public partial class MainMenuForm : Form
 
             MessageBox.Show($"Starting {currentSelectedGame} download and install.");
 
+            progressBar.Value = 20;
+            installPercentLabel.Text = $"{progressBar.Value}%";
+
             if (NetworkTools.DownloadGameFromFtp(currentSelectedGame, gameFilePathTextBox.Text))
             {
+                progressBar.Value = 60;
+                installPercentLabel.Text = $"{progressBar.Value}%";
+
                 DebugLogger.Log($"Successfuly downloaded files from server.");
                 DebugLogger.Log($"Starting install now.");
 
                 if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
                 {
+                    progressBar.Value = 100;
+                    installPercentLabel.Text = $"{progressBar.Value}%";
+
                     DebugLogger.Log($"Successfully installed {currentSelectedGame} files.");
 
                     MessageBox.Show($"{currentSelectedGame} has been fully installed.");
@@ -110,6 +124,11 @@ public partial class MainMenuForm : Form
             DebugLogger.Log($"{currentSelectedGame} files have already been installed.");
             MessageBox.Show($"{currentSelectedGame} files have already been installed.");
         }
+
+        progressBar.Value = 0;
+        installPercentLabel.Text = $"{progressBar.Value}%";
+
+        installedIcon.BackColor = Color.Green;
 
         DebugLogger.Break();
     }
@@ -149,6 +168,8 @@ public partial class MainMenuForm : Form
             MessageBox.Show($"{currentSelectedGame} has not been installed");
         }
 
+        installedIcon.BackColor = Color.Red;
+
         DebugLogger.Break();
     }
 
@@ -156,6 +177,11 @@ public partial class MainMenuForm : Form
     {
         ListViewItem item = gameListView.SelectedItems[0];
         currentSelectedGame = item.Text;
+
+        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+            installedIcon.BackColor = Color.Green;
+        else
+            installedIcon.BackColor = Color.Red;
 
         DebugLogger.Log($"Current game selected: {item.Text}");
     }
@@ -194,7 +220,7 @@ public partial class MainMenuForm : Form
 
     private void profilePictureBox_Click(object sender, EventArgs e)
     {
-        if(profileForm != null)
+        if (profileForm != null)
         {
             if (restrict == 0)
             {
