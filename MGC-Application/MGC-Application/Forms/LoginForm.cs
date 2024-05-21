@@ -7,6 +7,7 @@ public partial class LoginForm : Form
     private string username;
     private string password;
     private string serverIP;
+    private string directory;
 
     public LoginForm()
     {
@@ -15,6 +16,7 @@ public partial class LoginForm : Form
         username = string.Empty;
         password = string.Empty;
         serverIP = string.Empty;
+        directory = string.Empty;
 
         passwordTextBox.UseSystemPasswordChar = true;
     }
@@ -36,9 +38,14 @@ public partial class LoginForm : Form
         serverIP = serverIpTextBox.Text;
     }
 
+    private void directoryTextBox_TextChanged(object sender, EventArgs e)
+    {
+        directory = directoryTextBox.Text;
+    }
+
     private void loginButton_Click(object sender, EventArgs e)
     {
-        if (NetworkTools.CheckValidFTP(serverIP, username, password))
+        if (NetworkTools.CheckValidFTP(serverIP, username, password, directory))
         {
             DebugLogger.Log($"Successfully logged into server {serverIP}.");
 

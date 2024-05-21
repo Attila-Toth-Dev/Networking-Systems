@@ -38,6 +38,7 @@
             passwordTextBox = new TextBox();
             passwordLabel = new Label();
             backgroundPanel = new Panel();
+            directoryTextBox = new TextBox();
             passwordPictureBox = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             backgroundPanel.SuspendLayout();
@@ -77,7 +78,7 @@
             loginButton.Location = new Point(250, 290);
             loginButton.Name = "loginButton";
             loginButton.Size = new Size(100, 40);
-            loginButton.TabIndex = 4;
+            loginButton.TabIndex = 5;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
@@ -96,9 +97,9 @@
             serverIpLabel.AutoSize = true;
             serverIpLabel.Location = new Point(66, 245);
             serverIpLabel.Name = "serverIpLabel";
-            serverIpLabel.Size = new Size(128, 22);
+            serverIpLabel.Size = new Size(115, 22);
             serverIpLabel.TabIndex = 8;
-            serverIpLabel.Text = "FTP Address:";
+            serverIpLabel.Text = "IP/Directory:";
             // 
             // passwordTextBox
             // 
@@ -121,12 +122,22 @@
             // backgroundPanel
             // 
             backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Controls.Add(directoryTextBox);
             backgroundPanel.Controls.Add(passwordPictureBox);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(584, 361);
             backgroundPanel.TabIndex = 11;
+            // 
+            // directoryTextBox
+            // 
+            directoryTextBox.Location = new Point(404, 240);
+            directoryTextBox.Name = "directoryTextBox";
+            directoryTextBox.Size = new Size(100, 29);
+            directoryTextBox.TabIndex = 4;
+            directoryTextBox.TextAlign = HorizontalAlignment.Center;
+            directoryTextBox.TextChanged += directoryTextBox_TextChanged;
             // 
             // passwordPictureBox
             // 
@@ -166,6 +177,7 @@
             FormClosed += LoginForm_Closed;
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             backgroundPanel.ResumeLayout(false);
+            backgroundPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)passwordPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -183,5 +195,6 @@
         private Label passwordLabel;
         private Panel backgroundPanel;
         private PictureBox passwordPictureBox;
+        private TextBox directoryTextBox;
     }
 }

@@ -14,11 +14,12 @@ public static class NetworkTools
     /// <param name="_serverIP">The server IP.</param>
     /// <param name="_username">The username of the client.</param>
     /// <param name="_password">The password of the client.</param>
-    public static bool CheckValidFTP(string _serverIP, string _username, string _password)
+    /// <param name="_directory">The directory of the server.</param>
+    public static bool CheckValidFTP(string _serverIP, string _username, string _password, string _directory)
     {
         if(IsValidIP(_serverIP, 5))
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/{_directory}");
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
             request.Credentials = new NetworkCredential(_username, _password);
@@ -45,8 +46,12 @@ public static class NetworkTools
                 return false;
             }
         }
+        else
+        {
 
-        return false;
+            return false;
+        }
+
     }
 
     /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
