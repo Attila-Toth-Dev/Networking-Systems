@@ -27,7 +27,9 @@ public partial class MainMenuForm : Form
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
             DebugLogger.Log($"Please select a game before proceeding.");
-            MessageBox.Show("Please select a game before proceeding.");
+            DialogBoxForm dialog1 = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING, 
+                "Please select a game before proceeding.");
+            dialog1.ShowDialog();
 
             return;
         }
@@ -39,13 +41,17 @@ public partial class MainMenuForm : Form
             if (FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
             {
                 DebugLogger.Log($"Running {currentSelectedGame}.exe");
-                MessageBox.Show($"Running {currentSelectedGame}.exe");
+                DialogBoxForm dialog2 = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE, 
+                    $"Running {currentSelectedGame}.exe", 10);
+                dialog2.ShowDialog();
             }
         }
         else
         {
             DebugLogger.Log($"{currentSelectedGame} files are missing.");
-            MessageBox.Show($"{currentSelectedGame} files are missing.");
+            DialogBoxForm dialog3 = new DialogBoxForm(DialogBoxForm.MessageSeverity.ERROR,
+                $"{currentSelectedGame} files are missing");
+            dialog3.ShowDialog();
         }
 
         DebugLogger.Break();
@@ -56,7 +62,9 @@ public partial class MainMenuForm : Form
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
             DebugLogger.Log($"Please select a game before proceeding.");
-            MessageBox.Show("Please select a game before proceeding.");
+            DialogBoxForm dialog1 = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
+                "Please select a game before proceeding.");
+            dialog1.ShowDialog();
 
             return;
         }
@@ -67,8 +75,10 @@ public partial class MainMenuForm : Form
         }
         else
         {
-            DebugLogger.Log($"{currentSelectedGame} files are missing.");
-            MessageBox.Show($"{currentSelectedGame} files are missing.");
+            DebugLogger.Log($"{currentSelectedGame} files are missing."); 
+            DialogBoxForm dialog2 = new DialogBoxForm(DialogBoxForm.MessageSeverity.ERROR,
+                $"{currentSelectedGame} files are missing");
+            dialog2.ShowDialog();
         }
 
         DebugLogger.Break();
@@ -79,13 +89,18 @@ public partial class MainMenuForm : Form
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
             DebugLogger.Log($"Please select a game before proceeding.");
-            MessageBox.Show("Please select a game before proceeding.");
+            DialogBoxForm dialog1 = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
+                "Please select a game before proceeding.");
+            dialog1.ShowDialog();
 
             return;
         }
 
-
         DebugLogger.Log($"Preparing {currentSelectedGame} install process.");
+
+        DialogBoxForm dialog2 = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
+                $"Starting {currentSelectedGame} download and install.");
+        dialog2.ShowDialog();
 
         progressBar.Value = 10;
         installPercentLabel.Text = $"{progressBar.Value}%";
@@ -94,8 +109,6 @@ public partial class MainMenuForm : Form
         {
             DebugLogger.Log($"{currentSelectedGame} has not been installed.");
             DebugLogger.Log($"Starting download now.");
-
-            MessageBox.Show($"Starting {currentSelectedGame} download and install.");
 
             progressBar.Value = 20;
             installPercentLabel.Text = $"{progressBar.Value}%";
@@ -115,20 +128,26 @@ public partial class MainMenuForm : Form
 
                     DebugLogger.Log($"Successfully installed {currentSelectedGame} files.");
 
-                    MessageBox.Show($"{currentSelectedGame} has been fully installed.");
+                    DialogBoxForm dialog3 = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
+                        $"{currentSelectedGame} has been fully installed.");
+                    dialog3.ShowDialog();
+                    
+                    installedIcon.BackColor = Color.Green;
                 }
             }
         }
         else
         {
             DebugLogger.Log($"{currentSelectedGame} files have already been installed.");
-            MessageBox.Show($"{currentSelectedGame} files have already been installed.");
+            
+            DialogBoxForm dialog4 = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
+                $"{currentSelectedGame} files have already been installed.");
+            dialog4.ShowDialog();
         }
 
         progressBar.Value = 0;
         installPercentLabel.Text = $"{progressBar.Value}%";
 
-        installedIcon.BackColor = Color.Green;
 
         DebugLogger.Break();
     }
@@ -138,7 +157,9 @@ public partial class MainMenuForm : Form
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
             DebugLogger.Log($"Please select a game before proceeding.");
-            MessageBox.Show("Please select a game before proceeding.");
+            DialogBoxForm dialog1 = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
+                "Please select a game before proceeding.");
+            dialog1.ShowDialog();
 
             return;
         }
@@ -149,8 +170,10 @@ public partial class MainMenuForm : Form
         {
             DebugLogger.Log($"{currentSelectedGame} directory has been found.");
 
-            DialogResult result = MessageBox.Show($"Are you sure you would like to uninstall {currentSelectedGame}?", "", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
+                $"Are you sure you would like to uninstall {currentSelectedGame}?", true);
+            result.ShowDialog();
+            if (result.DecisionValue == 1)
             {
                 DebugLogger.Log($"Starting uninstall now.");
 
@@ -158,17 +181,21 @@ public partial class MainMenuForm : Form
                 {
                     DebugLogger.Log($"Successfuly uninstalled {currentSelectedGame} files");
 
-                    MessageBox.Show($"{currentSelectedGame} has been fully uninstalled.");
+                    DialogBoxForm dialog2 = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
+                        $"{currentSelectedGame} has been fully uninstalled.");
+                    dialog2.ShowDialog();
+
+                    installedIcon.BackColor = Color.Red;
                 }
             }
         }
         else
         {
             DebugLogger.Log($"{currentSelectedGame} has not been installed");
-            MessageBox.Show($"{currentSelectedGame} has not been installed");
+            DialogBoxForm dialog3 = new DialogBoxForm(DialogBoxForm.MessageSeverity.ERROR,
+                $"{currentSelectedGame} files are missing");
+            dialog3.ShowDialog();
         }
-
-        installedIcon.BackColor = Color.Red;
 
         DebugLogger.Break();
     }
@@ -197,8 +224,10 @@ public partial class MainMenuForm : Form
     }
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "", MessageBoxButtons.YesNo);
-        if (dialogResult == DialogResult.Yes)
+        DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
+            "Are you sure you want to logout?", true);
+        result.ShowDialog();
+        if (result.DecisionValue == 1)
         {
             DebugLogger.Log($"{NetworkTools.Username} disconnected from {NetworkTools.ServerIP}.");
 
@@ -211,8 +240,10 @@ public partial class MainMenuForm : Form
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo);
-        if (dialogResult == DialogResult.Yes)
+        DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
+            "Are you sure you want to logout?", true);
+        result.ShowDialog();
+        if (result.DecisionValue == 1)
         {
             Application.Exit();
         }

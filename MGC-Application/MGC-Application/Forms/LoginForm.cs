@@ -1,4 +1,6 @@
-﻿namespace MGC_Application;
+﻿using MGC_Application.Forms;
+
+namespace MGC_Application;
 
 public partial class LoginForm : Form
 {
@@ -51,8 +53,11 @@ public partial class LoginForm : Form
         }
         else
         {
-            MessageBox.Show($"Error logging into server.\nPlease try again.");
             DebugLogger.Log("$Error logging into server.");
+
+            DialogBoxForm dialog = new DialogBoxForm(DialogBoxForm.MessageSeverity.ERROR,
+                $"Error logging into server.\nPlease try again.");
+            dialog.ShowDialog();
 
             passwordTextBox.Clear();
             usernameTextBox.Focus();
