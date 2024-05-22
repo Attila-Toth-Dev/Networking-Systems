@@ -23,18 +23,19 @@ public partial class LoginForm : Form
 
     private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
-        passwordTextBox.MaxLength = 15;
+        passwordTextBox.MaxLength = 50;
         password = passwordTextBox.Text;
     }
 
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
     {
-        usernameTextBox.MaxLength = 15;
+        usernameTextBox.MaxLength = 50;
         username = usernameTextBox.Text;
     }
 
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
+        serverIpTextBox.MaxLength = 50;
         serverIP = serverIpTextBox.Text;
     }
 
