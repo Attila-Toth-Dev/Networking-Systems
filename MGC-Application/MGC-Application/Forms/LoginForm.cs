@@ -18,10 +18,9 @@ public partial class LoginForm : Form
         serverIP = string.Empty;
         directory = string.Empty;
 
-        usernameTextBox.TabIndex = 1;
-        passwordTextBox.TabIndex = 2;
-        serverIpTextBox.TabIndex = 3;
-        loginButton.TabIndex = 5;
+        usernameTextBox.Text = "ftp-user";
+        passwordTextBox.Text = "mn1-237A";
+        serverIpTextBox.Text = "58.169.146.100";
 
         passwordTextBox.UseSystemPasswordChar = true;
     }
@@ -76,7 +75,9 @@ public partial class LoginForm : Form
 
     private void clearFieldsButton_Click(object sender, EventArgs e)
     {
-
+        usernameTextBox.Clear();
+        passwordTextBox.Clear();
+        serverIpTextBox.Clear();
     }
 
     private void passwordPitureBox_MouseDown(object sender, MouseEventArgs e)

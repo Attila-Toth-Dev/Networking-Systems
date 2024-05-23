@@ -148,7 +148,6 @@ public partial class MainMenuForm : Form
         progressBar.Value = 0;
         installPercentLabel.Text = $"{progressBar.Value}%";
 
-
         DebugLogger.Break();
     }
 
@@ -192,6 +191,7 @@ public partial class MainMenuForm : Form
         else
         {
             DebugLogger.Log($"{currentSelectedGame} has not been installed");
+
             DialogBoxForm dialog3 = new DialogBoxForm(DialogBoxForm.MessageSeverity.ERROR,
                 $"{currentSelectedGame} files are missing");
             dialog3.ShowDialog();

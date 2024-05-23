@@ -60,7 +60,7 @@
             usernameTextBox.Location = new Point(198, 150);
             usernameTextBox.Name = "usernameTextBox";
             usernameTextBox.Size = new Size(200, 29);
-            usernameTextBox.TabIndex = 0;
+            usernameTextBox.TabIndex = 1;
             usernameTextBox.TextAlign = HorizontalAlignment.Center;
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
             // 
@@ -78,7 +78,7 @@
             loginButton.Location = new Point(198, 296);
             loginButton.Name = "loginButton";
             loginButton.Size = new Size(100, 40);
-            loginButton.TabIndex = 7;
+            loginButton.TabIndex = 4;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
@@ -88,7 +88,7 @@
             serverIpTextBox.Location = new Point(198, 246);
             serverIpTextBox.Name = "serverIpTextBox";
             serverIpTextBox.Size = new Size(200, 29);
-            serverIpTextBox.TabIndex = 2;
+            serverIpTextBox.TabIndex = 3;
             serverIpTextBox.TextAlign = HorizontalAlignment.Center;
             serverIpTextBox.TextChanged += serverIpTextBox_TextChanged;
             // 
@@ -106,7 +106,7 @@
             passwordTextBox.Location = new Point(198, 197);
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.Size = new Size(200, 29);
-            passwordTextBox.TabIndex = 1;
+            passwordTextBox.TabIndex = 2;
             passwordTextBox.TextAlign = HorizontalAlignment.Center;
             passwordTextBox.TextChanged += passwordTextBox_TextChanged;
             // 
@@ -142,7 +142,7 @@
             clearFieldsButton.Location = new Point(304, 296);
             clearFieldsButton.Name = "clearFieldsButton";
             clearFieldsButton.Size = new Size(94, 40);
-            clearFieldsButton.TabIndex = 11;
+            clearFieldsButton.TabIndex = 5;
             clearFieldsButton.Text = "Clear";
             clearFieldsButton.UseVisualStyleBackColor = true;
             clearFieldsButton.Click += clearFieldsButton_Click;

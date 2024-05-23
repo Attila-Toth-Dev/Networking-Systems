@@ -6,20 +6,19 @@ namespace MGC_Application;
 
 public static class NetworkTools
 {
-    public static string? ServerIP { get; set; }
     public static string? Username { get; set; }
     public static string? Password { get; set; }
+    public static string? ServerIP { get; set; }
 
     /// <summary>Checks if there is a valid connection between client and server.</summary>
     /// <param name="_serverIP">The server IP.</param>
     /// <param name="_username">The username of the client.</param>
     /// <param name="_password">The password of the client.</param>
-    /// <param name="_directory">The directory of the server.</param>
     public static bool CheckValidFTP(string _serverIP, string _username, string _password)
     {
         if(IsValidIP(_serverIP, 5))
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
             request.Credentials = new NetworkCredential(_username, _password);
@@ -48,7 +47,6 @@ public static class NetworkTools
         }
         else
         {
-
             return false;
         }
 
@@ -81,11 +79,8 @@ public static class NetworkTools
     public static bool DownloadGameFromFtp(string _game, string _pathFile)
     {
         string dir = $"{_pathFile}/{_game}.zip";
-        string file = $"{_game}.zip";
 
-        string serverDir = $"ftp://{ServerIP}/Games/{file}";
-
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverDir);
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
         request.Credentials = new NetworkCredential(Username, Password);
         request.UseBinary = true;
         request.Method = WebRequestMethods.Ftp.DownloadFile;
