@@ -38,7 +38,7 @@
             passwordTextBox = new TextBox();
             passwordLabel = new Label();
             backgroundPanel = new Panel();
-            directoryTextBox = new TextBox();
+            clearFieldsButton = new Button();
             passwordPictureBox = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             backgroundPanel.SuspendLayout();
@@ -57,17 +57,17 @@
             // 
             // usernameTextBox
             // 
-            usernameTextBox.Location = new Point(200, 145);
+            usernameTextBox.Location = new Point(198, 150);
             usernameTextBox.Name = "usernameTextBox";
             usernameTextBox.Size = new Size(200, 29);
-            usernameTextBox.TabIndex = 1;
+            usernameTextBox.TabIndex = 0;
             usernameTextBox.TextAlign = HorizontalAlignment.Center;
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
             // 
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
-            usernameLabel.Location = new Point(66, 152);
+            usernameLabel.Location = new Point(76, 153);
             usernameLabel.Name = "usernameLabel";
             usernameLabel.Size = new Size(102, 22);
             usernameLabel.TabIndex = 3;
@@ -75,45 +75,45 @@
             // 
             // loginButton
             // 
-            loginButton.Location = new Point(250, 290);
+            loginButton.Location = new Point(198, 296);
             loginButton.Name = "loginButton";
             loginButton.Size = new Size(100, 40);
-            loginButton.TabIndex = 5;
+            loginButton.TabIndex = 7;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
             // 
             // serverIpTextBox
             // 
-            serverIpTextBox.Location = new Point(200, 242);
+            serverIpTextBox.Location = new Point(198, 246);
             serverIpTextBox.Name = "serverIpTextBox";
             serverIpTextBox.Size = new Size(200, 29);
-            serverIpTextBox.TabIndex = 3;
+            serverIpTextBox.TabIndex = 2;
             serverIpTextBox.TextAlign = HorizontalAlignment.Center;
             serverIpTextBox.TextChanged += serverIpTextBox_TextChanged;
             // 
             // serverIpLabel
             // 
             serverIpLabel.AutoSize = true;
-            serverIpLabel.Location = new Point(66, 245);
+            serverIpLabel.Location = new Point(76, 249);
             serverIpLabel.Name = "serverIpLabel";
-            serverIpLabel.Size = new Size(115, 22);
+            serverIpLabel.Size = new Size(110, 22);
             serverIpLabel.TabIndex = 8;
-            serverIpLabel.Text = "IP/Directory:";
+            serverIpLabel.Text = "IP Address:";
             // 
             // passwordTextBox
             // 
-            passwordTextBox.Location = new Point(200, 194);
+            passwordTextBox.Location = new Point(198, 197);
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.Size = new Size(200, 29);
-            passwordTextBox.TabIndex = 2;
+            passwordTextBox.TabIndex = 1;
             passwordTextBox.TextAlign = HorizontalAlignment.Center;
             passwordTextBox.TextChanged += passwordTextBox_TextChanged;
             // 
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
-            passwordLabel.Location = new Point(66, 197);
+            passwordLabel.Location = new Point(76, 200);
             passwordLabel.Name = "passwordLabel";
             passwordLabel.Size = new Size(99, 22);
             passwordLabel.TabIndex = 10;
@@ -122,27 +122,35 @@
             // backgroundPanel
             // 
             backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
-            backgroundPanel.Controls.Add(directoryTextBox);
+            backgroundPanel.Controls.Add(clearFieldsButton);
+            backgroundPanel.Controls.Add(loginButton);
+            backgroundPanel.Controls.Add(passwordLabel);
+            backgroundPanel.Controls.Add(passwordTextBox);
+            backgroundPanel.Controls.Add(serverIpLabel);
             backgroundPanel.Controls.Add(passwordPictureBox);
+            backgroundPanel.Controls.Add(serverIpTextBox);
+            backgroundPanel.Controls.Add(usernameTextBox);
+            backgroundPanel.Controls.Add(usernameLabel);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(584, 361);
             backgroundPanel.TabIndex = 11;
             // 
-            // directoryTextBox
+            // clearFieldsButton
             // 
-            directoryTextBox.Location = new Point(404, 240);
-            directoryTextBox.Name = "directoryTextBox";
-            directoryTextBox.Size = new Size(100, 29);
-            directoryTextBox.TabIndex = 4;
-            directoryTextBox.TextAlign = HorizontalAlignment.Center;
-            directoryTextBox.TextChanged += directoryTextBox_TextChanged;
+            clearFieldsButton.Location = new Point(304, 296);
+            clearFieldsButton.Name = "clearFieldsButton";
+            clearFieldsButton.Size = new Size(94, 40);
+            clearFieldsButton.TabIndex = 11;
+            clearFieldsButton.Text = "Clear";
+            clearFieldsButton.UseVisualStyleBackColor = true;
+            clearFieldsButton.Click += clearFieldsButton_Click;
             // 
             // passwordPictureBox
             // 
             passwordPictureBox.Image = (Image)resources.GetObject("passwordPictureBox.Image");
-            passwordPictureBox.Location = new Point(404, 192);
+            passwordPictureBox.Location = new Point(404, 197);
             passwordPictureBox.Name = "passwordPictureBox";
             passwordPictureBox.Size = new Size(30, 30);
             passwordPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -157,13 +165,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
-            Controls.Add(passwordLabel);
-            Controls.Add(passwordTextBox);
-            Controls.Add(serverIpLabel);
-            Controls.Add(serverIpTextBox);
-            Controls.Add(loginButton);
-            Controls.Add(usernameLabel);
-            Controls.Add(usernameTextBox);
             Controls.Add(logoPictureBox);
             Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -180,7 +181,6 @@
             backgroundPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)passwordPictureBox).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -195,6 +195,6 @@
         private Label passwordLabel;
         private Panel backgroundPanel;
         private PictureBox passwordPictureBox;
-        private TextBox directoryTextBox;
+        private Button clearFieldsButton;
     }
 }
