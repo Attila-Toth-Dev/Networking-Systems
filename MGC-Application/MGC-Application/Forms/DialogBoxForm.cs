@@ -4,8 +4,6 @@ public partial class DialogBoxForm : Form
 {
     public int DecisionValue { get; set; }
 
-    private int timer;
-
     private bool isDecisionForm;
 
     public enum MessageSeverity
@@ -22,24 +20,6 @@ public partial class DialogBoxForm : Form
 
         messageTextBox.Enabled = false;
         messageTextBox.Text = _message;
-
-        isDecisionForm = _isDecisionForm;
-
-        yesButton.Visible = isDecisionForm;
-        noButton.Visible = isDecisionForm;
-
-        okayButton.Visible = !isDecisionForm;
-    }
-
-    public DialogBoxForm(MessageSeverity _headerMessage, string _message, int _timer, bool _isDecisionForm = false)
-    {
-        InitializeComponent();
-        DialogBoxText(_headerMessage);
-
-        messageTextBox.Enabled = false;
-        messageTextBox.Text = _message;
-
-        timer = _timer;
 
         isDecisionForm = _isDecisionForm;
 

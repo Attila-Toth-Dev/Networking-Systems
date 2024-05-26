@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogBoxForm));
             messageTextBox = new TextBox();
             okayButton = new Button();
             noButton = new Button();
             yesButton = new Button();
+            dialogTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // messageTextBox
@@ -107,5 +109,6 @@
         private Button okayButton;
         private Button noButton;
         private Button yesButton;
+        private System.Windows.Forms.Timer dialogTimer;
     }
 }

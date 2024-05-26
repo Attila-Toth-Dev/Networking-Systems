@@ -1,5 +1,4 @@
-﻿using IWshRuntimeLibrary;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO.Compression;
 
 namespace MGC_Application;
@@ -40,7 +39,7 @@ public static class FileTools
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
             System.IO.File.Delete(startFile);
-            
+
             return true;
         }
         catch(DirectoryNotFoundException ex)
@@ -122,11 +121,11 @@ public static class FileTools
     /// <summary>Creates a Desktop shortcut for the game.exe file.</summary>
     /// <param name="_game">The game of which to create a shortcut path for.</param>
     /// <param name="_pathFile">The pathfile of which linking the exe shortcut to.</param>
-    public static void CreateDesktopShortcut(string _game, string _pathFile)
+    /*public static void CreateDesktopShortcut(string _game, string _pathFile)
     {
         string desktopDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         string shortCutDir = Path.Combine(desktopDir, $"{_game}.lnk");
-        string pathFile = @$"{_pathFile}/{_game}/{_game}.exe";
+        string pathFile = @$"{_pathFile}/{_game}.exe";
         
         WshShell shell = new WshShell();
         IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortCutDir);
@@ -136,5 +135,5 @@ public static class FileTools
         DebugLogger.Log(shortcut.TargetPath);
 
         shortcut.Save();
-    }
+    }*/
 }

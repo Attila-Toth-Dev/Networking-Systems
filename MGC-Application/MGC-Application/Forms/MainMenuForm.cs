@@ -42,7 +42,7 @@ public partial class MainMenuForm : Form
             {
                 DebugLogger.Log($"Running {currentSelectedGame}.exe");
                 DialogBoxForm dialog2 = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE, 
-                    $"Running {currentSelectedGame}.exe", 10);
+                    $"Running {currentSelectedGame}.exe");
                 dialog2.ShowDialog();
             }
         }
