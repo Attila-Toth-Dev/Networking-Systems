@@ -7,7 +7,7 @@ public static class DebugLogger
     public static void Log(string _message)
     {
         string logFileName = $"Logs.txt";
-        string logPath = $"Logs/{logFileName}";
+        string logPath = $"{WelcomeForm.logPathFile}/{logFileName}";
 
         using (StreamWriter writer = new StreamWriter(logPath, true))
             writer.WriteLine($"{DateTime.Now} : {_message}");
@@ -17,7 +17,7 @@ public static class DebugLogger
     public static void Break()
     {
         string logFileName = $"Logs.txt";
-        string logPath = $"Logs/{logFileName}";
+        string logPath = $"{WelcomeForm.logPathFile}/{logFileName}";
 
         using (StreamWriter write = new StreamWriter(logPath, true))
             write.WriteLine(" ");

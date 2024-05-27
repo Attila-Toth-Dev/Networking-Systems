@@ -156,8 +156,8 @@
             passwordPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             passwordPictureBox.TabIndex = 0;
             passwordPictureBox.TabStop = false;
-            passwordPictureBox.MouseDown += passwordPitureBox_MouseDown;
-            passwordPictureBox.MouseUp += passwordPitureBox_MouseUp;
+            passwordPictureBox.MouseDown += passwordPictureBox_MouseDown;
+            passwordPictureBox.MouseUp += passwordPictureBox_MouseUp;
             // 
             // LoginForm
             // 

@@ -202,7 +202,6 @@
             // updateButton
             // 
             updateButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            updateButton.Enabled = false;
             updateButton.Location = new Point(105, 3);
             updateButton.Name = "updateButton";
             updateButton.Size = new Size(95, 65);
@@ -248,7 +247,7 @@
             // percentLabel
             // 
             percentLabel.AutoSize = true;
-            percentLabel.Location = new Point(144, 10);
+            percentLabel.Location = new Point(127, 10);
             percentLabel.Name = "percentLabel";
             percentLabel.Size = new Size(38, 22);
             percentLabel.TabIndex = 2;
@@ -259,9 +258,9 @@
             installLabel.AutoSize = true;
             installLabel.Location = new Point(3, 10);
             installLabel.Name = "installLabel";
-            installLabel.Size = new Size(147, 22);
+            installLabel.Size = new Size(129, 22);
             installLabel.TabIndex = 1;
-            installLabel.Text = "Install Progress:";
+            installLabel.Text = "File Progress:";
             // 
             // progressBar
             // 
@@ -325,12 +324,14 @@
             // 
             installWorker.WorkerReportsProgress = true;
             installWorker.DoWork += installWorker_DoWork;
+            installWorker.ProgressChanged += installWorker_ProgressChanged;
             installWorker.RunWorkerCompleted += installWorker_RunWorkerCompleted;
             // 
             // updateWorker
             // 
             updateWorker.WorkerReportsProgress = true;
             updateWorker.DoWork += updateWorker_DoWork;
+            updateWorker.ProgressChanged += updateWorker_ProgressChanged;
             updateWorker.RunWorkerCompleted += updateWorker_RunWorkerCompleted;
             // 
             // MainMenuForm

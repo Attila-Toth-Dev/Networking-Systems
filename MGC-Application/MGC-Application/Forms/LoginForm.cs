@@ -7,7 +7,6 @@ public partial class LoginForm : Form
     private string username;
     private string password;
     private string serverIP;
-    private string directory;
 
     public LoginForm()
     {
@@ -25,24 +24,28 @@ public partial class LoginForm : Form
         passwordTextBox.UseSystemPasswordChar = true;
     }
 
+    /// <summary>Event for passwordTextBox text change.</summary>
     private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
         passwordTextBox.MaxLength = 50;
         password = passwordTextBox.Text;
     }
 
+    /// <summary>Event for usernameTextBox text change.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
     {
         usernameTextBox.MaxLength = 50;
         username = usernameTextBox.Text;
     }
 
+    /// <summary>Event for serverIpTextBox text change.</summary>
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
         serverIpTextBox.MaxLength = 50;
         serverIP = serverIpTextBox.Text;
     }
 
+    /// <summary>Event for loginButton click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
@@ -73,6 +76,7 @@ public partial class LoginForm : Form
         DebugLogger.Break();
     }
 
+    /// <summary>Event for clearFieldsButton click.</summary>
     private void clearFieldsButton_Click(object sender, EventArgs e)
     {
         usernameTextBox.Clear();
@@ -80,18 +84,12 @@ public partial class LoginForm : Form
         serverIpTextBox.Clear();
     }
 
-    private void passwordPitureBox_MouseDown(object sender, MouseEventArgs e)
-    {
-        passwordTextBox.UseSystemPasswordChar = false;
-    }
+    /// <summary>Event for passwordPictureBox mouse down.</summary>
+    private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e) => passwordTextBox.UseSystemPasswordChar = false;
 
-    private void passwordPitureBox_MouseUp(object sender, MouseEventArgs e)
-    {
-        passwordTextBox.UseSystemPasswordChar = true;
-    }
+    /// <summary>Event for passwordPictureBox mouse up.</summary>
+    private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e) => passwordTextBox.UseSystemPasswordChar = true;
 
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        Application.Exit();
-    }
+    /// <summary>Event for LoginForm close.</summary>
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
 }

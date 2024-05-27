@@ -76,9 +76,9 @@ public static class NetworkTools
     /// <summary>Grabs the .zip files of the games from the server.</summary>
     /// <param name="_game">The game of which to grab the files for.</param>
     /// <param name="_pathFile">The path of which to install the game to.</param>
-    public static bool DownloadGameFromFtp(string _game, string _pathFile)
+    public static bool DownloadGameFromFtp(string _game)
     {
-        string dir = $"{_pathFile}/{_game}.zip";
+        string dir = $"{WelcomeForm.gamesPathFile}/{_game}.zip";
 
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
         request.Credentials = new NetworkCredential(Username, Password);
@@ -121,6 +121,39 @@ public static class NetworkTools
             stopwatch.Stop();
 
             return false;
+        }
+    }
+
+    /// <summary>Function checks the file size of the selected game zip file on remote server.</summary>
+    /// <param name="_game">The game to check file size of.</param>
+    public static long CheckForUpdate(string _game)
+    {
+        FtpWebRequest requestSize = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
+        requestSize.Proxy = null;
+        requestSize.Credentials = new NetworkCredential(Username, Password);
+        requestSize.Method = WebRequestMethods.Ftp.GetFileSize;
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
+        try
+        {
+            FtpWebResponse responseSize = (FtpWebResponse)requestSize.GetResponse();
+            long fileSize = responseSize.ContentLength;
+            responseSize.Close();
+
+            stopwatch.Stop();
+
+            Thread.Sleep(1000);
+
+            DebugLogger.Log($"File size is {fileSize}");
+            return fileSize;
+        }
+        catch(WebException ex)
+        {
+            stopwatch.Stop();
+
+            DebugLogger.Log($"Error getting file size off of remote server: {ex.Message}");
+            return 0;
         }
     }
 }

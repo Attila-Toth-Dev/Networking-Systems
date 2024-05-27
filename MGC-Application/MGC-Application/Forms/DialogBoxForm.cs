@@ -29,6 +29,7 @@ public partial class DialogBoxForm : Form
         okayButton.Visible = !isDecisionForm;
     }
 
+    /// <summary>Event for yesButton click.</summary>
     private void yesButton_Click(object sender, EventArgs e)
     {
         DecisionValue = 1;
@@ -36,6 +37,7 @@ public partial class DialogBoxForm : Form
         this.Dispose();
     }
 
+    /// <summary>Event for noButton click.</summary>
     private void noButton_Click(object sender, EventArgs e)
     {
         DecisionValue = -1;
@@ -43,12 +45,15 @@ public partial class DialogBoxForm : Form
         this.Dispose();
     }
 
+    /// <summary>Event for okayButton click.</summary>
     private void okayButton_Click(object sender, EventArgs e)
     {
         this.Close();
         this.Dispose();
     }
 
+    /// <summary>Function that changes dialog text boxes name with message severity.</summary>
+    /// <param name="_headerMessage">The severity level of dialog box.</param>
     private void DialogBoxText(MessageSeverity _headerMessage)
     {
         switch (_headerMessage)

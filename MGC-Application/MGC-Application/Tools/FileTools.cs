@@ -39,7 +39,7 @@ public static class FileTools
 
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
-            System.IO.File.Delete(startFile);
+            //File.Delete(startFile);
 
             return true;
         }
@@ -67,24 +67,6 @@ public static class FileTools
         catch(DirectoryNotFoundException ex)
         {
             DebugLogger.Log($"Error uninstalling {_game} files: {ex.Message}");
-            return false;
-        }
-    }
-
-    /// <summary>Update compares file from server to local machine and updates files when necessary.</summary>
-    /// <param name="_game">The game of which to update.</param>
-    /// <param name="_pathfile">The filepath of said game.</param>
-    public static bool Update(string _game, string _pathfile)
-    {
-        string dir = $"{_pathfile}/{_game}";
-
-        try
-        {
-            return true;
-        }
-        catch (FileLoadException ex)
-        {
-            DebugLogger.Log($"Error updating locals files: {ex.Message}");
             return false;
         }
     }

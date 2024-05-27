@@ -16,7 +16,7 @@ public partial class MainMenuForm : Form
 
         profileForm = new ProfileForm();
 
-        gameFilePathTextBox.Text = @"./Games";
+        gameFilePathTextBox.Text = WelcomeForm.gamesPathFile;
         installedIcon.BackColor = Color.Gray;
 
         updateWorker.WorkerReportsProgress = true;
@@ -27,6 +27,7 @@ public partial class MainMenuForm : Form
 
     #region UI Event Functions
 
+    /// <summary>Event for the gameListView click.</summary>
     private void gameListView_Click(object sender, EventArgs e)
     {
         ListViewItem item = gameListView.SelectedItems[0];
@@ -40,6 +41,7 @@ public partial class MainMenuForm : Form
         DebugLogger.Log($"Current game selected: {item.Text}");
     }
 
+    /// <summary>Event for the gameFolderPathButton click.</summary>
     private void gameFolderPathButton_Click(object sender, EventArgs e)
     {
         FolderBrowserDialog diag = new FolderBrowserDialog();
@@ -50,6 +52,7 @@ public partial class MainMenuForm : Form
         }
     }
 
+    /// <summary>Event for the logoutToolStripMenuItem click.</summary>
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
     {
         DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
@@ -67,6 +70,7 @@ public partial class MainMenuForm : Form
         }
     }
 
+    /// <summary>Event for the exitToolStripMenuItem click.</summary>
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
         DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
@@ -77,6 +81,7 @@ public partial class MainMenuForm : Form
             Application.Exit();
     }
 
+    /// <summary>Event for the profilePictureBox click.</summary>
     private void profilePictureBox_Click(object sender, EventArgs e)
     {
         if (profileForm != null)
@@ -95,15 +100,14 @@ public partial class MainMenuForm : Form
         DebugLogger.Break();
     }
 
-    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        Application.Exit();
-    }
+    /// <summary>Event for MainMenuForm close.</summary>
+    private void MainMenuForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
 
     #endregion
 
     #region Button Event Functions
 
+    /// <summary>Event for playButton click.</summary>
     private void playButton_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
@@ -125,6 +129,7 @@ public partial class MainMenuForm : Form
         DebugLogger.Break();
     }
 
+    /// <summary>Event for updateButton click.</summary>
     private void updateButton_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
@@ -137,9 +142,27 @@ public partial class MainMenuForm : Form
         {
             DebugLogger.Log($"{currentSelectedGame} game files have been found.");
 
+            long localFileLength = new FileInfo($"{gameFilePathTextBox.Text}/{currentSelectedGame}.zip").Length;
+            long remoteFileLength = NetworkTools.CheckForUpdate(currentSelectedGame);
+
+            if (localFileLength == remoteFileLength)
+            {
+
+                FileTools.ShowDialogMessage($"There is currently no update available for {currentSelectedGame}.");
+            }
+
             if (updateWorker.IsBusy != true)
-                updateWorker.RunWorkerAsync();
-            
+            {
+                if (localFileLength < remoteFileLength || localFileLength > remoteFileLength)
+                {
+                    DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
+                    $"Update available for {currentSelectedGame}, would you like to update now?", true);
+                    result.ShowDialog();
+
+                    if (result.DecisionValue == 1)
+                        updateWorker.RunWorkerAsync();
+                }
+            }
             else
                 FileTools.ShowDialogMessage($"Could not perform task as there are already processes running in the background.", 2);
         }
@@ -147,6 +170,7 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed.", 1);
     }
 
+    /// <summary>Event for installButton click.</summary>
     private void installButton_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
@@ -161,7 +185,7 @@ public partial class MainMenuForm : Form
 
             if (installWorker.IsBusy != true)
                 installWorker.RunWorkerAsync();
-            
+
             else
                 FileTools.ShowDialogMessage($"Could not perform task as there are already processes running in the background.");
         }
@@ -169,6 +193,7 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage($"{currentSelectedGame} game files have already been installed.", 1);
     }
 
+    /// <summary>Event for uninstallButton click.</summary>
     private void uninstallButton_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
@@ -189,8 +214,14 @@ public partial class MainMenuForm : Form
             {
                 if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
                 {
+                    progressBar.Value = 100;
+                    percentLabel.Text = $"{progressBar.Value}%";
+
                     FileTools.ShowDialogMessage($"Successfully uninstalled {currentSelectedGame} game files.");
                     installedIcon.BackColor = Color.Red;
+
+                    progressBar.Value = 0;
+                    percentLabel.Text = $"{progressBar.Value}%";
                 }
             }
         }
@@ -204,13 +235,41 @@ public partial class MainMenuForm : Form
 
     #region Worker Events
 
+    /// <summary>Event for updateWorker do work.</summary>
     private void updateWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
-        FileTools.ShowDialogMessage($"Starting update process for {currentSelectedGame}.");
+        if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
+        {
+            updateWorker.ReportProgress(0);
+            DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
+
+            if (NetworkTools.DownloadGameFromFtp(currentSelectedGame))
+            {
+                updateWorker.ReportProgress(0);
+                DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
+
+                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
+                {
+                    updateWorker.ReportProgress(0);
+                    DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
+                }
+            }
+        }
     }
 
+    /// <summary>Event for updateWorker progress change.</summary>
+    private void updateWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+    {
+        progressBar.Value += 30;
+        percentLabel.Text = $"{progressBar.Value}%";
+    }
+
+    /// <summary>Event for updateWorker work complete.</summary>
     private void updateWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
     {
+        progressBar.Value = 100;
+        percentLabel.Text = $"{progressBar.Value}%";
+
         FileTools.ShowDialogMessage($"Succesfully updated {currentSelectedGame} game files.");
 
         progressBar.Value = 0;
@@ -219,22 +278,40 @@ public partial class MainMenuForm : Form
         DebugLogger.Break();
     }
 
+    /// <summary>Event for installWorker do work.</summary>
     private void installWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
         FileTools.ShowDialogMessage($"Starting download and install process for {currentSelectedGame}.");
+        installWorker.ReportProgress(0);
 
-        if (NetworkTools.DownloadGameFromFtp(currentSelectedGame, gameFilePathTextBox.Text))
+        if (NetworkTools.DownloadGameFromFtp(currentSelectedGame))
         {
             DebugLogger.Log($"Successfuly downloaded files from server.");
             DebugLogger.Log($"Starting install now.");
 
+            installWorker.ReportProgress(0);
+
             if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
+            {
+                installWorker.ReportProgress(0);
                 installedIcon.BackColor = Color.Green;
+            }
         }
     }
 
+    /// <summary>Event for installWorker progress change.</summary>
+    private void installWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+    {
+        progressBar.Value += 30;
+        percentLabel.Text = $"{progressBar.Value}%";
+    }
+
+    /// <summary>Event for installWorker work complete.</summary>
     private void installWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
     {
+        progressBar.Value = 100;
+        percentLabel.Text = $"{progressBar.Value}%";
+
         FileTools.ShowDialogMessage($"Succesfully installed {currentSelectedGame} game files.");
 
         progressBar.Value = 0;
