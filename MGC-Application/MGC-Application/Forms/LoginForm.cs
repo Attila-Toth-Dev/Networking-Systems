@@ -15,7 +15,6 @@ public partial class LoginForm : Form
         username = string.Empty;
         password = string.Empty;
         serverIP = string.Empty;
-        directory = string.Empty;
 
         usernameTextBox.Text = "ftp-user";
         passwordTextBox.Text = "mn1-237A";

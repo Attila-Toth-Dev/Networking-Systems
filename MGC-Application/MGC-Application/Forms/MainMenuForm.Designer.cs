@@ -397,11 +397,11 @@
         private Panel filePathLayoutPanel;
         private TextBox gameFilePathTextBox;
         private Button gameFilePathButton;
-        private PictureBox profilePictureBox;
         private Label installLabel;
         private Label percentLabel;
         private Panel installedIcon;
         private System.ComponentModel.BackgroundWorker installWorker;
         private System.ComponentModel.BackgroundWorker updateWorker;
+        public PictureBox profilePictureBox;
     }
 }
