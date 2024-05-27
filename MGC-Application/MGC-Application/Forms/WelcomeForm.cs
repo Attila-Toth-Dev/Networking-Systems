@@ -2,12 +2,18 @@ namespace MGC_Application;
 
 public partial class WelcomeForm : Form
 {
+    public static string logPathFile = @"Logs";
+    public static string gamesPathFile = @"Documents\MGC-Launcher\Games";
+
     public WelcomeForm()
     {
         InitializeComponent();
 
-        FileTools.CreateDirectory("Games");
-        FileTools.CreateDirectory("Logs", true);
+        logPathFile = Environment.ExpandEnvironmentVariables(logPathFile);
+        gamesPathFile = Environment.ExpandEnvironmentVariables(gamesPathFile);
+
+        FileTools.CreateDirectory(gamesPathFile);
+        FileTools.CreateDirectory(logPathFile, true);
     }
 
     private void loadBarTimer_Tick(object sender, EventArgs e)

@@ -105,17 +105,15 @@ public static class FileTools
     /// <summary>Creates a directory in the system files.</summary>
     /// <param name="_folderName">The name for the directory.</param>
     /// <param name="_toReCreate">If the directory needs to be re-made on load.</param>
-    public static void CreateDirectory(string _folderName, bool _toReCreate = false)
+    public static void CreateDirectory(string _filePath, bool _toReCreate = false)
     {
-        if (!Directory.Exists(_folderName))
-        {
-            Directory.CreateDirectory(_folderName);
-        }
+        if (!Directory.Exists(_filePath))
+            Directory.CreateDirectory(_filePath);
 
-        else if (Directory.Exists(_folderName) && _toReCreate)
+        else if (Directory.Exists(_filePath) && _toReCreate)
         {
-            Directory.Delete(_folderName, true);
-            Directory.CreateDirectory(_folderName);
+            Directory.Delete(_filePath, true);
+            Directory.CreateDirectory(_filePath);
         }
     }
 

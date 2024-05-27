@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            ListViewItem listViewItem1 = new ListViewItem("Cursorblade");
-            ListViewItem listViewItem2 = new ListViewItem("Force Reboot");
-            ListViewItem listViewItem3 = new ListViewItem("Hardware Tycoon");
-            ListViewItem listViewItem4 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem5 = new ListViewItem("Mindustry");
+            ListViewItem listViewItem1 = new ListViewItem("Battle for Wesnoth");
+            ListViewItem listViewItem2 = new ListViewItem("Digital Logic Sim");
+            ListViewItem listViewItem3 = new ListViewItem("Force Reboot");
+            ListViewItem listViewItem4 = new ListViewItem("Gardiny");
+            ListViewItem listViewItem5 = new ListViewItem("Hell Bullet");
+            ListViewItem listViewItem6 = new ListViewItem("Mindustry");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -158,12 +159,7 @@
             gameListView.Columns.AddRange(new ColumnHeader[] { gameListHeader });
             gameListView.Dock = DockStyle.Fill;
             gameListView.GridLines = true;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5 });
+            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6 });
             gameListView.Location = new Point(0, 0);
             gameListView.Name = "gameListView";
             gameListView.Size = new Size(299, 473);
