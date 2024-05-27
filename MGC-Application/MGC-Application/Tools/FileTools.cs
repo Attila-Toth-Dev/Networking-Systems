@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using MGC_Application.Forms;
+using System.Diagnostics;
 using System.IO.Compression;
 
 namespace MGC_Application;
@@ -58,7 +59,7 @@ public static class FileTools
         {
             string dir = $"{_pathfile}/{_game}";
 
-            System.IO.File.Delete($"{_pathfile}/{_game}.zip");
+            File.Delete($"{_pathfile}/{_game}.zip");
             Directory.Delete(dir, true);
 
             return true;
@@ -118,22 +119,35 @@ public static class FileTools
         }
     }
 
-    /// <summary>Creates a Desktop shortcut for the game.exe file.</summary>
-    /// <param name="_game">The game of which to create a shortcut path for.</param>
-    /// <param name="_pathFile">The pathfile of which linking the exe shortcut to.</param>
-    /*public static void CreateDesktopShortcut(string _game, string _pathFile)
+    /// <summary>Function simplifies dialog creation function.</summary>
+    /// <param name="_message">The message the user wants to output to log and dialog.</param>
+    /// <param name="_severity">The severity level of the dialog.</param>
+    public static void ShowDialogMessage(string _message, int _severity = 0)
     {
-        string desktopDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        string shortCutDir = Path.Combine(desktopDir, $"{_game}.lnk");
-        string pathFile = @$"{_pathFile}/{_game}.exe";
-        
-        WshShell shell = new WshShell();
-        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortCutDir);
+        DebugLogger.Log(_message);
 
-        shortcut.Description = $"{_game} shortcut.";
-        shortcut.TargetPath = pathFile;
-        DebugLogger.Log(shortcut.TargetPath);
+        DialogBoxForm.MessageSeverity messageSeverity;
 
-        shortcut.Save();
-    }*/
+        switch (_severity)
+        {
+            case 0:
+                messageSeverity = DialogBoxForm.MessageSeverity.MESSAGE;
+                break;
+
+            case 1:
+                messageSeverity = DialogBoxForm.MessageSeverity.WARNING;
+                break;
+
+            case 2:
+                messageSeverity = DialogBoxForm.MessageSeverity.ERROR;
+                break;
+
+            default:
+                messageSeverity = DialogBoxForm.MessageSeverity.MESSAGE;
+                break;
+        }
+
+        DialogBoxForm dialog = new DialogBoxForm(messageSeverity, _message);
+        dialog.ShowDialog();
+    }
 }

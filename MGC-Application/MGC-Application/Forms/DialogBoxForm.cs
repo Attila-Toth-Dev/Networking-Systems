@@ -31,8 +31,6 @@ public partial class DialogBoxForm : Form
 
     private void yesButton_Click(object sender, EventArgs e)
     {
-        DebugLogger.Log("Button Value = 1");
-
         DecisionValue = 1;
         this.Close();
         this.Dispose();

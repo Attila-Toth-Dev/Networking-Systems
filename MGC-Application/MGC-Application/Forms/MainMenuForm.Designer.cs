@@ -51,14 +51,16 @@
             playButton = new Button();
             installButton = new Button();
             progressLayoutPanel = new Panel();
-            installPercentLabel = new Label();
-            installProgressLabel = new Label();
+            percentLabel = new Label();
+            installLabel = new Label();
             progressBar = new ProgressBar();
             gameInfoPanel = new Panel();
             gameFilePathLabel = new Label();
             filePathLayoutPanel = new Panel();
             gameFilePathButton = new Button();
             gameFilePathTextBox = new TextBox();
+            installWorker = new System.ComponentModel.BackgroundWorker();
+            updateWorker = new System.ComponentModel.BackgroundWorker();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
@@ -239,31 +241,31 @@
             // 
             progressLayoutPanel.BackColor = Color.LightBlue;
             progressLayoutPanel.BorderStyle = BorderStyle.Fixed3D;
-            progressLayoutPanel.Controls.Add(installPercentLabel);
-            progressLayoutPanel.Controls.Add(installProgressLabel);
+            progressLayoutPanel.Controls.Add(percentLabel);
+            progressLayoutPanel.Controls.Add(installLabel);
             progressLayoutPanel.Controls.Add(progressBar);
             progressLayoutPanel.Location = new Point(423, 583);
             progressLayoutPanel.Name = "progressLayoutPanel";
             progressLayoutPanel.Size = new Size(311, 74);
             progressLayoutPanel.TabIndex = 7;
             // 
-            // installPercentLabel
+            // percentLabel
             // 
-            installPercentLabel.AutoSize = true;
-            installPercentLabel.Location = new Point(144, 10);
-            installPercentLabel.Name = "installPercentLabel";
-            installPercentLabel.Size = new Size(38, 22);
-            installPercentLabel.TabIndex = 2;
-            installPercentLabel.Text = "0%";
+            percentLabel.AutoSize = true;
+            percentLabel.Location = new Point(144, 10);
+            percentLabel.Name = "percentLabel";
+            percentLabel.Size = new Size(38, 22);
+            percentLabel.TabIndex = 2;
+            percentLabel.Text = "0%";
             // 
-            // installProgressLabel
+            // installLabel
             // 
-            installProgressLabel.AutoSize = true;
-            installProgressLabel.Location = new Point(3, 10);
-            installProgressLabel.Name = "installProgressLabel";
-            installProgressLabel.Size = new Size(147, 22);
-            installProgressLabel.TabIndex = 1;
-            installProgressLabel.Text = "Install Progress:";
+            installLabel.AutoSize = true;
+            installLabel.Location = new Point(3, 10);
+            installLabel.Name = "installLabel";
+            installLabel.Size = new Size(147, 22);
+            installLabel.TabIndex = 1;
+            installLabel.Text = "Install Progress:";
             // 
             // progressBar
             // 
@@ -322,6 +324,18 @@
             gameFilePathTextBox.Name = "gameFilePathTextBox";
             gameFilePathTextBox.Size = new Size(230, 26);
             gameFilePathTextBox.TabIndex = 0;
+            // 
+            // installWorker
+            // 
+            installWorker.WorkerReportsProgress = true;
+            installWorker.DoWork += installWorker_DoWork;
+            installWorker.RunWorkerCompleted += installWorker_RunWorkerCompleted;
+            // 
+            // updateWorker
+            // 
+            updateWorker.WorkerReportsProgress = true;
+            updateWorker.DoWork += updateWorker_DoWork;
+            updateWorker.RunWorkerCompleted += updateWorker_RunWorkerCompleted;
             // 
             // MainMenuForm
             // 
@@ -387,8 +401,10 @@
         private TextBox gameFilePathTextBox;
         private Button gameFilePathButton;
         private PictureBox profilePictureBox;
-        private Label installProgressLabel;
-        private Label installPercentLabel;
+        private Label installLabel;
+        private Label percentLabel;
         private Panel installedIcon;
+        private System.ComponentModel.BackgroundWorker installWorker;
+        private System.ComponentModel.BackgroundWorker updateWorker;
     }
 }
