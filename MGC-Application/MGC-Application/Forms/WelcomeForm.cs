@@ -21,9 +21,12 @@ public partial class WelcomeForm : Form
     /// <summary>Event for loadBarTimer tick.</summary>
     private void loadBarTimer_Tick(object sender, EventArgs e)
     {
+        // change the progress bar load up value
+        // using the timer tick.
         loadingValueLabel.Text = $"{loadingProgressBar.Value}%";
         loadingProgressBar.Value += 10;
 
+        // when loading bar is maximum, open up login form.
         if (loadingProgressBar.Value >= loadingProgressBar.Maximum)
         {
             loadBarTimer.Enabled = false;
@@ -35,5 +38,9 @@ public partial class WelcomeForm : Form
     }
 
     /// <summary>Event for WelcomeForm close.</summary>
-    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
+    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        // close the application.
+        Application.Exit();
+    }
 }

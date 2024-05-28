@@ -379,9 +379,9 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private Panel topHeaderPanel;
         private Label welecomeLabel;
-        private Panel myGamesPanel;
-        private ProgressBar downloadBar;
-        private Label downloadLabel;
+        //private Panel myGamesPanel;
+        //private ProgressBar downloadBar;
+        //private Label downloadLabel;
         private Panel gameListPanel;
         private Panel buttonLayoutPanel;
         private Button installButton;

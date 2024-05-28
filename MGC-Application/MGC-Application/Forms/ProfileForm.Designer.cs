@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileForm));
-            ListViewItem listViewItem1 = new ListViewItem("Character");
-            ListViewItem listViewItem2 = new ListViewItem("Fish Monster");
-            ListViewItem listViewItem3 = new ListViewItem("Goblin Head");
-            ListViewItem listViewItem4 = new ListViewItem("Ogre");
-            ListViewItem listViewItem5 = new ListViewItem("Overlord");
-            ListViewItem listViewItem6 = new ListViewItem("Pirate");
+            ListViewItem listViewItem7 = new ListViewItem("Character");
+            ListViewItem listViewItem8 = new ListViewItem("Fish Monster");
+            ListViewItem listViewItem9 = new ListViewItem("Goblin Head");
+            ListViewItem listViewItem10 = new ListViewItem("Ogre");
+            ListViewItem listViewItem11 = new ListViewItem("Overlord");
+            ListViewItem listViewItem12 = new ListViewItem("Pirate");
             profileIconPanel = new Panel();
             profileIconPictureBox = new PictureBox();
             profileHeaderPanel = new Panel();
@@ -137,7 +137,7 @@
             profileIconListView.Font = new Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             profileIconListView.FullRowSelect = true;
             profileIconListView.GridLines = true;
-            profileIconListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6 });
+            profileIconListView.Items.AddRange(new ListViewItem[] { listViewItem7, listViewItem8, listViewItem9, listViewItem10, listViewItem11, listViewItem12 });
             profileIconListView.Location = new Point(4, 3);
             profileIconListView.Name = "profileIconListView";
             profileIconListView.Size = new Size(145, 53);
@@ -156,6 +156,7 @@
             Controls.Add(profileHeaderPanel);
             Controls.Add(profileIconPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5, 4, 5, 4);
             MaximizeBox = false;

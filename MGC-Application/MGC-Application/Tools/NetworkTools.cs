@@ -16,40 +16,47 @@ public static class NetworkTools
     /// <param name="_password">The password of the client.</param>
     public static bool CheckValidFTP(string _serverIP, string _username, string _password)
     {
-        if(IsValidIP(_serverIP, 5))
+        // check to see if the given IP is a valid address.
+        if (IsValidIP(_serverIP, 5))
         {
+            // if true, create a FTP web request to remote host
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
-            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
 
+            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
             request.Credentials = new NetworkCredential(_username, _password);
+            request.ServicePoint.ConnectionLimit = 4;
             request.Timeout = 1000;
 
             var stopwatch = Stopwatch.StartNew();
 
+            // try to get response from remote host
+            // else, prompt with web exception error.
             try
             {
-                request.GetResponse();
-            
+                request.GetResponseAsync();
+                request.KeepAlive = false;
+
+                stopwatch.Stop();
+
                 DebugLogger.Log($"FTP connection is valid with {_serverIP}.");
                 DebugLogger.Log($"Connection time: {stopwatch.Elapsed}");
-            
-                stopwatch.Stop();
-            
+
                 return true;
             }
             catch (WebException ex)
             {
+                request.KeepAlive = false;
                 stopwatch.Stop();
 
                 DebugLogger.Log($"Error initializing connection with server: {ex.Message}");
+
                 return false;
             }
         }
         else
-        {
             return false;
-        }
-
     }
 
     /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
@@ -57,6 +64,8 @@ public static class NetworkTools
     /// <param name="_timeout">The timeout time for the ping.</param>
     public static bool IsValidIP(string _serverIP, int _timeout)
     {
+        // try to ping the address to check if it is a true address,
+        // else return ping exception error.
         try
         {
             Ping ping = new Ping();
@@ -69,6 +78,7 @@ public static class NetworkTools
         catch(PingException ex)
         {
             DebugLogger.Log($"Error validating connection to address. {ex.Message}");
+            
             return false;
         }
     }
@@ -80,13 +90,20 @@ public static class NetworkTools
     {
         string dir = $"{WelcomeForm.gamesPathFile}/{_game}.zip";
 
+        // create a FTP web request to remote host to initialize
+        // connection with host.
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
+
         request.Credentials = new NetworkCredential(Username, Password);
         request.UseBinary = true;
         request.Method = WebRequestMethods.Ftp.DownloadFile;
 
-        var stopwatch = Stopwatch.StartNew();
-
+        // try to write the data of the .zip from
+        // server to local machine local pathfile.
+        
+        // else throw a webexception error. 
         try
         {
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
@@ -109,8 +126,6 @@ public static class NetworkTools
             response.Close();
             writer.Close();
 
-            stopwatch.Stop();
-
             Thread.Sleep(1000);
 
             return true;
@@ -118,7 +133,6 @@ public static class NetworkTools
         catch (WebException ex)
         {
             DebugLogger.Log($"Error downloading files from server: {ex.Message}");
-            stopwatch.Stop();
 
             return false;
         }
@@ -128,31 +142,33 @@ public static class NetworkTools
     /// <param name="_game">The game to check file size of.</param>
     public static long CheckForUpdate(string _game)
     {
+        // create a FTP web request connection to address
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
         FtpWebRequest requestSize = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
+
         requestSize.Proxy = null;
         requestSize.Credentials = new NetworkCredential(Username, Password);
         requestSize.Method = WebRequestMethods.Ftp.GetFileSize;
 
-        Stopwatch stopwatch = Stopwatch.StartNew();
+        // try to get the file size of the copy
+        // of game from remote host for update sizing.
 
+        // else return web exception error.
         try
         {
             FtpWebResponse responseSize = (FtpWebResponse)requestSize.GetResponse();
             long fileSize = responseSize.ContentLength;
             responseSize.Close();
 
-            stopwatch.Stop();
-
-            Thread.Sleep(1000);
-
             DebugLogger.Log($"File size is {fileSize}");
+            
             return fileSize;
         }
         catch(WebException ex)
         {
-            stopwatch.Stop();
-
             DebugLogger.Log($"Error getting file size off of remote server: {ex.Message}");
+            
             return 0;
         }
     }

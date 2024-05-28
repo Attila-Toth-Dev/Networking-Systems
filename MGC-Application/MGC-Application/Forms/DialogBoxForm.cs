@@ -32,6 +32,7 @@ public partial class DialogBoxForm : Form
     /// <summary>Event for yesButton click.</summary>
     private void yesButton_Click(object sender, EventArgs e)
     {
+        // returns a positive value for yes.
         DecisionValue = 1;
         this.Close();
         this.Dispose();
@@ -40,6 +41,7 @@ public partial class DialogBoxForm : Form
     /// <summary>Event for noButton click.</summary>
     private void noButton_Click(object sender, EventArgs e)
     {
+        // returns a negative value for no.
         DecisionValue = -1;
         this.Close();
         this.Dispose();
@@ -48,6 +50,7 @@ public partial class DialogBoxForm : Form
     /// <summary>Event for okayButton click.</summary>
     private void okayButton_Click(object sender, EventArgs e)
     {
+        // closes the dialog box.
         this.Close();
         this.Dispose();
     }
@@ -56,6 +59,8 @@ public partial class DialogBoxForm : Form
     /// <param name="_headerMessage">The severity level of dialog box.</param>
     private void DialogBoxText(MessageSeverity _headerMessage)
     {
+        // dependent on the messageseverity, change the forms
+        // text to the severity level.
         switch (_headerMessage)
         {
             case MessageSeverity.MESSAGE:

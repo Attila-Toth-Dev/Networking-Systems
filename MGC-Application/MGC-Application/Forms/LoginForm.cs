@@ -26,6 +26,7 @@ public partial class LoginForm : Form
     /// <summary>Event for passwordTextBox text change.</summary>
     private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
+        // changes password to the characters inside text box.
         passwordTextBox.MaxLength = 50;
         password = passwordTextBox.Text;
     }
@@ -33,6 +34,7 @@ public partial class LoginForm : Form
     /// <summary>Event for usernameTextBox text change.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e)
     {
+        // changes username to the characters inside text box.
         usernameTextBox.MaxLength = 50;
         username = usernameTextBox.Text;
     }
@@ -40,6 +42,7 @@ public partial class LoginForm : Form
     /// <summary>Event for serverIpTextBox text change.</summary>
     private void serverIpTextBox_TextChanged(object sender, EventArgs e)
     {
+        // changes server IP to the characters inside text box.
         serverIpTextBox.MaxLength = 50;
         serverIP = serverIpTextBox.Text;
     }
@@ -47,8 +50,12 @@ public partial class LoginForm : Form
     /// <summary>Event for loginButton click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
+        // check to see if username, password and server IP
+        // match up to FTP server allowed users.
         if (NetworkTools.CheckValidFTP(serverIP, username, password))
         {
+            // if true, save username, password and serverIP to network class,
+            // and display main menu form.
             DebugLogger.Log($"Successfully logged into server {serverIP}.");
 
             NetworkTools.Username = username;
@@ -62,11 +69,9 @@ public partial class LoginForm : Form
         }
         else
         {
-            DebugLogger.Log("$Error logging into server.");
-
-            DialogBoxForm dialog = new DialogBoxForm(DialogBoxForm.MessageSeverity.ERROR,
-                $"Error logging into server.\nPlease try again.");
-            dialog.ShowDialog();
+            // if false, return a dialog box erroring the user credentials.
+            // prompt user to try logging in again.
+            FileTools.ShowDialogMessage($"Error logging into server, please try again.", 1);
 
             passwordTextBox.Clear();
             usernameTextBox.Focus();
@@ -78,17 +83,30 @@ public partial class LoginForm : Form
     /// <summary>Event for clearFieldsButton click.</summary>
     private void clearFieldsButton_Click(object sender, EventArgs e)
     {
+        // clear data inside text boxes.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
         serverIpTextBox.Clear();
     }
 
     /// <summary>Event for passwordPictureBox mouse down.</summary>
-    private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e) => passwordTextBox.UseSystemPasswordChar = false;
+    private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e)
+    {
+        // allow user to view password with mouse down.
+        passwordTextBox.UseSystemPasswordChar = false;
+    }
 
     /// <summary>Event for passwordPictureBox mouse up.</summary>
-    private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e) => passwordTextBox.UseSystemPasswordChar = true;
+    private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e)
+    {
+        // disable viewing of password back to password characters.
+        passwordTextBox.UseSystemPasswordChar = true;
+    }
 
     /// <summary>Event for LoginForm close.</summary>
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        // close application.
+        Application.Exit();
+    }
 }

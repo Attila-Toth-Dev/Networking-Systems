@@ -9,6 +9,8 @@ public static class DebugLogger
         string logFileName = $"Logs.txt";
         string logPath = $"{WelcomeForm.logPathFile}/{logFileName}";
 
+        // append the string message with time and date, alongside message
+        // as a new ling in the logs file.
         using (StreamWriter writer = new StreamWriter(logPath, true))
             writer.WriteLine($"{DateTime.Now} : {_message}");
     }
@@ -19,6 +21,7 @@ public static class DebugLogger
         string logFileName = $"Logs.txt";
         string logPath = $"{WelcomeForm.logPathFile}/{logFileName}";
 
+        // create a new empty line in logs file.
         using (StreamWriter write = new StreamWriter(logPath, true))
             write.WriteLine(" ");
     }
