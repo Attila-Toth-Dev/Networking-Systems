@@ -55,6 +55,7 @@
             percentLabel = new Label();
             installLabel = new Label();
             progressBar = new ProgressBar();
+            cancelButton = new Button();
             gameInfoPanel = new Panel();
             gameFilePathLabel = new Label();
             filePathLayoutPanel = new Panel();
@@ -62,6 +63,8 @@
             gameFilePathTextBox = new TextBox();
             installWorker = new System.ComponentModel.BackgroundWorker();
             updateWorker = new System.ComponentModel.BackgroundWorker();
+            toolsPanel = new Panel();
+            propertiesButton = new Button();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
@@ -69,6 +72,7 @@
             buttonLayoutPanel.SuspendLayout();
             progressLayoutPanel.SuspendLayout();
             filePathLayoutPanel.SuspendLayout();
+            toolsPanel.SuspendLayout();
             SuspendLayout();
             // 
             // toolMenuStrip
@@ -103,7 +107,7 @@
             // 
             // topHeaderPanel
             // 
-            topHeaderPanel.BackColor = Color.PowderBlue;
+            topHeaderPanel.BackColor = Color.LightBlue;
             topHeaderPanel.BorderStyle = BorderStyle.Fixed3D;
             topHeaderPanel.Controls.Add(profilePictureBox);
             topHeaderPanel.Controls.Add(welecomeLabel);
@@ -239,9 +243,9 @@
             progressLayoutPanel.Controls.Add(percentLabel);
             progressLayoutPanel.Controls.Add(installLabel);
             progressLayoutPanel.Controls.Add(progressBar);
-            progressLayoutPanel.Location = new Point(423, 583);
+            progressLayoutPanel.Location = new Point(517, 583);
             progressLayoutPanel.Name = "progressLayoutPanel";
-            progressLayoutPanel.Size = new Size(311, 74);
+            progressLayoutPanel.Size = new Size(217, 74);
             progressLayoutPanel.TabIndex = 7;
             // 
             // percentLabel
@@ -267,8 +271,18 @@
             progressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             progressBar.Location = new Point(3, 41);
             progressBar.Name = "progressBar";
-            progressBar.Size = new Size(301, 26);
+            progressBar.Size = new Size(206, 26);
             progressBar.TabIndex = 0;
+            // 
+            // cancelButton
+            // 
+            cancelButton.Location = new Point(3, 3);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(78, 32);
+            cancelButton.TabIndex = 0;
+            cancelButton.Text = "Cancel";
+            cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.Click += cancelButton_Click;
             // 
             // gameInfoPanel
             // 
@@ -314,8 +328,9 @@
             // gameFilePathTextBox
             // 
             gameFilePathTextBox.Enabled = false;
-            gameFilePathTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gameFilePathTextBox.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gameFilePathTextBox.Location = new Point(3, 41);
+            gameFilePathTextBox.Multiline = true;
             gameFilePathTextBox.Name = "gameFilePathTextBox";
             gameFilePathTextBox.Size = new Size(230, 26);
             gameFilePathTextBox.TabIndex = 0;
@@ -323,6 +338,7 @@
             // installWorker
             // 
             installWorker.WorkerReportsProgress = true;
+            installWorker.WorkerSupportsCancellation = true;
             installWorker.DoWork += installWorker_DoWork;
             installWorker.ProgressChanged += installWorker_ProgressChanged;
             installWorker.RunWorkerCompleted += installWorker_RunWorkerCompleted;
@@ -330,9 +346,32 @@
             // updateWorker
             // 
             updateWorker.WorkerReportsProgress = true;
+            updateWorker.WorkerSupportsCancellation = true;
             updateWorker.DoWork += updateWorker_DoWork;
             updateWorker.ProgressChanged += updateWorker_ProgressChanged;
             updateWorker.RunWorkerCompleted += updateWorker_RunWorkerCompleted;
+            // 
+            // toolsPanel
+            // 
+            toolsPanel.BackColor = Color.LightBlue;
+            toolsPanel.BorderStyle = BorderStyle.Fixed3D;
+            toolsPanel.Controls.Add(propertiesButton);
+            toolsPanel.Controls.Add(cancelButton);
+            toolsPanel.Location = new Point(423, 583);
+            toolsPanel.Name = "toolsPanel";
+            toolsPanel.Size = new Size(88, 74);
+            toolsPanel.TabIndex = 1;
+            // 
+            // propertiesButton
+            // 
+            propertiesButton.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            propertiesButton.Location = new Point(3, 36);
+            propertiesButton.Name = "propertiesButton";
+            propertiesButton.Size = new Size(78, 32);
+            propertiesButton.TabIndex = 1;
+            propertiesButton.Text = "Config";
+            propertiesButton.UseVisualStyleBackColor = true;
+            propertiesButton.Click += propertiesButton_Click;
             // 
             // MainMenuForm
             // 
@@ -340,6 +379,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonFace;
             ClientSize = new Size(984, 661);
+            Controls.Add(toolsPanel);
             Controls.Add(filePathLayoutPanel);
             Controls.Add(gameInfoPanel);
             Controls.Add(progressLayoutPanel);
@@ -368,6 +408,7 @@
             progressLayoutPanel.PerformLayout();
             filePathLayoutPanel.ResumeLayout(false);
             filePathLayoutPanel.PerformLayout();
+            toolsPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -395,7 +436,6 @@
         public ColumnHeader gameListHeader;
         private Label gameFilePathLabel;
         private Panel filePathLayoutPanel;
-        private TextBox gameFilePathTextBox;
         private Button gameFilePathButton;
         private Label installLabel;
         private Label percentLabel;
@@ -403,5 +443,9 @@
         private System.ComponentModel.BackgroundWorker installWorker;
         private System.ComponentModel.BackgroundWorker updateWorker;
         public PictureBox profilePictureBox;
+        private Button cancelButton;
+        private Panel toolsPanel;
+        private Button propertiesButton;
+        public TextBox gameFilePathTextBox;
     }
 }

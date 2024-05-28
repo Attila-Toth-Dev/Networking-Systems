@@ -4,37 +4,46 @@ namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
-    public Image ProfileIcon 
+    public Image ProfileIcon
     {
         get => profilePictureBox.Image;
         set => profilePictureBox.Image = value;
     }
 
-    public int Restrict
+    public int ProfileRestrict
     {
-        get => restrict;
-        set => restrict = value;
+        get => profileRestrict;
+        set => profileRestrict = value;
     }
 
-    private ProfileForm profileForm;
+    public int PropertiesRestrict
+    {
+        get => propertiesRestrict;
+        set => propertiesRestrict = value;
+    }
 
-    private string currentSelectedGame;
-    private int restrict;
+    public string currentSelectedGame;
+
+    private ProfileForm profileForm;
+    private PropertiesForm propertiesForm;
+
+    private int profileRestrict;
+    private int propertiesRestrict;
 
     public MainMenuForm()
     {
         InitializeComponent();
 
         profileForm = new ProfileForm(this);
-
-        gameFilePathTextBox.Text = WelcomeForm.gamesPathFile;
-        installedIcon.BackColor = Color.Gray;
+        propertiesForm = new PropertiesForm(this);
+        
+        profileRestrict = 0;
+        propertiesRestrict = 0;
 
         currentSelectedGame = string.Empty;
-        restrict = 0;
-        
-        updateWorker.WorkerReportsProgress = true;
-        installWorker.WorkerReportsProgress = true;
+        gameFilePathTextBox.Text = WelcomeForm.gamesPathFile;
+
+        installedIcon.BackColor = Color.Gray;
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
     }
@@ -71,7 +80,7 @@ public partial class MainMenuForm : Form
             // set the pathfile text to the designated path chosen
             // by the player.
             gameFilePathTextBox.Text = diag.SelectedPath;
-            DebugLogger.Log($"Current game filepath: {diag.SelectedPath}");
+            DebugLogger.Log($"Current game filepath: {gameFilePathTextBox.Text}");
         }
     }
 
@@ -121,11 +130,11 @@ public partial class MainMenuForm : Form
             // if true, open the profile form menu as a dialog.
             // if false, if restrict value > 0 then prevent from opening another
             // profile menu dialog form.
-            if (restrict == 0)
+            if (profileRestrict == 0)
             {
                 DebugLogger.Log($"Accessing {NetworkTools.Username} profile.");
 
-                restrict++;
+                profileRestrict++;
                 profileForm.ShowDialog();
             }
             else
@@ -309,6 +318,64 @@ public partial class MainMenuForm : Form
         DebugLogger.Break();
     }
 
+    /// <summary>Event for cancelButton click.</summary>
+    private void cancelButton_Click(object sender, EventArgs e)
+    {
+        // if true, cancel background process,
+        // else, return prompt to user.
+        if (updateWorker.IsBusy == true || installWorker.IsBusy == true)
+        {
+            updateWorker.CancelAsync();
+            installWorker.CancelAsync();
+
+            // abort ftp processes going on.
+            // and uninstall the downloaded zip to avoid conflict errors.
+            //NetworkTools.request?.Abort();
+            // make so we wait for worker stop confirmation,
+            // then unistall file.
+            //FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text);
+        }
+        else
+            FileTools.ShowDialogMessage("There are no on-going processes running in the background, aborting process.", 1);
+    }
+
+    /// <summary>Event for propertiesButton click.</summary>
+    private void propertiesButton_Click(object sender, EventArgs e)
+    {
+        // if a game has not been selected, then prompt user to
+        // select a game to access properties window. 
+        if (string.IsNullOrWhiteSpace(currentSelectedGame))
+        {
+            FileTools.ShowDialogMessage($"Please select a game before proceeding.", 1);
+            return;
+        }
+
+        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        {
+            // when user clicks on profile icon, make sure the program
+            // is able to only open up one profile menu, this eases memory usage.
+            if (propertiesForm != null)
+            {
+                // if true, open the profile form menu as a dialog.
+                // if false, if restrict value > 0 then prevent from opening another
+                // profile menu dialog form.
+                if (propertiesRestrict == 0)
+                {
+                    DebugLogger.Log($"Accessing {currentSelectedGame} properties window.");
+
+                    propertiesRestrict++;
+                    propertiesForm.ShowDialog();
+                }
+                else
+                    propertiesForm.Close();
+            }
+        }
+        else
+            FileTools.ShowDialogMessage($"{currentSelectedGame} is not installed or has not been found. Please install and try again.", 1);
+
+        DebugLogger.Break();
+    }
+
     #endregion
 
     #region Worker Events
@@ -318,21 +385,21 @@ public partial class MainMenuForm : Form
     {
         // when updating, remove the .zip file and
         // main game directory from install location.
-        if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
         {
             updateWorker.ReportProgress(0);
             DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
 
             // once completely uninstalled, download the new copy
             // of the updated game.
-            if (NetworkTools.DownloadGameFromFtp(currentSelectedGame))
+            if (NetworkTools.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
             {
                 updateWorker.ReportProgress(0);
                 DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
 
                 // then "install" the new copy by extracting
                 // the .zip file.
-                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
+                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
                 {
                     updateWorker.ReportProgress(0);
                     DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
@@ -372,6 +439,9 @@ public partial class MainMenuForm : Form
     /// <summary>Event for installWorker do work.</summary>
     private void installWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
+        if (installWorker.CancellationPending)
+            e.Cancel = true;
+
         // prompt user letting them know game install
         // will commence.
         FileTools.ShowDialogMessage($"Starting download and install process for {currentSelectedGame}.");
@@ -379,15 +449,21 @@ public partial class MainMenuForm : Form
 
         // then download the copy of the game from
         // the remote host.
-        if (NetworkTools.DownloadGameFromFtp(currentSelectedGame))
+        if (NetworkTools.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
         {
+            if (installWorker.CancellationPending)
+                e.Cancel = true;
+
             installWorker.ReportProgress(0);
             DebugLogger.Log($"Successfuly downloaded files from server.");
             DebugLogger.Log($"Starting install now.");
 
             // then "install" the freshly downloaded .zip file.
-            if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text))
+            if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
             {
+                if (installWorker.CancellationPending)
+                    e.Cancel = true;
+
                 installWorker.ReportProgress(0);
                 installedIcon.BackColor = Color.Green;
             }

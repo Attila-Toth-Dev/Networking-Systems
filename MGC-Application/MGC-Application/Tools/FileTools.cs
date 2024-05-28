@@ -60,10 +60,9 @@ public static class FileTools
     /// <param name="_pathfile">The filepath of the chosen game.</param>
     public static bool Uninstall(string _game, string _pathfile)
     {
-        // try uninstalling the .zip and game directory.
-        // if it cannot be unistalled, throw directory not found exception.
         try
         {
+            // try uninstalling the .zip and game directory.
             string dir = $"{_pathfile}/{_game}";
 
             File.Delete($"{_pathfile}/{_game}.zip");
@@ -73,8 +72,8 @@ public static class FileTools
         }
         catch(DirectoryNotFoundException ex)
         {
+            // if it cannot be unistalled, throw directory not found exception.
             DebugLogger.Log($"Error uninstalling {_game} files: {ex.Message}");
-            
             return false;
         }
     }
