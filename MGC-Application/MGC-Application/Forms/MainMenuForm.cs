@@ -1,4 +1,6 @@
 ﻿using MGC_Application.Forms;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace MGC_Application;
 
@@ -42,6 +44,8 @@ public partial class MainMenuForm : Form
         gameFilePathTextBox.Text = WelcomeForm.gamesPathFile;
 
         installedIcon.BackColor = Color.Gray;
+
+        cancelButton.Enabled = false;
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
     }
@@ -140,6 +144,12 @@ public partial class MainMenuForm : Form
         }
 
         DebugLogger.Break();
+    }
+
+    /// <summary>Event for consoleToolStripMenuItem click.</summary>
+    private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+
     }
 
     /// <summary>Event for MainMenuForm close.</summary>
@@ -389,7 +399,7 @@ public partial class MainMenuForm : Form
         {
             //DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
             updateWorker.ReportProgress(0);
-            
+
             // check to see if there is a cancellation
             // pending from the user
             if (updateWorker.CancellationPending)
@@ -418,7 +428,7 @@ public partial class MainMenuForm : Form
                 // then "install" the new copy by extracting
                 // the .zip file.
                 if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending) { }
-                    //DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
+                //DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
             }
         }
     }

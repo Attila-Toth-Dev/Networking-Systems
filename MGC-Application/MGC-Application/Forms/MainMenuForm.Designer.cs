@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            ListViewItem listViewItem1 = new ListViewItem("Battle for Wesnoth");
-            ListViewItem listViewItem2 = new ListViewItem("Digital Logic Sim");
-            ListViewItem listViewItem3 = new ListViewItem("Force Reboot");
-            ListViewItem listViewItem4 = new ListViewItem("Gardiny");
-            ListViewItem listViewItem5 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem6 = new ListViewItem("Mindustry");
+            ListViewItem listViewItem7 = new ListViewItem("Battle for Wesnoth");
+            ListViewItem listViewItem8 = new ListViewItem("Digital Logic Sim");
+            ListViewItem listViewItem9 = new ListViewItem("Force Reboot");
+            ListViewItem listViewItem10 = new ListViewItem("Gardiny");
+            ListViewItem listViewItem11 = new ListViewItem("Hell Bullet");
+            ListViewItem listViewItem12 = new ListViewItem("Mindustry");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -65,6 +65,8 @@
             updateWorker = new System.ComponentModel.BackgroundWorker();
             toolsPanel = new Panel();
             propertiesButton = new Button();
+            viewToolStripMenuItem = new ToolStripMenuItem();
+            consoleToolStripMenuItem = new ToolStripMenuItem();
             toolMenuStrip.SuspendLayout();
             topHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
@@ -77,7 +79,7 @@
             // 
             // toolMenuStrip
             // 
-            toolMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+            toolMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem });
             toolMenuStrip.Location = new Point(0, 0);
             toolMenuStrip.Name = "toolMenuStrip";
             toolMenuStrip.Size = new Size(984, 24);
@@ -94,14 +96,14 @@
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(112, 22);
+            logoutToolStripMenuItem.Size = new Size(180, 22);
             logoutToolStripMenuItem.Text = "&Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(112, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "&Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -163,7 +165,7 @@
             gameListView.Columns.AddRange(new ColumnHeader[] { gameListHeader });
             gameListView.Dock = DockStyle.Fill;
             gameListView.GridLines = true;
-            gameListView.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5, listViewItem6 });
+            gameListView.Items.AddRange(new ListViewItem[] { listViewItem7, listViewItem8, listViewItem9, listViewItem10, listViewItem11, listViewItem12 });
             gameListView.Location = new Point(0, 0);
             gameListView.Name = "gameListView";
             gameListView.Size = new Size(299, 473);
@@ -373,6 +375,20 @@
             propertiesButton.UseVisualStyleBackColor = true;
             propertiesButton.Click += propertiesButton_Click;
             // 
+            // viewToolStripMenuItem
+            // 
+            viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { consoleToolStripMenuItem });
+            viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            viewToolStripMenuItem.Size = new Size(44, 20);
+            viewToolStripMenuItem.Text = "&View";
+            // 
+            // consoleToolStripMenuItem
+            // 
+            consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
+            consoleToolStripMenuItem.Size = new Size(180, 22);
+            consoleToolStripMenuItem.Text = "&Console";
+            consoleToolStripMenuItem.Click += consoleToolStripMenuItem_Click;
+            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -447,5 +463,7 @@
         private Panel toolsPanel;
         private Button propertiesButton;
         public TextBox gameFilePathTextBox;
+        private ToolStripMenuItem viewToolStripMenuItem;
+        private ToolStripMenuItem consoleToolStripMenuItem;
     }
 }
