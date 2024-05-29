@@ -56,7 +56,7 @@ public partial class LoginForm : Form
         {
             // if true, save username, password and serverIP to network class,
             // and display main menu form.
-            DebugLogger.Log($"Successfully logged into server {serverIP}.");
+            //DebugLogger.Log($"Successfully logged into server {serverIP}.");
 
             NetworkTools.Username = username;
             NetworkTools.Password = password;
@@ -71,7 +71,7 @@ public partial class LoginForm : Form
         {
             // if false, return a dialog box erroring the user credentials.
             // prompt user to try logging in again.
-            FileTools.ShowDialogMessage($"Error logging into server, please try again.", 1);
+            FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
 
             passwordTextBox.Clear();
             usernameTextBox.Focus();

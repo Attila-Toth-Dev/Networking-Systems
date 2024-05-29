@@ -22,10 +22,11 @@ public partial class MainMenuForm : Form
         set => propertiesRestrict = value;
     }
 
-    public string currentSelectedGame;
+    public string GamePathFile { get => gameFilePathTextBox.Text; }
 
-    private ProfileForm profileForm;
-    private PropertiesForm propertiesForm;
+    public bool IsInProcess { get; set; }
+
+    private string currentSelectedGame;
 
     private int profileRestrict;
     private int propertiesRestrict;
@@ -34,9 +35,6 @@ public partial class MainMenuForm : Form
     {
         InitializeComponent();
 
-        profileForm = new ProfileForm(this);
-        propertiesForm = new PropertiesForm(this);
-        
         profileRestrict = 0;
         propertiesRestrict = 0;
 
@@ -57,6 +55,7 @@ public partial class MainMenuForm : Form
         // selected in list views name.
         ListViewItem item = gameListView.SelectedItems[0];
         currentSelectedGame = item.Text;
+        FileTools.currentGame = currentSelectedGame;
 
         // verify if game has been installed in location.
         // if true, set game installed? icon colour to green.
@@ -65,8 +64,6 @@ public partial class MainMenuForm : Form
             installedIcon.BackColor = Color.Green;
         else
             installedIcon.BackColor = Color.Red;
-
-        DebugLogger.Log($"Current game selected: {item.Text}");
     }
 
     /// <summary>Event for the gameFolderPathButton click.</summary>
@@ -80,7 +77,7 @@ public partial class MainMenuForm : Form
             // set the pathfile text to the designated path chosen
             // by the player.
             gameFilePathTextBox.Text = diag.SelectedPath;
-            DebugLogger.Log($"Current game filepath: {gameFilePathTextBox.Text}");
+            DebugLogger.Log($"Current game filepath: {gameFilePathTextBox.Text} (Line 80)");
         }
     }
 
@@ -95,9 +92,9 @@ public partial class MainMenuForm : Form
 
         // if true, close the main menu application,
         // then open the login form menu.
-        if (result.DecisionValue == 1)
+        if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
         {
-            DebugLogger.Log($"{NetworkTools.Username} disconnected from {NetworkTools.ServerIP}.");
+            DebugLogger.Log($"{NetworkTools.Username} disconnected from {NetworkTools.ServerIP}. (Line 97)");
 
             this.Hide();
 
@@ -116,29 +113,30 @@ public partial class MainMenuForm : Form
         result.ShowDialog();
 
         // if true, then close the application.
-        if (result.DecisionValue == 1)
+        if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
             Application.Exit();
     }
 
     /// <summary>Event for the profilePictureBox click.</summary>
     private void profilePictureBox_Click(object sender, EventArgs e)
     {
-        // when user clicks on profile icon, make sure the program
-        // is able to only open up one profile menu, this eases memory usage.
-        if (profileForm != null)
+        using (ProfileForm profile = new ProfileForm(this))
         {
-            // if true, open the profile form menu as a dialog.
-            // if false, if restrict value > 0 then prevent from opening another
-            // profile menu dialog form.
-            if (profileRestrict == 0)
+            // when user clicks on profile icon, make sure the program
+            // is able to only open up one profile menu, this eases memory usage.
+            if (profile != null)
             {
-                DebugLogger.Log($"Accessing {NetworkTools.Username} profile.");
-
-                profileRestrict++;
-                profileForm.ShowDialog();
+                // if true, open the profile form menu as a dialog.
+                // if false, if restrict value > 0 then prevent from opening another
+                // profile menu dialog form.
+                if (profileRestrict == 0)
+                {
+                    profileRestrict++;
+                    profile.ShowDialog();
+                }
+                else
+                    profile.Close();
             }
-            else
-                profileForm.Close();
         }
 
         DebugLogger.Break();
@@ -162,15 +160,13 @@ public partial class MainMenuForm : Form
         // select a game to run.
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
-            FileTools.ShowDialogMessage($"Please select a game before proceeding.", 1);
+            FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 165)", 1);
             return;
         }
 
         // check to see if the game has been installed.
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            DebugLogger.Log($"{currentSelectedGame} files have been found.");
-
             // if game is installed,
             // run the current selected game .exe.
             if (FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
@@ -180,7 +176,7 @@ public partial class MainMenuForm : Form
         {
             // else, prompt the user that files,
             // do not appear to be installed.
-            FileTools.ShowDialogMessage($"{currentSelectedGame} files are missing.", 2);
+            FileTools.ShowDialogMessage($"{currentSelectedGame} files are missing. (Line 183)", 2);
         }
 
         DebugLogger.Break();
@@ -193,15 +189,13 @@ public partial class MainMenuForm : Form
         // select a game to update.
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
-            FileTools.ShowDialogMessage($"Please select a game before proceeding.");
+            FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 196)");
             return;
         }
 
         // check to see if game has already been installed.
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            DebugLogger.Log($"{currentSelectedGame} game files have been found.");
-
             // if installed, grab the file size of the local copy of the game,
             // and also grab the file size of the remote hosts copy of the game.
             long localFileLength = new FileInfo($"{gameFilePathTextBox.Text}/{currentSelectedGame}.zip").Length;
@@ -209,7 +203,7 @@ public partial class MainMenuForm : Form
 
             // if both have the same size, return no update.
             if (localFileLength == remoteFileLength)
-                FileTools.ShowDialogMessage($"There is currently no update available for {currentSelectedGame}.");
+                FileTools.ShowDialogMessage($"There is currently no update available for {currentSelectedGame}. (Line 212)");
 
             // if there is a difference size wise comparing to remote copy.
             if (localFileLength < remoteFileLength || localFileLength > remoteFileLength)
@@ -224,20 +218,25 @@ public partial class MainMenuForm : Form
 
                     // if true, start the updating process on a different thread.
                     // if false, return and remove the prompt.
-                    if (result.DecisionValue == 1)
+                    if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
                     {
+                        DebugLogger.Log($"Starting update process now...");
+
+                        IsInProcess = true;
+
                         updateButton.Enabled = false;
                         installButton.Enabled = false;
+                        uninstallButton.Enabled = false;
 
                         updateWorker.RunWorkerAsync();
                     }
                 }
                 else
-                    FileTools.ShowDialogMessage($"Could not perform task as there are already processes running in the background.", 2);
+                    FileTools.ShowDialogMessage($"Could not perform task as there are already processes running in the background. (Line 235)", 2);
             }
         }
         else
-            FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed.", 1);
+            FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed. (Line 239)", 1);
     }
 
     /// <summary>Event for installButton click.</summary>
@@ -247,7 +246,7 @@ public partial class MainMenuForm : Form
         // select a game to install.
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
-            FileTools.ShowDialogMessage($"Please select a game before proceeding.", 1);
+            FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 249)", 1);
             return;
         }
 
@@ -255,22 +254,25 @@ public partial class MainMenuForm : Form
         // if false, prompt user saying files have already been found.
         if (!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            DebugLogger.Log($"{currentSelectedGame} game files have not been found.");
-
             // if thread is not busy, start the install process
             // on the install thread.
             if (installWorker.IsBusy != true)
             {
+                DebugLogger.Log($"Starting install process now...");
+
+                IsInProcess = true;
+
                 installButton.Enabled = false;
                 updateButton.Enabled = false;
+                uninstallButton.Enabled = false;
 
                 installWorker.RunWorkerAsync();
             }
             else
-                FileTools.ShowDialogMessage($"Could not perform task as there are already processes running in the background.");
+                FileTools.ShowDialogMessage($"Could not perform task as there are already processes running in the background. (Line 270)");
         }
         else
-            FileTools.ShowDialogMessage($"{currentSelectedGame} game files have already been installed.", 1);
+            FileTools.ShowDialogMessage($"{currentSelectedGame} game files have already been installed. (Line 273)", 1);
     }
 
     /// <summary>Event for uninstallButton click.</summary>
@@ -280,7 +282,7 @@ public partial class MainMenuForm : Form
         // select a game to uninstall.
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
-            FileTools.ShowDialogMessage($"Please select a game before proceeding.", 1);
+            FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 283)", 1);
             return;
         }
 
@@ -288,8 +290,6 @@ public partial class MainMenuForm : Form
         // if false, prompt user saying game has not been installed.
         if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            DebugLogger.Log($"{currentSelectedGame} game files have been found.");
-
             // prompt user asking if they are certain on uninstalling.
             DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
                 $"Are you sure you would like to uninstall {currentSelectedGame}?", true);
@@ -297,14 +297,16 @@ public partial class MainMenuForm : Form
 
             // if true, uninstall the game.zip and the game directory
             // from the install path file location.
-            if (result.DecisionValue == 1)
+            if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
             {
+                DebugLogger.Log("Starting uninstall process now...");
+
                 if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
                 {
                     progressBar.Value = 100;
                     percentLabel.Text = $"{progressBar.Value}%";
 
-                    FileTools.ShowDialogMessage($"Successfully uninstalled {currentSelectedGame} game files.");
+                    FileTools.ShowDialogMessage($"Successfully uninstalled {currentSelectedGame} game files. (Line 305)");
                     installedIcon.BackColor = Color.Red;
 
                     progressBar.Value = 0;
@@ -313,7 +315,7 @@ public partial class MainMenuForm : Form
             }
         }
         else
-            FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed.", 2);
+            FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed. (Line 314)", 2);
 
         DebugLogger.Break();
     }
@@ -327,16 +329,9 @@ public partial class MainMenuForm : Form
         {
             updateWorker.CancelAsync();
             installWorker.CancelAsync();
-
-            // abort ftp processes going on.
-            // and uninstall the downloaded zip to avoid conflict errors.
-            //NetworkTools.request?.Abort();
-            // make so we wait for worker stop confirmation,
-            // then unistall file.
-            //FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text);
         }
         else
-            FileTools.ShowDialogMessage("There are no on-going processes running in the background, aborting process.", 1);
+            FileTools.ShowDialogMessage("There are no on-going processes running in the background, aborting process. (Line 330)", 1);
     }
 
     /// <summary>Event for propertiesButton click.</summary>
@@ -346,32 +341,28 @@ public partial class MainMenuForm : Form
         // select a game to access properties window. 
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
-            FileTools.ShowDialogMessage($"Please select a game before proceeding.", 1);
+            FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 340)", 1);
             return;
         }
 
-        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        using (PropertiesForm properties = new PropertiesForm(this))
         {
             // when user clicks on profile icon, make sure the program
             // is able to only open up one profile menu, this eases memory usage.
-            if (propertiesForm != null)
+            if (properties != null)
             {
                 // if true, open the profile form menu as a dialog.
                 // if false, if restrict value > 0 then prevent from opening another
                 // profile menu dialog form.
                 if (propertiesRestrict == 0)
                 {
-                    DebugLogger.Log($"Accessing {currentSelectedGame} properties window.");
-
                     propertiesRestrict++;
-                    propertiesForm.ShowDialog();
+                    properties.ShowDialog();
                 }
                 else
-                    propertiesForm.Close();
+                    properties.Close();
             }
         }
-        else
-            FileTools.ShowDialogMessage($"{currentSelectedGame} is not installed or has not been found. Please install and try again.", 1);
 
         DebugLogger.Break();
     }
@@ -383,27 +374,51 @@ public partial class MainMenuForm : Form
     /// <summary>Event for updateWorker do work.</summary>
     private void updateWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
+        // check to see if there is a cancellation
+        // pending from the user
+        if (updateWorker.CancellationPending)
+        {
+            FileTools.ShowDialogMessage("Cancelled Update.");
+            IsInProcess = false;
+            e.Cancel = true;
+        }
+
         // when updating, remove the .zip file and
         // main game directory from install location.
-        if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
+        if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
         {
+            //DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
             updateWorker.ReportProgress(0);
-            DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
+            
+            // check to see if there is a cancellation
+            // pending from the user
+            if (updateWorker.CancellationPending)
+            {
+                FileTools.ShowDialogMessage("Cancelled Update.");
+                IsInProcess = false;
+                e.Cancel = true;
+            }
 
             // once completely uninstalled, download the new copy
             // of the updated game.
             if (NetworkTools.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
             {
+                //DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
                 updateWorker.ReportProgress(0);
-                DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
+
+                // check to see if there is a cancellation
+                // pending from the user
+                if (updateWorker.CancellationPending)
+                {
+                    FileTools.ShowDialogMessage("Cancelled Update.");
+                    IsInProcess = false;
+                    e.Cancel = true;
+                }
 
                 // then "install" the new copy by extracting
                 // the .zip file.
-                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
-                {
-                    updateWorker.ReportProgress(0);
-                    DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
-                }
+                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending) { }
+                    //DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
             }
         }
     }
@@ -430,8 +445,11 @@ public partial class MainMenuForm : Form
         progressBar.Value = 0;
         percentLabel.Text = $"{progressBar.Value}%";
 
+        IsInProcess = false;
+
         updateButton.Enabled = true;
         installButton.Enabled = true;
+        uninstallButton.Enabled = true;
 
         DebugLogger.Break();
     }
@@ -439,8 +457,14 @@ public partial class MainMenuForm : Form
     /// <summary>Event for installWorker do work.</summary>
     private void installWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
+        // check to see if there is a cancellation
+        // pending requested by the user.
         if (installWorker.CancellationPending)
+        {
+            FileTools.ShowDialogMessage("Installation Cancelled.");
+            IsInProcess = false;
             e.Cancel = true;
+        }
 
         // prompt user letting them know game install
         // will commence.
@@ -451,22 +475,24 @@ public partial class MainMenuForm : Form
         // the remote host.
         if (NetworkTools.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
         {
-            if (installWorker.CancellationPending)
-                e.Cancel = true;
+            //DebugLogger.Log($"Install worker cancel request: {e.Cancel}");
 
+            // check to see if there is a cancellation
+            // pending requested by the user.
+            if (installWorker.CancellationPending)
+            {
+                FileTools.ShowDialogMessage("Installation Cancelled.");
+                IsInProcess = false;
+                e.Cancel = true;
+            }
+
+            //DebugLogger.Log($"Successfuly downloaded files from server.");
+            //DebugLogger.Log($"Starting install now.");
             installWorker.ReportProgress(0);
-            DebugLogger.Log($"Successfuly downloaded files from server.");
-            DebugLogger.Log($"Starting install now.");
 
             // then "install" the freshly downloaded .zip file.
             if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
-            {
-                if (installWorker.CancellationPending)
-                    e.Cancel = true;
-
-                installWorker.ReportProgress(0);
                 installedIcon.BackColor = Color.Green;
-            }
         }
     }
 
@@ -492,8 +518,11 @@ public partial class MainMenuForm : Form
         progressBar.Value = 0;
         percentLabel.Text = $"{progressBar.Value}%";
 
+        IsInProcess = false;
+
         installButton.Enabled = true;
         updateButton.Enabled = true;
+        uninstallButton.Enabled = true;
 
         DebugLogger.Break();
     }

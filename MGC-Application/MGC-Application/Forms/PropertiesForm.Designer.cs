@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PropertiesForm));
             toolsPanel = new Panel();
-            reinstallButton = new Button();
+            purgeButton = new Button();
             closeButton = new Button();
             toolDescPanel = new Panel();
             configDescTextBox = new TextBox();
@@ -45,21 +45,22 @@
             // 
             toolsPanel.BackColor = Color.LightBlue;
             toolsPanel.BorderStyle = BorderStyle.Fixed3D;
-            toolsPanel.Controls.Add(reinstallButton);
+            toolsPanel.Controls.Add(purgeButton);
             toolsPanel.Controls.Add(closeButton);
             toolsPanel.Location = new Point(6, 54);
             toolsPanel.Name = "toolsPanel";
             toolsPanel.Size = new Size(109, 201);
             toolsPanel.TabIndex = 0;
             // 
-            // reinstallButton
+            // purgeButton
             // 
-            reinstallButton.Location = new Point(3, 3);
-            reinstallButton.Name = "reinstallButton";
-            reinstallButton.Size = new Size(99, 33);
-            reinstallButton.TabIndex = 0;
-            reinstallButton.Text = "Reinstall";
-            reinstallButton.UseVisualStyleBackColor = true;
+            purgeButton.Location = new Point(4, 3);
+            purgeButton.Name = "purgeButton";
+            purgeButton.Size = new Size(99, 33);
+            purgeButton.TabIndex = 1;
+            purgeButton.Text = "Purge";
+            purgeButton.UseVisualStyleBackColor = true;
+            purgeButton.Click += purgeButton_Click;
             // 
             // closeButton
             // 
@@ -138,11 +139,11 @@
         #endregion
 
         private Panel toolsPanel;
-        private Button reinstallButton;
         private Button closeButton;
         private Panel toolDescPanel;
         private TextBox configDescTextBox;
         private Panel headerPanel;
         private Label headerLabel;
+        private Button purgeButton;
     }
 }

@@ -4,8 +4,10 @@ using System.IO.Compression;
 
 namespace MGC_Application;
 
-public static class FileTools
+public class FileTools
 {
+    public static string? currentGame;
+
     /// <summary>Run executes the exe of the game.</summary>
     /// <param name="_game">The program of to run the exe of.</param>
     /// <param name="_pathfile">The pathfile of the game.</param>
@@ -15,16 +17,19 @@ public static class FileTools
         // if game cannot be executed, then run exception error.
         try
         {
-            Process process = new Process();
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
-            process.Start();
+            using (Process process = new Process())
+            {
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
+                process.Start();
+            }
 
+            DebugLogger.Log($"Executing {_game}.exe");
             return true;
         }
-        catch(FileLoadException ex)
+        catch(FileNotFoundException ex)
         {
-            DebugLogger.Log($"Error running {_game}.exe: {ex.Message}");
+            DebugLogger.Log(ex.Message);
             return false;
         }
     }
@@ -45,12 +50,12 @@ public static class FileTools
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
 
+            DebugLogger.Log($"Installed {_game} game files.");
             return true;
         }
         catch(FileNotFoundException ex)
         {
-            DebugLogger.Log($"Error installing {_game} files: {ex.Message}");
-            
+            DebugLogger.Log(ex.Message);
             return false;
         }
     }
@@ -58,22 +63,25 @@ public static class FileTools
     /// <summary>Uninstall removes the game files from the games folder.</summary>
     /// <param name="_game">The game of which to remove.</param>
     /// <param name="_pathfile">The filepath of the chosen game.</param>
-    public static bool Uninstall(string _game, string _pathfile)
+    public static bool Uninstall(string _game, string _pathFile)
     {
         try
         {
-            // try uninstalling the .zip and game directory.
-            string dir = $"{_pathfile}/{_game}";
+            DeleteFile(_game, _pathFile);
+            Thread.Sleep(2000);
+            DeleteDirectory(_game, _pathFile);
 
-            File.Delete($"{_pathfile}/{_game}.zip");
-            Directory.Delete(dir, true);
-
+            DebugLogger.Log($"Uninstalled {_game} game files.");
             return true;
+        }
+        catch(FileNotFoundException ex)
+        {
+            DebugLogger.Log(ex.Message);
+            return false;
         }
         catch(DirectoryNotFoundException ex)
         {
-            // if it cannot be unistalled, throw directory not found exception.
-            DebugLogger.Log($"Error uninstalling {_game} files: {ex.Message}");
+            DebugLogger.Log(ex.Message);
             return false;
         }
     }
@@ -86,10 +94,24 @@ public static class FileTools
         string dir = $"{_pathfile}/{_game}";
 
         // verify if the game has been installed in pathfile.
-        if (Directory.Exists(dir))
-            return true;
-        else
+        try
+        {
+            if (Directory.Exists(dir))
+            {
+                DebugLogger.Log($"{dir} directory has been found.");
+                return true;
+            }
+            else
+            {
+                DebugLogger.Log($"{dir} does not exist.");
+                return false;
+            }
+        }
+        catch(DirectoryNotFoundException ex)
+        {
+            DebugLogger.Log(ex.Message);
             return false;
+        }
     }
 
     /// <summary>Creates a directory in the system files.</summary>
@@ -97,26 +119,37 @@ public static class FileTools
     /// <param name="_toReCreate">If the directory needs to be re-made on load.</param>
     public static void CreateDirectory(string _filePath, bool _toReCreate = false)
     {
-        // if directory is not real, create a new directory in pathfile.
-        if (!Directory.Exists(_filePath))
-            Directory.CreateDirectory(_filePath);
-
-        // else if user would like to delete and recreate directoy
-        // in the pathfile.
-        else if (Directory.Exists(_filePath) && _toReCreate)
+        try
         {
-            Directory.Delete(_filePath, true);
-            Directory.CreateDirectory(_filePath);
+            // if directory is not real, create a new directory in pathfile.
+            if (!Directory.Exists(_filePath))
+            {
+                Directory.CreateDirectory(_filePath);
+                DebugLogger.Log($"{_filePath}: dirctory has been created.");
+            }
+
+            // else if user would like to delete and recreate directoy
+            // in the pathfile.
+            else if (Directory.Exists(_filePath) && _toReCreate)
+            {
+                Directory.Delete(_filePath, true);
+                Directory.CreateDirectory(_filePath);
+                DebugLogger.Log($"{_filePath}: directory has been re-created.");
+            }
+        }
+        catch(DirectoryNotFoundException ex)
+        {
+            DebugLogger.Log(ex.Message);
         }
     }
 
     /// <summary>Function simplifies dialog creation function.</summary>
     /// <param name="_message">The message the user wants to output to log and dialog.</param>
     /// <param name="_severity">The severity level of the dialog.</param>
-    public static void ShowDialogMessage(string _message, int _severity = 0)
+    public static void ShowDialogMessage(string _message, int _severity = 0, bool _isDecision = false)
     {
         // log a message in logs file.
-        DebugLogger.Log(_message);
+        //DebugLogger.Log(_message);
 
         // get the severity of the dialog box message.
         DialogBoxForm.MessageSeverity messageSeverity;
@@ -139,8 +172,41 @@ public static class FileTools
                 break;
         }
 
-        // create a dialog box with the given message and severity level.
         DialogBoxForm dialog = new DialogBoxForm(messageSeverity, _message);
         dialog.ShowDialog();
+    }
+
+    /// <summary>This function deletes a given directory.</summary>
+    /// <param name="_game">The game directory to delete.</param>
+    /// <param name="_pathFile">The path of the directory to delete.</param>
+    public static void DeleteDirectory(string _game, string _pathFile)
+    {
+        try
+        {
+            string dir = $"{_pathFile}/{_game}";
+            Directory.Delete(dir, true);
+            DebugLogger.Log($"{dir}: directory has been deleted.");
+        }
+        catch(DirectoryNotFoundException ex)
+        {
+            DebugLogger.Log(ex.Message);
+        }
+    }
+
+    /// <summary>This function deletes a given file.</summary>
+    /// <param name="_game">The game file to delete.</param>
+    /// <param name="_pathFile">The path of the file to delete.</param>
+    public static void DeleteFile(string _game, string _pathFile)
+    {
+        try
+        {
+            string file = $"{_pathFile}/{_game}.zip";
+            File.Delete(file);
+            DebugLogger.Log($"{file}: file has been deleted.");
+        }
+        catch(FileNotFoundException ex)
+        {
+            DebugLogger.Log(ex.Message);
+        }
     }
 }

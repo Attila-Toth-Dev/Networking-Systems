@@ -23,6 +23,6 @@ public static class DebugLogger
 
         // create a new empty line in logs file.
         using (StreamWriter write = new StreamWriter(logPath, true))
-            write.WriteLine(" ");
+            write.WriteLine("");
     }
 }

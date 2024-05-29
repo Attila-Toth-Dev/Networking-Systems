@@ -2,7 +2,8 @@
 
 public partial class DialogBoxForm : Form
 {
-    public int DecisionValue { get; set; }
+    //public int DecisionValue { get; set; }
+    public BoolValue DecisionValue { get; set; }
 
     private bool isDecisionForm;
 
@@ -11,6 +12,12 @@ public partial class DialogBoxForm : Form
         MESSAGE,
         WARNING,
         ERROR
+    }
+
+    public enum BoolValue
+    {
+        YES,
+        NO
     }
 
     public DialogBoxForm(MessageSeverity _headerMessage, string _message, bool _isDecisionForm = false)
@@ -33,7 +40,7 @@ public partial class DialogBoxForm : Form
     private void yesButton_Click(object sender, EventArgs e)
     {
         // returns a positive value for yes.
-        DecisionValue = 1;
+        DecisionValue = BoolValue.YES;
         this.Close();
         this.Dispose();
     }
@@ -42,7 +49,7 @@ public partial class DialogBoxForm : Form
     private void noButton_Click(object sender, EventArgs e)
     {
         // returns a negative value for no.
-        DecisionValue = -1;
+        DecisionValue = BoolValue.NO;
         this.Close();
         this.Dispose();
     }
