@@ -16,6 +16,8 @@ public partial class PropertiesForm : Form
         mainMenuForm = _mainMenuForm;
     }
 
+    #region Button Events
+
     /// <summary>Event for purgeButton click.</summary>
     private void purgeButton_Click(object sender, EventArgs e)
     {
@@ -50,6 +52,8 @@ public partial class PropertiesForm : Form
         // closes the form.
         this.Close();
     }
+
+    #endregion
 
     /// <summary>Event for PropertiesForm form closed.</summary>
     private void PropertiesForm_FormClosed(object sender, FormClosedEventArgs e)

@@ -21,6 +21,8 @@ public partial class WelcomeForm : Form
         FileTools.CreateDirectory(credentialsPathFile);
     }
 
+    #region UI Events
+
     /// <summary>Event for loadBarTimer tick.</summary>
     private void loadBarTimer_Tick(object sender, EventArgs e)
     {
@@ -39,6 +41,8 @@ public partial class WelcomeForm : Form
             form.Show();
         }
     }
+
+    #endregion
 
     /// <summary>Event for WelcomeForm close.</summary>
     private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)

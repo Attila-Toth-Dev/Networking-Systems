@@ -19,6 +19,8 @@ public partial class LoginForm : Form
         passwordTextBox.UseSystemPasswordChar = true;
     }
 
+    #region UI Events
+
     /// <summary>Event for passwordTextBox text change.</summary>
     private void passwordTextBox_TextChanged(object sender, EventArgs e)
     {
@@ -40,12 +42,56 @@ public partial class LoginForm : Form
         serverIpTextBox.MaxLength = 50;
     }
 
+    /// <summary>Event for clearFieldsLabel click.</summary>
+    private void clearFieldsLabel_Click(object sender, EventArgs e)
+    {
+        // clear data inside text boxes.
+        usernameTextBox.Clear();
+        passwordTextBox.Clear();
+        serverIpTextBox.Clear();
+    }
+
+
+    /// <summary>Event for passwordPictureBox mouse down.</summary>
+    private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e)
+    {
+        // allow user to view password with mouse down.
+        passwordTextBox.UseSystemPasswordChar = false;
+    }
+
+    /// <summary>Event for passwordPictureBox mouse up.</summary>
+    private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e)
+    {
+        // disable viewing of password back to password characters.
+        passwordTextBox.UseSystemPasswordChar = true;
+    }
+
+    /// <summary>Event for LoginForm close.</summary>
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        // close application.
+        Application.Exit();
+    }
+
+    #endregion
+
+    #region Button Events
+
     /// <summary>Event for loginButton click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
+        // If text box space is empty, return null value.
+        if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || string.IsNullOrWhiteSpace(passwordTextBox.Text) ||
+           string.IsNullOrWhiteSpace(serverIpTextBox.Text))
+        {
+            FileTools.ShowDialogMessage("Please fill out all text boxes.");
+            return;
+        }
+
         // check to see if username, password and server IP
         // match up to FTP server allowed users.
-        if (CredentialsTools.ValidateLogin(usernameTextBox.Text, passwordTextBox.Text))
+        uint hashValue = CredentialsTools.BKDRHash(passwordTextBox.Text);
+        if (CredentialsTools.ValidateLogin(usernameTextBox.Text, hashValue.ToString()))
         {
             if (NetworkTools.CheckValidFTP(serverIpTextBox.Text))
             {
@@ -89,34 +135,5 @@ public partial class LoginForm : Form
         createForm.ShowDialog();
     }
 
-    /// <summary>Event for clearFieldsLabel click.</summary>
-    private void clearFieldsLabel_Click(object sender, EventArgs e)
-    {
-        // clear data inside text boxes.
-        usernameTextBox.Clear();
-        passwordTextBox.Clear();
-        serverIpTextBox.Clear();
-    }
-
-
-    /// <summary>Event for passwordPictureBox mouse down.</summary>
-    private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e)
-    {
-        // allow user to view password with mouse down.
-        passwordTextBox.UseSystemPasswordChar = false;
-    }
-
-    /// <summary>Event for passwordPictureBox mouse up.</summary>
-    private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e)
-    {
-        // disable viewing of password back to password characters.
-        passwordTextBox.UseSystemPasswordChar = true;
-    }
-
-    /// <summary>Event for LoginForm close.</summary>
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        // close application.
-        Application.Exit();
-    }
+    #endregion
 }

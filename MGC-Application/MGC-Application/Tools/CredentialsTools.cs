@@ -22,11 +22,12 @@ public class CredentialsTools
             }
         }
 
+        DebugLogger.Log("Account does not exist, please try again.");
         return false;
     }
 
     /// <summary>Checks to see if username already exists.</summary>
-    /// <param name="_username"></param>
+    /// <param name="_username">Username of the account to check.</param>
     public static bool UserExists(string _username)
     {
         string[] lines = File.ReadAllLines(credPathFile);
@@ -36,15 +37,36 @@ public class CredentialsTools
             string[] parts = line.Split(',');
 
             if (parts.Length == 2 && parts[0] == _username)
+            {
+                DebugLogger.Log("Username already exists");
                 return true;
+            }
         }
 
         return false;
     }
 
+    /// <summary>Function that adds the username and password details of account.</summary>
+    /// <param name="_username">Username of the account.</param>
+    /// <param name="_password">Password of the account.</param>
     public static void AddUser(string _username, string _password)
     {
-        File.AppendAllText(credPathFile,
-            $"{_username},{_password}{Environment.NewLine}");
+        string pass = BKDRHash(_password).ToString();
+        File.AppendAllText(credPathFile, $"{_username},{pass}{Environment.NewLine}");
+
+        DebugLogger.Log($"Successfully registered account.");
+    }
+
+    /// <summary></summary>
+    /// <param name="_password"></param>
+    public static uint BKDRHash(string _password)
+    {
+        uint seed = 1313;
+        uint hash = 0;
+
+        for (uint i = 0; i < _password.Length; i++)
+            hash = (hash * seed) + ((byte)_password[(int)i]);
+
+        return hash;
     }
 }

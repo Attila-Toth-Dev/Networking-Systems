@@ -2,7 +2,6 @@
 
 public partial class DialogBoxForm : Form
 {
-    //public int DecisionValue { get; set; }
     public BoolValue DecisionValue { get; set; }
 
     private bool isDecisionForm;
@@ -36,6 +35,8 @@ public partial class DialogBoxForm : Form
         okayButton.Visible = !isDecisionForm;
     }
 
+    #region Button Events
+
     /// <summary>Event for yesButton click.</summary>
     private void yesButton_Click(object sender, EventArgs e)
     {
@@ -58,6 +59,16 @@ public partial class DialogBoxForm : Form
     private void okayButton_Click(object sender, EventArgs e)
     {
         // closes the dialog box.
+        this.Close();
+        this.Dispose();
+    }
+
+    #endregion
+
+    /// <summary>Event for DialogBoxForm close.</summary>
+    private void DialogBoxForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        // close the dialog box
         this.Close();
         this.Dispose();
     }

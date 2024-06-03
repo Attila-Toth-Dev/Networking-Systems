@@ -100,6 +100,7 @@
             Name = "DialogBoxForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DialogBoxForm";
+            FormClosed += DialogBoxForm_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

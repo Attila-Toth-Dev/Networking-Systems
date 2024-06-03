@@ -146,11 +146,8 @@ public class FileTools
     /// <summary>Function simplifies dialog creation function.</summary>
     /// <param name="_message">The message the user wants to output to log and dialog.</param>
     /// <param name="_severity">The severity level of the dialog.</param>
-    public static void ShowDialogMessage(string _message, int _severity = 0, bool _isDecision = false)
+    public static void ShowDialogMessage(string _message, int _severity = 0)
     {
-        // log a message in logs file.
-        //DebugLogger.Log(_message);
-
         // get the severity of the dialog box message.
         DialogBoxForm.MessageSeverity messageSeverity;
         switch (_severity)

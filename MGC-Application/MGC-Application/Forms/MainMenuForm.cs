@@ -16,18 +16,6 @@ public partial class MainMenuForm : Form
 
     public bool IsInProcess { get; set; }
 
-    public string Username
-    {
-        get => username;
-        set => username = value;
-    }
-
-    public string Password
-    {
-        get => password;
-        set => password = value;
-    }
-
     #endregion
     
     private ProfileForm profileForm;
@@ -36,7 +24,6 @@ public partial class MainMenuForm : Form
     private string currentSelectedGame;
 
     private string username;
-    private string password;
 
     public MainMenuForm(string _username, string _password)
     {
@@ -52,9 +39,10 @@ public partial class MainMenuForm : Form
         profileForm = new ProfileForm(this);
 
         username = _username;
-        password = _password;
 
         welecomeLabel.Text = $"{_username}'s Library";
+
+        FileTools.ShowDialogMessage($"Welcome to the MGC Client Launcher {username}!");
     }
 
     #region UI Event Functions

@@ -20,12 +20,7 @@ public partial class ProfileForm : Form
         this.Text = $"{NetworkTools.Username} profile";
     }
 
-    /// <summary>Event for returnButton click.</summary>
-    private void returnButton_Click(object sender, EventArgs e)
-    {
-        // close the profile form.
-        this.Close();
-    }
+    #region UI Events
 
     /// <summary>Event for ProfileForm close.</summary>
     private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
@@ -46,4 +41,17 @@ public partial class ProfileForm : Form
         profileIconPictureBox.Image = Image.FromFile($"Profile/{currentSelectedProfilePicture}.png");
         mainMenuForm.ProfileIcon = profileIconPictureBox.Image;
     }
+
+    #endregion
+
+    #region Button Events
+
+    /// <summary>Event for returnButton click.</summary>
+    private void returnButton_Click(object sender, EventArgs e)
+    {
+        // close the profile form.
+        this.Close();
+    }
+
+    #endregion
 }
