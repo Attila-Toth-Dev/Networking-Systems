@@ -49,8 +49,6 @@ public partial class PropertiesForm : Form
     {
         // closes the form.
         this.Close();
-        this.Dispose();
-        mainMenuForm.PropertiesRestrict = 0;
     }
 
     /// <summary>Event for PropertiesForm form closed.</summary>
@@ -58,7 +56,5 @@ public partial class PropertiesForm : Form
     {
         // closes the form.
         this.Close();
-        this.Dispose();
-        mainMenuForm.PropertiesRestrict = 0;
     }
 }

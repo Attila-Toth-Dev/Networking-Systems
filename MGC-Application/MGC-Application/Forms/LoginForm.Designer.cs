@@ -38,7 +38,8 @@
             passwordTextBox = new TextBox();
             passwordLabel = new Label();
             backgroundPanel = new Panel();
-            clearFieldsButton = new Button();
+            clearFieldsLabel = new Label();
+            createAccountButton = new Button();
             passwordPictureBox = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             backgroundPanel.SuspendLayout();
@@ -75,7 +76,7 @@
             // 
             // loginButton
             // 
-            loginButton.Location = new Point(198, 296);
+            loginButton.Location = new Point(198, 293);
             loginButton.Name = "loginButton";
             loginButton.Size = new Size(100, 40);
             loginButton.TabIndex = 4;
@@ -122,7 +123,8 @@
             // backgroundPanel
             // 
             backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
-            backgroundPanel.Controls.Add(clearFieldsButton);
+            backgroundPanel.Controls.Add(clearFieldsLabel);
+            backgroundPanel.Controls.Add(createAccountButton);
             backgroundPanel.Controls.Add(loginButton);
             backgroundPanel.Controls.Add(passwordLabel);
             backgroundPanel.Controls.Add(passwordTextBox);
@@ -137,15 +139,25 @@
             backgroundPanel.Size = new Size(584, 361);
             backgroundPanel.TabIndex = 11;
             // 
-            // clearFieldsButton
+            // clearFieldsLabel
             // 
-            clearFieldsButton.Location = new Point(304, 296);
-            clearFieldsButton.Name = "clearFieldsButton";
-            clearFieldsButton.Size = new Size(94, 40);
-            clearFieldsButton.TabIndex = 5;
-            clearFieldsButton.Text = "Clear";
-            clearFieldsButton.UseVisualStyleBackColor = true;
-            clearFieldsButton.Click += clearFieldsButton_Click;
+            clearFieldsLabel.AutoSize = true;
+            clearFieldsLabel.Location = new Point(404, 249);
+            clearFieldsLabel.Name = "clearFieldsLabel";
+            clearFieldsLabel.Size = new Size(112, 22);
+            clearFieldsLabel.TabIndex = 11;
+            clearFieldsLabel.Text = "Clear Fields";
+            clearFieldsLabel.Click += clearFieldsLabel_Click;
+            // 
+            // createAccountButton
+            // 
+            createAccountButton.Location = new Point(304, 293);
+            createAccountButton.Name = "createAccountButton";
+            createAccountButton.Size = new Size(94, 40);
+            createAccountButton.TabIndex = 5;
+            createAccountButton.Text = "Create";
+            createAccountButton.UseVisualStyleBackColor = true;
+            createAccountButton.Click += createAccountButton_Click;
             // 
             // passwordPictureBox
             // 
@@ -195,6 +207,7 @@
         private Label passwordLabel;
         private Panel backgroundPanel;
         private PictureBox passwordPictureBox;
-        private Button clearFieldsButton;
+        private Button createAccountButton;
+        private Label clearFieldsLabel;
     }
 }

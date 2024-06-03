@@ -25,8 +25,6 @@ public partial class ProfileForm : Form
     {
         // close the profile form.
         this.Close();
-        this.Dispose();
-        mainMenuForm.ProfileRestrict = 0;
     }
 
     /// <summary>Event for ProfileForm close.</summary>
@@ -34,8 +32,6 @@ public partial class ProfileForm : Form
     {
         // close the profile form.
         this.Close();
-        this.Dispose();
-        mainMenuForm.ProfileRestrict = 0;
     }
 
     /// <summary>Event for profileIconListView click.</summary>

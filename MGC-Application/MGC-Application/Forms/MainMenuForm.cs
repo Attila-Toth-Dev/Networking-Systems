@@ -1,6 +1,4 @@
 ﻿using MGC_Application.Forms;
-using System.Diagnostics;
-using System.Xml.Linq;
 
 namespace MGC_Application;
 
@@ -12,40 +10,27 @@ public partial class MainMenuForm : Form
         set => profilePictureBox.Image = value;
     }
 
-    public int ProfileRestrict
-    {
-        get => profileRestrict;
-        set => profileRestrict = value;
-    }
-
-    public int PropertiesRestrict
-    {
-        get => propertiesRestrict;
-        set => propertiesRestrict = value;
-    }
-
     public string GamePathFile { get => gameFilePathTextBox.Text; }
 
     public bool IsInProcess { get; set; }
 
     private string currentSelectedGame;
 
-    private int profileRestrict;
-    private int propertiesRestrict;
+    private ProfileForm profileForm;
+    private PropertiesForm propertiesForm;
 
     public MainMenuForm()
     {
         InitializeComponent();
 
-        profileRestrict = 0;
-        propertiesRestrict = 0;
-
         currentSelectedGame = string.Empty;
         gameFilePathTextBox.Text = WelcomeForm.gamesPathFile;
-
         installedIcon.BackColor = Color.Gray;
 
         cancelButton.Enabled = false;
+
+        propertiesForm = new PropertiesForm(this);
+        profileForm = new ProfileForm(this);
 
         welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
     }
@@ -124,24 +109,7 @@ public partial class MainMenuForm : Form
     /// <summary>Event for the profilePictureBox click.</summary>
     private void profilePictureBox_Click(object sender, EventArgs e)
     {
-        using (ProfileForm profile = new ProfileForm(this))
-        {
-            // when user clicks on profile icon, make sure the program
-            // is able to only open up one profile menu, this eases memory usage.
-            if (profile != null)
-            {
-                // if true, open the profile form menu as a dialog.
-                // if false, if restrict value > 0 then prevent from opening another
-                // profile menu dialog form.
-                if (profileRestrict == 0)
-                {
-                    profileRestrict++;
-                    profile.ShowDialog();
-                }
-                else
-                    profile.Close();
-            }
-        }
+        profileForm.ShowDialog();
 
         DebugLogger.Break();
     }
@@ -354,25 +322,8 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 340)", 1);
             return;
         }
-
-        using (PropertiesForm properties = new PropertiesForm(this))
-        {
-            // when user clicks on profile icon, make sure the program
-            // is able to only open up one profile menu, this eases memory usage.
-            if (properties != null)
-            {
-                // if true, open the profile form menu as a dialog.
-                // if false, if restrict value > 0 then prevent from opening another
-                // profile menu dialog form.
-                if (propertiesRestrict == 0)
-                {
-                    propertiesRestrict++;
-                    properties.ShowDialog();
-                }
-                else
-                    properties.Close();
-            }
-        }
+        else
+            propertiesForm.ShowDialog();
 
         DebugLogger.Break();
     }

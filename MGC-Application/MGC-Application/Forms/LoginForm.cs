@@ -8,9 +8,13 @@ public partial class LoginForm : Form
     private string password;
     private string serverIP;
 
+    private CreateAccountForm createForm;
+
     public LoginForm()
     {
         InitializeComponent();
+
+        createForm = new CreateAccountForm();
 
         username = string.Empty;
         password = string.Empty;
@@ -80,14 +84,21 @@ public partial class LoginForm : Form
         DebugLogger.Break();
     }
 
-    /// <summary>Event for clearFieldsButton click.</summary>
-    private void clearFieldsButton_Click(object sender, EventArgs e)
+    /// <summary>Event for createAccountButton click.</summary>
+    private void createAccountButton_Click(object sender, EventArgs e)
+    {
+        createForm.ShowDialog();
+    }
+
+    /// <summary>Event for clearFieldsLabel click.</summary>
+    private void clearFieldsLabel_Click(object sender, EventArgs e)
     {
         // clear data inside text boxes.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
         serverIpTextBox.Clear();
     }
+
 
     /// <summary>Event for passwordPictureBox mouse down.</summary>
     private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e)
