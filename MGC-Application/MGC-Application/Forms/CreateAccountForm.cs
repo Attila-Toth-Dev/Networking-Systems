@@ -21,7 +21,7 @@ public partial class CreateAccountForm : Form
         // if username already exists, then prompt player
         // with a different account name,
         // else add the username if username does not exists.
-        if (CredentialsTools.UserExists(usernameTextBox.Text))
+        if (Credentials.UserExists(usernameTextBox.Text))
         {
             usernameTextBox.Clear();
             passwordTextBox.Clear();
@@ -30,9 +30,14 @@ public partial class CreateAccountForm : Form
         }
         else
         {
-            CredentialsTools.AddUser(usernameTextBox.Text, passwordTextBox.Text);
-            FileTools.ShowDialogMessage($"User account created.");
-            this.Close();
+            if (Networking.FTPCredentialsCheck(usernameTextBox.Text, passwordTextBox.Text))
+            {
+                Credentials.AddUser(usernameTextBox.Text, passwordTextBox.Text);
+                FileTools.ShowDialogMessage($"User account created.");
+                this.Close();
+            }
+            else
+                Debug.Log("Error uploading file data.");
         }
     }
 

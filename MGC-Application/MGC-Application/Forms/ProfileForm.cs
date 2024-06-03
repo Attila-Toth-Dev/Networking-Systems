@@ -10,14 +10,14 @@ public partial class ProfileForm : Form
     {
         InitializeComponent();
 
-        profileNameLabel.Text = $"{NetworkTools.Username}";
-        profileBioTextBox.Text = $"Hey there! I'm {NetworkTools.Username} and I love to play video games, especially MS Paint.";
+        profileNameLabel.Text = $"{Networking.Username}";
+        profileBioTextBox.Text = $"Hey there! I'm {Networking.Username} and I love to play video games, especially MS Paint.";
 
         currentSelectedProfilePicture = string.Empty;
 
         mainMenuForm = _form;
 
-        this.Text = $"{NetworkTools.Username} profile";
+        this.Text = $"{Networking.Username} profile";
     }
 
     #region UI Events

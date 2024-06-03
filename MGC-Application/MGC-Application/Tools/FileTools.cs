@@ -24,12 +24,12 @@ public class FileTools
                 process.Start();
             }
 
-            DebugLogger.Log($"Executing {_game}.exe");
+            Debug.Log($"Executing {_game}.exe");
             return true;
         }
         catch(FileNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return false;
         }
     }
@@ -50,12 +50,12 @@ public class FileTools
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
 
-            DebugLogger.Log($"Installed {_game} game files.");
+            Debug.Log($"Installed {_game} game files.");
             return true;
         }
         catch(FileNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return false;
         }
     }
@@ -71,17 +71,17 @@ public class FileTools
             Thread.Sleep(2000);
             DeleteDirectory(_game, _pathFile);
 
-            DebugLogger.Log($"Uninstalled {_game} game files.");
+            Debug.Log($"Uninstalled {_game} game files.");
             return true;
         }
         catch(FileNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return false;
         }
         catch(DirectoryNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return false;
         }
     }
@@ -98,18 +98,18 @@ public class FileTools
         {
             if (Directory.Exists(dir))
             {
-                DebugLogger.Log($"{dir} directory has been found.");
+                Debug.Log($"{dir} directory has been found.");
                 return true;
             }
             else
             {
-                DebugLogger.Log($"{dir} does not exist.");
+                Debug.Log($"{dir} does not exist.");
                 return false;
             }
         }
         catch(DirectoryNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return false;
         }
     }
@@ -125,7 +125,7 @@ public class FileTools
             if (!Directory.Exists(_filePath))
             {
                 Directory.CreateDirectory(_filePath);
-                DebugLogger.Log($"{_filePath}: dirctory has been created.");
+                Debug.Log($"{_filePath}: dirctory has been created.");
             }
 
             // else if user would like to delete and recreate directoy
@@ -134,12 +134,12 @@ public class FileTools
             {
                 Directory.Delete(_filePath, true);
                 Directory.CreateDirectory(_filePath);
-                DebugLogger.Log($"{_filePath}: directory has been re-created.");
+                Debug.Log($"{_filePath}: directory has been re-created.");
             }
         }
         catch(DirectoryNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
         }
     }
 
@@ -182,11 +182,11 @@ public class FileTools
         {
             string dir = $"{_pathFile}/{_game}";
             Directory.Delete(dir, true);
-            DebugLogger.Log($"{dir}: directory has been deleted.");
+            Debug.Log($"{dir}: directory has been deleted.");
         }
         catch(DirectoryNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
         }
     }
 
@@ -199,11 +199,11 @@ public class FileTools
         {
             string file = $"{_pathFile}/{_game}.zip";
             File.Delete(file);
-            DebugLogger.Log($"{file}: file has been deleted.");
+            Debug.Log($"{file}: file has been deleted.");
         }
         catch(FileNotFoundException ex)
         {
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
         }
     }
 }

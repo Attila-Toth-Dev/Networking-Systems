@@ -1,6 +1,6 @@
 ﻿namespace MGC_Application;
 
-public class DebugLogger
+public class Debug
 {
     /// <summary>Log allows for application to log special changes or errors within application.</summary>
     /// <param name="_message">The message of which to log.</param>

@@ -1,6 +1,6 @@
 ﻿namespace MGC_Application.Tools;
 
-public class CredentialsTools
+public class Credentials
 {
     private static string credPathFile = $"{WelcomeForm.credentialsPathFile}/Credentials.txt";
 
@@ -17,12 +17,12 @@ public class CredentialsTools
 
             if (parts.Length == 2 && parts[0] == _username && parts[1] == _password)
             {
-                DebugLogger.Log($"User details correct. Welcome {_username}");
+                Debug.Log($"User details correct. Welcome {_username}");
                 return true;
             }
         }
 
-        DebugLogger.Log("Account does not exist, please try again.");
+        Debug.Log("Account does not exist, please try again.");
         return false;
     }
 
@@ -38,7 +38,7 @@ public class CredentialsTools
 
             if (parts.Length == 2 && parts[0] == _username)
             {
-                DebugLogger.Log("Username already exists");
+                Debug.Log("Username already exists");
                 return true;
             }
         }
@@ -54,11 +54,11 @@ public class CredentialsTools
         string pass = BKDRHash(_password).ToString();
         File.AppendAllText(credPathFile, $"{_username},{pass}{Environment.NewLine}");
 
-        DebugLogger.Log($"Successfully registered account.");
+        Debug.Log($"Successfully registered account.");
     }
 
-    /// <summary></summary>
-    /// <param name="_password"></param>
+    /// <summary>Hashing function that securely hashes the password for an account.</summary>
+    /// <param name="_password">The password to hash for account.</param>
     public static uint BKDRHash(string _password)
     {
         uint seed = 1313;

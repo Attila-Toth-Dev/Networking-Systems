@@ -13,8 +13,11 @@ public partial class LoginForm : Form
 
         createForm = new CreateAccountForm();
 
-        NetworkTools.Username = "ftp-user";
-        NetworkTools.Password = "mn1-237A";
+        Networking.Username = "ftp-user";
+        Networking.Password = "mn1-237A";
+
+        serverIpTextBox.Text = "58.169.146.100";
+        Networking.ServerIP = serverIpTextBox.Text;
 
         passwordTextBox.UseSystemPasswordChar = true;
     }
@@ -90,14 +93,14 @@ public partial class LoginForm : Form
 
         // check to see if username, password and server IP
         // match up to FTP server allowed users.
-        uint hashValue = CredentialsTools.BKDRHash(passwordTextBox.Text);
-        if (CredentialsTools.ValidateLogin(usernameTextBox.Text, hashValue.ToString()))
+        uint hashValue = Credentials.BKDRHash(passwordTextBox.Text);
+        if (Credentials.ValidateLogin(usernameTextBox.Text, hashValue.ToString()))
         {
-            if (NetworkTools.CheckValidFTP(serverIpTextBox.Text))
+            if (Networking.CheckValidFTP(serverIpTextBox.Text))
             {
                 // if true, save username, password and serverIP to network class,
                 // and display main menu form.
-                NetworkTools.ServerIP = serverIpTextBox.Text;
+                Networking.ServerIP = serverIpTextBox.Text;
 
                 Hide();
 
@@ -126,7 +129,7 @@ public partial class LoginForm : Form
             serverIpTextBox.Clear();
         }
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     /// <summary>Event for createAccountButton click.</summary>

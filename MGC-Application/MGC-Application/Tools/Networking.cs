@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
+using System.Xml.Linq;
 
 namespace MGC_Application;
 
-public class NetworkTools
+public class Networking
 {
     #region Getters/Setters
 
@@ -37,13 +38,13 @@ public class NetworkTools
                 // try to get response from remote host
                 request.GetResponse();
 
-                DebugLogger.Log($"{_serverIP}: connection has been made.");
+                Debug.Log($"{_serverIP}: connection has been made.");
                 return true;
             }
             catch (WebException ex)
             {
                 // else, prompt with web exception error.
-                DebugLogger.Log(ex.Message);
+                Debug.Log(ex.Message);
                 return false;
             }
         }
@@ -95,13 +96,13 @@ public class NetworkTools
 
             Thread.Sleep(1000);
 
-            DebugLogger.Log($"{_game} has been downloaded from remote host.");
+            Debug.Log($"{_game} has been downloaded from remote host.");
             return true;
         }
         catch (WebException ex)
         {
             // else throw a webexception error. 
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return false;
         }
     }
@@ -126,13 +127,13 @@ public class NetworkTools
             long fileSize = responseSize.ContentLength;
             responseSize.Close();
 
-            DebugLogger.Log($"File size is {fileSize}.");
+            Debug.Log($"File size is {fileSize}.");
             return fileSize;
         }
         catch(WebException ex)
         {
             // else return web exception error.
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
             return 0;
         }
     }
@@ -148,13 +149,36 @@ public class NetworkTools
             Ping ping = new Ping();
             PingReply pingReply = ping.Send(_serverIP, _timeout);
 
-            DebugLogger.Log($"Ping connection recieved with remote server.");
+            Debug.Log($"Ping connection recieved with remote server.");
             return true;
         }
         catch (PingException ex)
         {
             // catch return ping exception error.
-            DebugLogger.Log(ex.Message);
+            Debug.Log(ex.Message);
+            return false;
+        }
+    }
+
+    /// <summary>Function that gains access to FTP server credentials.</summary>
+    /// <param name="_username">The username of account.</param>
+    /// <param name="_password">The password of account.</param>
+    public static bool FTPCredentialsCheck(string _username, string _password)
+    {
+        try
+        {
+            
+
+            return true;
+        }
+        catch(FileNotFoundException ex)
+        {
+            Debug.Log(ex.Message);
+            return false;
+        }
+        catch(WebException ex)
+        {
+            Debug.Log(ex.Message);
             return false;
         }
     }

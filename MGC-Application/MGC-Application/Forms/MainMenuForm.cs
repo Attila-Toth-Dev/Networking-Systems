@@ -76,7 +76,7 @@ public partial class MainMenuForm : Form
             // set the pathfile text to the designated path chosen
             // by the player.
             gameFilePathTextBox.Text = diag.SelectedPath;
-            DebugLogger.Log($"Current game filepath: {gameFilePathTextBox.Text} (Line 80)");
+            Debug.Log($"Current game filepath: {gameFilePathTextBox.Text} (Line 80)");
         }
     }
 
@@ -93,7 +93,7 @@ public partial class MainMenuForm : Form
         // then open the login form menu.
         if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
         {
-            DebugLogger.Log($"{NetworkTools.Username} disconnected from {NetworkTools.ServerIP}. (Line 97)");
+            Debug.Log($"{Networking.Username} disconnected from {Networking.ServerIP}. (Line 97)");
 
             this.Hide();
 
@@ -121,7 +121,7 @@ public partial class MainMenuForm : Form
     {
         profileForm.ShowDialog();
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     /// <summary>Event for consoleToolStripMenuItem click.</summary>
@@ -167,7 +167,7 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage($"{currentSelectedGame} files are missing. (Line 183)", 2);
         }
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     /// <summary>Event for updateButton click.</summary>
@@ -187,7 +187,7 @@ public partial class MainMenuForm : Form
             // if installed, grab the file size of the local copy of the game,
             // and also grab the file size of the remote hosts copy of the game.
             long localFileLength = new FileInfo($"{gameFilePathTextBox.Text}/{currentSelectedGame}.zip").Length;
-            long remoteFileLength = NetworkTools.CheckForUpdate(currentSelectedGame);
+            long remoteFileLength = Networking.CheckForUpdate(currentSelectedGame);
 
             // if both have the same size, return no update.
             if (localFileLength == remoteFileLength)
@@ -208,7 +208,7 @@ public partial class MainMenuForm : Form
                     // if false, return and remove the prompt.
                     if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
                     {
-                        DebugLogger.Log($"Starting update process now...");
+                        Debug.Log($"Starting update process now...");
 
                         IsInProcess = true;
 
@@ -246,7 +246,7 @@ public partial class MainMenuForm : Form
             // on the install thread.
             if (installWorker.IsBusy != true)
             {
-                DebugLogger.Log($"Starting install process now...");
+                Debug.Log($"Starting install process now...");
 
                 IsInProcess = true;
 
@@ -287,7 +287,7 @@ public partial class MainMenuForm : Form
             // from the install path file location.
             if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
             {
-                DebugLogger.Log("Starting uninstall process now...");
+                Debug.Log("Starting uninstall process now...");
 
                 if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
                 {
@@ -305,7 +305,7 @@ public partial class MainMenuForm : Form
         else
             FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed. (Line 314)", 2);
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     /// <summary>Event for cancelButton click.</summary>
@@ -335,7 +335,7 @@ public partial class MainMenuForm : Form
         else
             propertiesForm.ShowDialog();
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     #endregion
@@ -372,7 +372,7 @@ public partial class MainMenuForm : Form
 
             // once completely uninstalled, download the new copy
             // of the updated game.
-            if (NetworkTools.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
+            if (Networking.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
             {
                 //DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
                 updateWorker.ReportProgress(0);
@@ -422,7 +422,7 @@ public partial class MainMenuForm : Form
         installButton.Enabled = true;
         uninstallButton.Enabled = true;
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     /// <summary>Event for installWorker do work.</summary>
@@ -444,7 +444,7 @@ public partial class MainMenuForm : Form
 
         // then download the copy of the game from
         // the remote host.
-        if (NetworkTools.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
+        if (Networking.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
         {
             //DebugLogger.Log($"Install worker cancel request: {e.Cancel}");
 
@@ -495,7 +495,7 @@ public partial class MainMenuForm : Form
         updateButton.Enabled = true;
         uninstallButton.Enabled = true;
 
-        DebugLogger.Break();
+        Debug.Break();
     }
 
     #endregion

@@ -31,7 +31,7 @@ public partial class PropertiesForm : Form
 
             if (decision.DecisionValue == DialogBoxForm.BoolValue.YES)
             {
-                DebugLogger.Log($"Started file purge process...");
+                Debug.Log($"Started file purge process...");
 
                 FileTools.DeleteDirectory(FileTools.currentGame, mainMenuForm.GamePathFile);
                 Thread.Sleep(2000);
@@ -39,7 +39,7 @@ public partial class PropertiesForm : Form
                 Thread.Sleep(1000);
 
                 FileTools.ShowDialogMessage($"Successfully purged all {FileTools.currentGame} game files.");
-                DebugLogger.Log($"Successfully purged {FileTools.currentGame} files.");
+                Debug.Log($"Successfully purged {FileTools.currentGame} files.");
             }
         }
         else
