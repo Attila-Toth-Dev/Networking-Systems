@@ -1,13 +1,10 @@
 ﻿using MGC_Application.Forms;
+using MGC_Application.Tools;
 
 namespace MGC_Application;
 
 public partial class LoginForm : Form
 {
-    private string username;
-    private string password;
-    private string serverIP;
-
     private CreateAccountForm createForm;
 
     public LoginForm()
@@ -16,13 +13,8 @@ public partial class LoginForm : Form
 
         createForm = new CreateAccountForm();
 
-        username = string.Empty;
-        password = string.Empty;
-        serverIP = string.Empty;
-
-        usernameTextBox.Text = "ftp-user";
-        passwordTextBox.Text = "mn1-237A";
-        serverIpTextBox.Text = "58.169.146.100";
+        NetworkTools.Username = "ftp-user";
+        NetworkTools.Password = "mn1-237A";
 
         passwordTextBox.UseSystemPasswordChar = true;
     }
@@ -32,7 +24,6 @@ public partial class LoginForm : Form
     {
         // changes password to the characters inside text box.
         passwordTextBox.MaxLength = 50;
-        password = passwordTextBox.Text;
     }
 
     /// <summary>Event for usernameTextBox text change.</summary>
@@ -40,7 +31,6 @@ public partial class LoginForm : Form
     {
         // changes username to the characters inside text box.
         usernameTextBox.MaxLength = 50;
-        username = usernameTextBox.Text;
     }
 
     /// <summary>Event for serverIpTextBox text change.</summary>
@@ -48,7 +38,6 @@ public partial class LoginForm : Form
     {
         // changes server IP to the characters inside text box.
         serverIpTextBox.MaxLength = 50;
-        serverIP = serverIpTextBox.Text;
     }
 
     /// <summary>Event for loginButton click.</summary>
@@ -56,29 +45,39 @@ public partial class LoginForm : Form
     {
         // check to see if username, password and server IP
         // match up to FTP server allowed users.
-        if (NetworkTools.CheckValidFTP(serverIP, username, password))
+        if (CredentialsTools.ValidateLogin(usernameTextBox.Text, passwordTextBox.Text))
         {
-            // if true, save username, password and serverIP to network class,
-            // and display main menu form.
-            //DebugLogger.Log($"Successfully logged into server {serverIP}.");
+            if (NetworkTools.CheckValidFTP(serverIpTextBox.Text))
+            {
+                // if true, save username, password and serverIP to network class,
+                // and display main menu form.
+                NetworkTools.ServerIP = serverIpTextBox.Text;
 
-            NetworkTools.Username = username;
-            NetworkTools.Password = password;
-            NetworkTools.ServerIP = serverIP;
+                Hide();
 
-            Hide();
+                MainMenuForm form = new MainMenuForm(usernameTextBox.Text, passwordTextBox.Text);
+                form.Show();
+            }
+            else
+            {
+                // if false, return a dialog box erroring the user credentials.
+                // prompt user to try logging in again.
+                FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
 
-            MainMenuForm form = new MainMenuForm();
-            form.Show();
+                passwordTextBox.Clear();
+                usernameTextBox.Focus();
+                serverIpTextBox.Clear();
+            }
         }
         else
         {
-            // if false, return a dialog box erroring the user credentials.
-            // prompt user to try logging in again.
-            FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
+            // if false, prompt user to create an account
+            // and to register an account.
+            FileTools.ShowDialogMessage("Account does not exist, try again.");
 
             passwordTextBox.Clear();
-            usernameTextBox.Focus();
+            usernameTextBox.Clear();
+            serverIpTextBox.Clear();
         }
 
         DebugLogger.Break();

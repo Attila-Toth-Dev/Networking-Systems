@@ -5,15 +5,21 @@ namespace MGC_Application;
 
 public class NetworkTools
 {
-    public static string? Username { get; set; }
-    public static string? Password { get; set; }
+    #region Getters/Setters
+
     public static string? ServerIP { get; set; }
+
+    public static string? Username { get; set; }
+    
+    public static string? Password { get; set; }
+    
+    #endregion
 
     /// <summary>Checks if there is a valid connection between client and server.</summary>
     /// <param name="_serverIP">The server IP.</param>
     /// <param name="_username">The username of the client.</param>
     /// <param name="_password">The password of the client.</param>
-    public static bool CheckValidFTP(string _serverIP, string _username, string _password)
+    public static bool CheckValidFTP(string _serverIP)
     {
         // check to see if the given IP is a valid address.
         if (IsValidIP(_serverIP, 5))
@@ -23,7 +29,7 @@ public class NetworkTools
                 // if true, create a FTP web request to remote host
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
 
-                request.Credentials = new NetworkCredential(_username, _password);
+                request.Credentials = new NetworkCredential(Username, Password);
                 request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
                 request.ServicePoint.ConnectionLimit = 4;
                 request.KeepAlive = false;

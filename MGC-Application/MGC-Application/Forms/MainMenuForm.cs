@@ -4,6 +4,8 @@ namespace MGC_Application;
 
 public partial class MainMenuForm : Form
 {
+    #region Getters/Setters
+
     public Image ProfileIcon
     {
         get => profilePictureBox.Image;
@@ -14,12 +16,29 @@ public partial class MainMenuForm : Form
 
     public bool IsInProcess { get; set; }
 
-    private string currentSelectedGame;
+    public string Username
+    {
+        get => username;
+        set => username = value;
+    }
 
+    public string Password
+    {
+        get => password;
+        set => password = value;
+    }
+
+    #endregion
+    
     private ProfileForm profileForm;
     private PropertiesForm propertiesForm;
 
-    public MainMenuForm()
+    private string currentSelectedGame;
+
+    private string username;
+    private string password;
+
+    public MainMenuForm(string _username, string _password)
     {
         InitializeComponent();
 
@@ -32,7 +51,10 @@ public partial class MainMenuForm : Form
         propertiesForm = new PropertiesForm(this);
         profileForm = new ProfileForm(this);
 
-        welecomeLabel.Text = $"{NetworkTools.Username}'s Library";
+        username = _username;
+        password = _password;
+
+        welecomeLabel.Text = $"{_username}'s Library";
     }
 
     #region UI Event Functions

@@ -103,6 +103,7 @@
             saveButton.TabIndex = 2;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
             // passwordTextBox
             // 
