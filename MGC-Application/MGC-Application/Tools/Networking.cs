@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
-using System.Xml.Linq;
 
 namespace MGC_Application;
 
@@ -167,8 +166,6 @@ public class Networking
     {
         try
         {
-            
-
             return true;
         }
         catch(FileNotFoundException ex)

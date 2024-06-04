@@ -15,9 +15,10 @@ public partial class LoginForm : Form
 
         Networking.Username = "ftp-user";
         Networking.Password = "mn1-237A";
+        Networking.ServerIP = "58.169.146.100";
 
+        serverIpTextBox.Enabled = false;
         serverIpTextBox.Text = "58.169.146.100";
-        Networking.ServerIP = serverIpTextBox.Text;
 
         passwordTextBox.UseSystemPasswordChar = true;
     }
@@ -52,6 +53,8 @@ public partial class LoginForm : Form
         usernameTextBox.Clear();
         passwordTextBox.Clear();
         serverIpTextBox.Clear();
+
+        usernameTextBox.Focus();
     }
 
 
@@ -93,8 +96,9 @@ public partial class LoginForm : Form
 
         // check to see if username, password and server IP
         // match up to FTP server allowed users.
-        uint hashValue = Credentials.BKDRHash(passwordTextBox.Text);
-        if (Credentials.ValidateLogin(usernameTextBox.Text, hashValue.ToString()))
+        uint user = Credentials.BKDRHash(usernameTextBox.Text);
+        uint pass = Credentials.BKDRHash(passwordTextBox.Text);
+        if (Credentials.ValidateLogin(user.ToString(), pass.ToString()))
         {
             if (Networking.CheckValidFTP(serverIpTextBox.Text))
             {
@@ -115,7 +119,7 @@ public partial class LoginForm : Form
 
                 passwordTextBox.Clear();
                 usernameTextBox.Focus();
-                serverIpTextBox.Clear();
+                //serverIpTextBox.Clear();
             }
         }
         else
@@ -126,7 +130,7 @@ public partial class LoginForm : Form
 
             passwordTextBox.Clear();
             usernameTextBox.Clear();
-            serverIpTextBox.Clear();
+            //serverIpTextBox.Clear();
         }
 
         Debug.Break();

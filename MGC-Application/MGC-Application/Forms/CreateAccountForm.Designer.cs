@@ -111,6 +111,7 @@
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.Size = new Size(119, 29);
             passwordTextBox.TabIndex = 1;
+            passwordTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // usernameTextBox
             // 
@@ -118,6 +119,7 @@
             usernameTextBox.Name = "usernameTextBox";
             usernameTextBox.Size = new Size(119, 29);
             usernameTextBox.TabIndex = 0;
+            usernameTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // CreateAccountForm
             // 

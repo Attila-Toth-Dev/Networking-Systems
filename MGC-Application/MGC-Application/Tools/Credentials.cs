@@ -2,48 +2,67 @@
 
 public class Credentials
 {
-    private static string credPathFile = $"{WelcomeForm.credentialsPathFile}/Credentials.txt";
-
     /// <summary>Checks if account details are correct.</summary>
     /// <param name="_username">Username of account.</param>
     /// <param name="_password">Password of account.</param>
     public static bool ValidateLogin(string _username, string _password)
     {
-        string[] lines = File.ReadAllLines(credPathFile);
-
-        for (int i = 0; i < lines.Length; i++)
+        try
         {
-            string[] parts = lines[i].Split(',');
-
-            if (parts.Length == 2 && parts[0] == _username && parts[1] == _password)
+            using(StreamReader reader = new StreamReader($"{WelcomeForm.usersPathFile}/Users.txt"))
             {
-                Debug.Log($"User details correct. Welcome {_username}");
-                return true;
-            }
-        }
+                string? line;
+                while((line = reader.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(',');
 
-        Debug.Log("Account does not exist, please try again.");
-        return false;
+                    if(parts.Length == 2 && parts[0] == _username && parts[1] == _password)
+                    {
+                        Debug.Log($"User details correct. Welcome {_username}.");
+                        return true;
+                    }
+                }
+            }
+
+            Debug.Log("Account does not exist, please try again.");
+            return false;
+        }
+        catch(FileNotFoundException ex)
+        {
+            Debug.Log(ex.Message);
+            return false;
+        }
     }
 
     /// <summary>Checks to see if username already exists.</summary>
     /// <param name="_username">Username of the account to check.</param>
     public static bool UserExists(string _username)
     {
-        string[] lines = File.ReadAllLines(credPathFile);
-
-        foreach(var line in lines)
+        try
         {
-            string[] parts = line.Split(',');
-
-            if (parts.Length == 2 && parts[0] == _username)
+            using (StreamReader reader = new StreamReader($"{WelcomeForm.usersPathFile}/Users.txt"))
             {
-                Debug.Log("Username already exists");
-                return true;
+                string? line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(',');
+
+                    if (parts.Length == 2 && parts[0] == _username)
+                    {
+                        Debug.Log($"User account already exists.");
+                        return true;
+                    }
+                }
+
+                Debug.Log($"User account does not exist.");
+                return false;
             }
         }
-
-        return false;
+        catch(FileNotFoundException ex)
+        {
+            Debug.Log(ex.Message);
+            return false;
+        }
     }
 
     /// <summary>Function that adds the username and password details of account.</summary>
@@ -51,21 +70,41 @@ public class Credentials
     /// <param name="_password">Password of the account.</param>
     public static void AddUser(string _username, string _password)
     {
-        string pass = BKDRHash(_password).ToString();
-        File.AppendAllText(credPathFile, $"{_username},{pass}{Environment.NewLine}");
+        try
+        {
+            string usersPathName = $"Users.txt";
+            string usersPath = $"{WelcomeForm.usersPathFile}/{usersPathName}";
 
-        Debug.Log($"Successfully registered account.");
+            using(StreamWriter writer = new StreamWriter(usersPath, true))
+            {
+                string pass = BKDRHash(_password).ToString();
+                string user = BKDRHash(_username).ToString();
+                writer.Write($"{user},{pass}{Environment.NewLine}");
+
+                Debug.Log($"Successfully registered account.");
+            }
+        }
+        catch(FileNotFoundException ex)
+        {
+            Debug.Log(ex.Message);
+            return;
+        }
+        catch(FileFormatException ex)
+        {
+            Debug.Log(ex.Message);
+            return;
+        }
     }
 
     /// <summary>Hashing function that securely hashes the password for an account.</summary>
-    /// <param name="_password">The password to hash for account.</param>
-    public static uint BKDRHash(string _password)
+    /// <param name="_string">The password to hash for account.</param>
+    public static uint BKDRHash(string _string)
     {
         uint seed = 1313;
         uint hash = 0;
 
-        for (uint i = 0; i < _password.Length; i++)
-            hash = (hash * seed) + ((byte)_password[(int)i]);
+        for (uint i = 0; i < _string.Length; i++)
+            hash = (hash * seed) + ((byte)_string[(int)i]);
 
         return hash;
     }

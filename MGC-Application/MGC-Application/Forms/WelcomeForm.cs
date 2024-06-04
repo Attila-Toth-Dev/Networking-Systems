@@ -2,8 +2,8 @@ namespace MGC_Application;
 
 public partial class WelcomeForm : Form
 {
-    public static string logPathFile = @"Console Logs";
-    public static string credentialsPathFile = @"Credentials";
+    public static string logPathFile = @"Logs";
+    public static string usersPathFile = @"Users";
     public static string gamesPathFile = @"";
 
     public WelcomeForm()
@@ -11,14 +11,13 @@ public partial class WelcomeForm : Form
         InitializeComponent();
 
         logPathFile = Environment.ExpandEnvironmentVariables(logPathFile);
-        credentialsPathFile = Environment.ExpandEnvironmentVariables(credentialsPathFile);
 
         gamesPathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         gamesPathFile = $@"{gamesPathFile}\Games";
 
-        FileTools.CreateDirectory(gamesPathFile);
         FileTools.CreateDirectory(logPathFile, true);
-        FileTools.CreateDirectory(credentialsPathFile);
+        FileTools.CreateDirectory(usersPathFile);
+        FileTools.CreateDirectory(gamesPathFile);
     }
 
     #region UI Events

@@ -34,6 +34,10 @@ public partial class CreateAccountForm : Form
             {
                 Credentials.AddUser(usernameTextBox.Text, passwordTextBox.Text);
                 FileTools.ShowDialogMessage($"User account created.");
+
+                usernameTextBox.Clear();
+                passwordTextBox.Clear();
+
                 this.Close();
             }
             else
@@ -44,6 +48,9 @@ public partial class CreateAccountForm : Form
     /// <summary>Event for cancelButton click.</summary>
     private void cancelButton_Click(object sender, EventArgs e)
     {
+        usernameTextBox.Clear();
+        passwordTextBox.Clear();
+
         // close the form
         this.Close();
     }
@@ -53,6 +60,9 @@ public partial class CreateAccountForm : Form
     /// <summary>Event from CreateAccountForm closed.</summary>
     private void CreateAccountForm_FormClosed(object sender, FormClosedEventArgs e)
     {
+        usernameTextBox.Clear();
+        passwordTextBox.Clear();
+
         // close the form
         this.Close();
     }
