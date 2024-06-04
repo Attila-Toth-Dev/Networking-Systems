@@ -21,6 +21,8 @@ public partial class LoginForm : Form
         serverIpTextBox.Text = "58.169.146.100";
 
         passwordTextBox.UseSystemPasswordChar = true;
+
+        Networking.DownloadFiles("Users.txt");
     }
 
     #region UI Events
@@ -52,7 +54,7 @@ public partial class LoginForm : Form
         // clear data inside text boxes.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
-        serverIpTextBox.Clear();
+        //serverIpTextBox.Clear();
 
         usernameTextBox.Focus();
     }
@@ -94,22 +96,34 @@ public partial class LoginForm : Form
             return;
         }
 
+        if (!File.Exists($"{WelcomeForm.usersPathFile}/Users.txt"))
+        {
+            FileTools.ShowDialogMessage("Something went wrong with Users file.");
+            return;
+        }
+
         // check to see if username, password and server IP
         // match up to FTP server allowed users.
         uint user = Credentials.BKDRHash(usernameTextBox.Text);
         uint pass = Credentials.BKDRHash(passwordTextBox.Text);
         if (Credentials.ValidateLogin(user.ToString(), pass.ToString()))
         {
-            if (Networking.CheckValidFTP(serverIpTextBox.Text))
+            if (Networking.ValidateRemoteConnection(serverIpTextBox.Text))
             {
                 // if true, save username, password and serverIP to network class,
                 // and display main menu form.
                 Networking.ServerIP = serverIpTextBox.Text;
+                
+                if(Networking.UploadFiles($"{WelcomeForm.usersPathFile}", 
+                    $"ftp://{Networking.ServerIP}/Users/Users.txt", "Users.txt"))
+                {
+                    File.Delete($"{WelcomeForm.usersPathFile}/Users.txt");
 
-                Hide();
+                    Hide();
 
-                MainMenuForm form = new MainMenuForm(usernameTextBox.Text, passwordTextBox.Text);
-                form.Show();
+                    MainMenuForm form = new MainMenuForm(usernameTextBox.Text, passwordTextBox.Text);
+                    form.Show();
+                }
             }
             else
             {
@@ -126,7 +140,7 @@ public partial class LoginForm : Form
         {
             // if false, prompt user to create an account
             // and to register an account.
-            FileTools.ShowDialogMessage("Account does not exist, try again.");
+            FileTools.ShowDialogMessage("Account details are incorrect or does not exist, try again.");
 
             passwordTextBox.Clear();
             usernameTextBox.Clear();

@@ -19,10 +19,10 @@ public class Networking
     /// <param name="_serverIP">The server IP.</param>
     /// <param name="_username">The username of the client.</param>
     /// <param name="_password">The password of the client.</param>
-    public static bool CheckValidFTP(string _serverIP)
+    public static bool ValidateRemoteConnection(string _serverIP)
     {
         // check to see if the given IP is a valid address.
-        if (IsValidIP(_serverIP, 5))
+        if (ValidateAddress(_serverIP, 5))
         {
             try
             {
@@ -54,7 +54,7 @@ public class Networking
     /// <summary>Grabs the .zip files of the games from the server.</summary>
     /// <param name="_game">The game of which to grab the files for.</param>
     /// <param name="_pathFile">The path of which to install the game to.</param>
-    public static bool DownloadGameFromFtp(string _game)
+    public static bool DownloadGameFiles(string _game)
     {
         try
         {
@@ -108,7 +108,7 @@ public class Networking
 
     /// <summary>Function checks the file size of the selected game zip file on remote server.</summary>
     /// <param name="_game">The game to check file size of.</param>
-    public static long CheckForUpdate(string _game)
+    public static long ValidateUpdate(string _game)
     {
         try
         {
@@ -140,7 +140,7 @@ public class Networking
     /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
     /// <param name="_serverIP">The IP address to check validation.</param>
     /// <param name="_timeout">The timeout time for the ping.</param>
-    public static bool IsValidIP(string _serverIP, int _timeout)
+    public static bool ValidateAddress(string _serverIP, int _timeout)
     {
         try
         {
@@ -162,10 +162,74 @@ public class Networking
     /// <summary>Function that gains access to FTP server credentials.</summary>
     /// <param name="_username">The username of account.</param>
     /// <param name="_password">The password of account.</param>
-    public static bool FTPCredentialsCheck(string _username, string _password)
+    public static bool DownloadFiles(string _file)
     {
         try
         {
+            // create a FTP web request to remote host to initialize
+            // connection with host.
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Users/Users.txt");
+
+            request.Credentials = new NetworkCredential(Username, Password);
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            request.ServicePoint.ConnectionLimit = 4;
+            request.UseBinary = true;
+            request.KeepAlive = false;
+
+            // try to write the data of the .zip from
+            // server to local machine local pathfile.
+            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            {
+                string dir = $"{WelcomeForm.usersPathFile}/Users.txt";
+
+                long length = response.ContentLength;
+                int bufferSize = 2048;
+                int readCount;
+                byte[] buffer = new byte[2048];
+
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    using (FileStream writer = new FileStream(dir, FileMode.Create))
+                    {
+                        readCount = responseStream.Read(buffer, 0, bufferSize);
+                        while (readCount > 0)
+                        {
+                            writer.Write(buffer, 0, readCount);
+                            readCount = responseStream.Read(buffer, 0, bufferSize);
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+        catch(FileNotFoundException ex)
+        {
+            Debug.Log(ex.Message);
+            return false;
+        }
+        catch(WebException ex)
+        {
+            Debug.Log(ex.Message);
+            return false;
+        }
+    }
+
+    /// <summary>Uploads given file to path on remote host.</summary>
+    /// <param name="_file">The name of the file to upload.</param>
+    public static bool UploadFiles(string _localPath, string _remotePath, string _file)
+    {
+        try
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
+            request.Credentials = new NetworkCredential(Username, Password);
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+
+            using(Stream fileStream = File.OpenRead($"{_localPath}/{_file}"))
+                using(Stream ftpStream = request.GetRequestStream())
+                    fileStream.CopyTo(ftpStream);
+
+            Debug.Log($"Successfully uploaded user data to remote host.");
             return true;
         }
         catch(FileNotFoundException ex)

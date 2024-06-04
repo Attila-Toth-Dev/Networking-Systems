@@ -59,7 +59,7 @@ public partial class MainMenuForm : Form
         // verify if game has been installed in location.
         // if true, set game installed? icon colour to green.
         // if false, set game installed? icon colour to red.
-        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
             installedIcon.BackColor = Color.Green;
         else
             installedIcon.BackColor = Color.Red;
@@ -153,11 +153,11 @@ public partial class MainMenuForm : Form
         }
 
         // check to see if the game has been installed.
-        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
         {
             // if game is installed,
             // run the current selected game .exe.
-            if (FileTools.Run(currentSelectedGame, gameFilePathTextBox.Text))
+            if (FileTools.ExecuteGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
                 FileTools.ShowDialogMessage($"Running {currentSelectedGame}.exe");
         }
         else
@@ -182,12 +182,12 @@ public partial class MainMenuForm : Form
         }
 
         // check to see if game has already been installed.
-        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
         {
             // if installed, grab the file size of the local copy of the game,
             // and also grab the file size of the remote hosts copy of the game.
             long localFileLength = new FileInfo($"{gameFilePathTextBox.Text}/{currentSelectedGame}.zip").Length;
-            long remoteFileLength = Networking.CheckForUpdate(currentSelectedGame);
+            long remoteFileLength = Networking.ValidateUpdate(currentSelectedGame);
 
             // if both have the same size, return no update.
             if (localFileLength == remoteFileLength)
@@ -240,7 +240,7 @@ public partial class MainMenuForm : Form
 
         // check to see if the game has not been installed,
         // if false, prompt user saying files have already been found.
-        if (!FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (!FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
         {
             // if thread is not busy, start the install process
             // on the install thread.
@@ -276,7 +276,7 @@ public partial class MainMenuForm : Form
 
         // check to see if the game has been installed,
         // if false, prompt user saying game has not been installed.
-        if (FileTools.VerifyGameLocation(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
         {
             // prompt user asking if they are certain on uninstalling.
             DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.WARNING,
@@ -289,7 +289,7 @@ public partial class MainMenuForm : Form
             {
                 Debug.Log("Starting uninstall process now...");
 
-                if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
+                if (FileTools.UninstallGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
                 {
                     progressBar.Value = 100;
                     percentLabel.Text = $"{progressBar.Value}%";
@@ -356,7 +356,7 @@ public partial class MainMenuForm : Form
 
         // when updating, remove the .zip file and
         // main game directory from install location.
-        if (FileTools.Uninstall(currentSelectedGame, gameFilePathTextBox.Text))
+        if (FileTools.UninstallGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
         {
             //DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
             updateWorker.ReportProgress(0);
@@ -372,7 +372,7 @@ public partial class MainMenuForm : Form
 
             // once completely uninstalled, download the new copy
             // of the updated game.
-            if (Networking.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
+            if (Networking.DownloadGameFiles(currentSelectedGame) && !updateWorker.CancellationPending)
             {
                 //DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
                 updateWorker.ReportProgress(0);
@@ -388,7 +388,7 @@ public partial class MainMenuForm : Form
 
                 // then "install" the new copy by extracting
                 // the .zip file.
-                if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending) { }
+                if (FileTools.InstallGameFiles(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending) { }
                 //DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
             }
         }
@@ -444,7 +444,7 @@ public partial class MainMenuForm : Form
 
         // then download the copy of the game from
         // the remote host.
-        if (Networking.DownloadGameFromFtp(currentSelectedGame) && !updateWorker.CancellationPending)
+        if (Networking.DownloadGameFiles(currentSelectedGame) && !updateWorker.CancellationPending)
         {
             //DebugLogger.Log($"Install worker cancel request: {e.Cancel}");
 
@@ -462,7 +462,7 @@ public partial class MainMenuForm : Form
             installWorker.ReportProgress(0);
 
             // then "install" the freshly downloaded .zip file.
-            if (FileTools.Install(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
+            if (FileTools.InstallGameFiles(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending)
                 installedIcon.BackColor = Color.Green;
         }
     }

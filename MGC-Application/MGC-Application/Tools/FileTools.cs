@@ -11,7 +11,7 @@ public class FileTools
     /// <summary>Run executes the exe of the game.</summary>
     /// <param name="_game">The program of to run the exe of.</param>
     /// <param name="_pathfile">The pathfile of the game.</param>
-    public static bool Run(string _game, string _pathfile)
+    public static bool ExecuteGameFiles(string _game, string _pathfile)
     {
         // try to execute the .exe of the given game,
         // if game cannot be executed, then run exception error.
@@ -37,7 +37,7 @@ public class FileTools
     /// <summary>Install extracts and installs the game files in its own directory.</summary>
     /// <param name="_game">The game of which will be installed.</param>
     /// <param name="_pathfile">The pathfile of which the game files are located at.</param>
-    public static bool Install(string _game, string _pathfile)
+    public static bool InstallGameFiles(string _game, string _pathfile)
     {
         // try to extract the downloaded .zip
         // into its own game directory within pathfile.
@@ -63,7 +63,7 @@ public class FileTools
     /// <summary>Uninstall removes the game files from the games folder.</summary>
     /// <param name="_game">The game of which to remove.</param>
     /// <param name="_pathfile">The filepath of the chosen game.</param>
-    public static bool Uninstall(string _game, string _pathFile)
+    public static bool UninstallGameFiles(string _game, string _pathFile)
     {
         try
         {
@@ -89,7 +89,7 @@ public class FileTools
     /// <summary>Verifys if the game is installed.</summary>
     /// <param name="_game">The game of which to check installation of.</param>
     /// <param name="_pathfile">The pathfile of the installed game.</param>
-    public static bool VerifyGameLocation(string _game, string _pathfile)
+    public static bool VerifyGameFiles(string _game, string _pathfile)
     {
         string dir = $"{_pathfile}/{_game}";
 

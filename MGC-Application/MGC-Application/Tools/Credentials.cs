@@ -24,7 +24,7 @@ public class Credentials
                 }
             }
 
-            Debug.Log("Account does not exist, please try again.");
+            Debug.Log("Account details do not match, please try again.");
             return false;
         }
         catch(FileNotFoundException ex)

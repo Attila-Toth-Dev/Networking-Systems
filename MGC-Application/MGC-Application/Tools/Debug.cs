@@ -6,7 +6,7 @@ public class Debug
     /// <param name="_message">The message of which to log.</param>
     public static void Log(string _message)
     {
-        string logFileName = $"Console Log.txt";
+        string logFileName = $"Logs.txt";
         string logPath = $"{WelcomeForm.logPathFile}/{logFileName}";
 
         // append the string message with time and date, alongside message
@@ -18,7 +18,7 @@ public class Debug
     /// <summary>Break makes a empty line of space in log files for ease of reading.</summary>
     public static void Break()
     {
-        string logFileName = $"Console Log.txt";
+        string logFileName = $"Logs.txt";
         string logPath = $"{WelcomeForm.logPathFile}/{logFileName}";
 
         // create a new empty line in logs file.
