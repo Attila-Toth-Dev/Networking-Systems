@@ -1,4 +1,5 @@
 ﻿using MGC_Application.Forms;
+using System.Xml.Linq;
 
 namespace MGC_Application;
 
@@ -12,9 +13,16 @@ public partial class MainMenuForm : Form
         set => profilePictureBox.Image = value;
     }
 
-    public string GamePathFile { get => gameFilePathTextBox.Text; }
+    public string GamePathFile 
+    { 
+        get => gameFilePathTextBox.Text;
+    }
 
-    public bool IsInProcess { get; set; }
+    public bool IsInProcess 
+    { 
+        get; 
+        set; 
+    }
 
     #endregion
     
@@ -47,7 +55,7 @@ public partial class MainMenuForm : Form
 
     #region UI Event Functions
 
-    /// <summary>Event for the gameListView click.</summary>
+    /// <summary>Event for the game list view click.</summary>
     private void gameListView_Click(object sender, EventArgs e)
     {
         // current selected game is the game that has been
@@ -65,7 +73,7 @@ public partial class MainMenuForm : Form
             installedIcon.BackColor = Color.Red;
     }
 
-    /// <summary>Event for the gameFolderPathButton click.</summary>
+    /// <summary>Event for the game folder path button click.</summary>
     private void gameFolderPathButton_Click(object sender, EventArgs e)
     {
         // allow users to change install location path file
@@ -80,7 +88,7 @@ public partial class MainMenuForm : Form
         }
     }
 
-    /// <summary>Event for the logoutToolStripMenuItem click.</summary>
+    /// <summary>Event for the logout tool strip menu item click.</summary>
     private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
     {
         // show a decision dialog box for player
@@ -102,7 +110,7 @@ public partial class MainMenuForm : Form
         }
     }
 
-    /// <summary>Event for the exitToolStripMenuItem click.</summary>
+    /// <summary>Event for the exit tool strip menu item click.</summary>
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
         // show a decision dialog box for player
@@ -116,7 +124,7 @@ public partial class MainMenuForm : Form
             Application.Exit();
     }
 
-    /// <summary>Event for the profilePictureBox click.</summary>
+    /// <summary>Event for the profile picture box click.</summary>
     private void profilePictureBox_Click(object sender, EventArgs e)
     {
         profileForm.ShowDialog();
@@ -124,13 +132,7 @@ public partial class MainMenuForm : Form
         Debug.Break();
     }
 
-    /// <summary>Event for consoleToolStripMenuItem click.</summary>
-    private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    /// <summary>Event for MainMenuForm close.</summary>
+    /// <summary>Event for main menu form close.</summary>
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
     {
         // close the application,
@@ -141,7 +143,7 @@ public partial class MainMenuForm : Form
 
     #region Button Event Functions
 
-    /// <summary>Event for playButton click.</summary>
+    /// <summary>Event for play button click.</summary>
     private void playButton_Click(object sender, EventArgs e)
     {
         // if a game has not been selected, then prompt user to
@@ -170,7 +172,7 @@ public partial class MainMenuForm : Form
         Debug.Break();
     }
 
-    /// <summary>Event for updateButton click.</summary>
+    /// <summary>Event for update button click.</summary>
     private void updateButton_Click(object sender, EventArgs e)
     {
         // if a game has not been selected, then prompt user to
@@ -187,7 +189,7 @@ public partial class MainMenuForm : Form
             // if installed, grab the file size of the local copy of the game,
             // and also grab the file size of the remote hosts copy of the game.
             long localFileLength = new FileInfo($"{gameFilePathTextBox.Text}/{currentSelectedGame}.zip").Length;
-            long remoteFileLength = Networking.ValidateUpdate(currentSelectedGame);
+            long remoteFileLength = Networking.ValidateUpdate(currentSelectedGame, $"ftp://{Networking.ServerIP}/Games/");
 
             // if both have the same size, return no update.
             if (localFileLength == remoteFileLength)
@@ -227,7 +229,7 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage($"{currentSelectedGame} game files have not been installed. (Line 239)", 1);
     }
 
-    /// <summary>Event for installButton click.</summary>
+    /// <summary>Event for install button click.</summary>
     private void installButton_Click(object sender, EventArgs e)
     {
         // if a game has not been selected, then prompt user to
@@ -263,7 +265,7 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage($"{currentSelectedGame} game files have already been installed. (Line 273)", 1);
     }
 
-    /// <summary>Event for uninstallButton click.</summary>
+    /// <summary>Event for uninstall button click.</summary>
     private void uninstallButton_Click(object sender, EventArgs e)
     {
         // if a game has not been selected, then prompt user to
@@ -308,7 +310,7 @@ public partial class MainMenuForm : Form
         Debug.Break();
     }
 
-    /// <summary>Event for cancelButton click.</summary>
+    /// <summary>Event for cancel button click.</summary>
     private void cancelButton_Click(object sender, EventArgs e)
     {
         // if true, cancel background process,
@@ -322,7 +324,7 @@ public partial class MainMenuForm : Form
             FileTools.ShowDialogMessage("There are no on-going processes running in the background, aborting process. (Line 330)", 1);
     }
 
-    /// <summary>Event for propertiesButton click.</summary>
+    /// <summary>Event for properties button click.</summary>
     private void propertiesButton_Click(object sender, EventArgs e)
     {
         // if a game has not been selected, then prompt user to
@@ -342,7 +344,7 @@ public partial class MainMenuForm : Form
 
     #region Worker Events
 
-    /// <summary>Event for updateWorker do work.</summary>
+    /// <summary>Event for update worker do work.</summary>
     private void updateWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
         // check to see if there is a cancellation
@@ -358,7 +360,7 @@ public partial class MainMenuForm : Form
         // main game directory from install location.
         if (FileTools.UninstallGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
         {
-            //DebugLogger.Log($"Removed old instance of {currentSelectedGame} games files.");
+            Debug.Log($"Removed old instance of {currentSelectedGame} games files.");
             updateWorker.ReportProgress(0);
 
             // check to see if there is a cancellation
@@ -372,9 +374,9 @@ public partial class MainMenuForm : Form
 
             // once completely uninstalled, download the new copy
             // of the updated game.
-            if (Networking.DownloadGameFiles(currentSelectedGame) && !updateWorker.CancellationPending)
+            if (Networking.DownloadGameFiles(currentSelectedGame, $"ftp://{Networking.ServerIP}/Games/") && !updateWorker.CancellationPending)
             {
-                //DebugLogger.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
+                Debug.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
                 updateWorker.ReportProgress(0);
 
                 // check to see if there is a cancellation
@@ -389,12 +391,12 @@ public partial class MainMenuForm : Form
                 // then "install" the new copy by extracting
                 // the .zip file.
                 if (FileTools.InstallGameFiles(currentSelectedGame, gameFilePathTextBox.Text) && !updateWorker.CancellationPending) { }
-                //DebugLogger.Log($"Successfully reinstalled {currentSelectedGame} game files.");
+                Debug.Log($"Successfully reinstalled {currentSelectedGame} game files.");
             }
         }
     }
 
-    /// <summary>Event for updateWorker progress change.</summary>
+    /// <summary>Event for update worker progress change.</summary>
     private void updateWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
     {
         // change progress value on report progress by 30.
@@ -402,7 +404,7 @@ public partial class MainMenuForm : Form
         percentLabel.Text = $"{progressBar.Value}%";
     }
 
-    /// <summary>Event for updateWorker work complete.</summary>
+    /// <summary>Event for update worker work complete.</summary>
     private void updateWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
     {
         // when complete, prompt user telling game has finished updating
@@ -425,7 +427,7 @@ public partial class MainMenuForm : Form
         Debug.Break();
     }
 
-    /// <summary>Event for installWorker do work.</summary>
+    /// <summary>Event for install worker do work.</summary>
     private void installWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
         // check to see if there is a cancellation
@@ -444,9 +446,9 @@ public partial class MainMenuForm : Form
 
         // then download the copy of the game from
         // the remote host.
-        if (Networking.DownloadGameFiles(currentSelectedGame) && !updateWorker.CancellationPending)
+        if (Networking.DownloadGameFiles(currentSelectedGame, $"ftp://{Networking.ServerIP}/Games/") && !updateWorker.CancellationPending)
         {
-            //DebugLogger.Log($"Install worker cancel request: {e.Cancel}");
+            Debug.Log($"Install worker cancel request: {e.Cancel}");
 
             // check to see if there is a cancellation
             // pending requested by the user.
@@ -457,8 +459,8 @@ public partial class MainMenuForm : Form
                 e.Cancel = true;
             }
 
-            //DebugLogger.Log($"Successfuly downloaded files from server.");
-            //DebugLogger.Log($"Starting install now.");
+            Debug.Log($"Successfuly downloaded files from server.");
+            Debug.Log($"Starting install now.");
             installWorker.ReportProgress(0);
 
             // then "install" the freshly downloaded .zip file.
@@ -467,7 +469,7 @@ public partial class MainMenuForm : Form
         }
     }
 
-    /// <summary>Event for installWorker progress change.</summary>
+    /// <summary>Event for install worker progress change.</summary>
     private void installWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
     {
         // change progress value on report progress by 30.
@@ -475,7 +477,7 @@ public partial class MainMenuForm : Form
         percentLabel.Text = $"{progressBar.Value}%";
     }
 
-    /// <summary>Event for installWorker work complete.</summary>
+    /// <summary>Event for install worker work complete.</summary>
     private void installWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
     {
         // when complete, prompt user telling game has finished installing

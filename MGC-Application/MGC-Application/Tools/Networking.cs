@@ -17,8 +17,6 @@ public class Networking
 
     /// <summary>Checks if there is a valid connection between client and server.</summary>
     /// <param name="_serverIP">The server IP.</param>
-    /// <param name="_username">The username of the client.</param>
-    /// <param name="_password">The password of the client.</param>
     public static bool ValidateRemoteConnection(string _serverIP)
     {
         // check to see if the given IP is a valid address.
@@ -51,16 +49,38 @@ public class Networking
             return false;
     }
 
-    /// <summary>Grabs the .zip files of the games from the server.</summary>
-    /// <param name="_game">The game of which to grab the files for.</param>
-    /// <param name="_pathFile">The path of which to install the game to.</param>
-    public static bool DownloadGameFiles(string _game)
+    /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
+    /// <param name="_serverIP">The IP address to check validation.</param>
+    /// <param name="_timeout">The timeout time for the ping.</param>
+    public static bool ValidateAddress(string _serverIP, int _timeout)
+    {
+        try
+        {
+            // try to ping the address to check if it is a true address,
+            Ping ping = new Ping();
+            PingReply pingReply = ping.Send(_serverIP, _timeout);
+
+            Debug.Log($"Ping connection recieved with remote server.");
+            return true;
+        }
+        catch (PingException ex)
+        {
+            // catch return ping exception error.
+            Debug.Log(ex.Message);
+            return false;
+        }
+    }
+
+    /// <summary></summary>
+    /// <param name="_game"></param>
+    /// <param name="_remotePath"></param>
+    public static bool DownloadGameFiles(string _game, string _remotePath)
     {
         try
         {
             // create a FTP web request to remote host to initialize
             // connection with host.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
 
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -106,14 +126,15 @@ public class Networking
         }
     }
 
-    /// <summary>Function checks the file size of the selected game zip file on remote server.</summary>
-    /// <param name="_game">The game to check file size of.</param>
-    public static long ValidateUpdate(string _game)
+    /// <summary></summary>
+    /// <param name="_game"></param>
+    /// <param name="_remotePath"></param>
+    public static long ValidateUpdate(string _game, string _remotePath)
     {
         try
         {
             // create a FTP web request connection to address
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Games/{_game}.zip");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
 
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.GetFileSize;
@@ -137,38 +158,16 @@ public class Networking
         }
     }
 
-    /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
-    /// <param name="_serverIP">The IP address to check validation.</param>
-    /// <param name="_timeout">The timeout time for the ping.</param>
-    public static bool ValidateAddress(string _serverIP, int _timeout)
-    {
-        try
-        {
-            // try to ping the address to check if it is a true address,
-            Ping ping = new Ping();
-            PingReply pingReply = ping.Send(_serverIP, _timeout);
-
-            Debug.Log($"Ping connection recieved with remote server.");
-            return true;
-        }
-        catch (PingException ex)
-        {
-            // catch return ping exception error.
-            Debug.Log(ex.Message);
-            return false;
-        }
-    }
-
-    /// <summary>Function that gains access to FTP server credentials.</summary>
-    /// <param name="_username">The username of account.</param>
-    /// <param name="_password">The password of account.</param>
-    public static bool DownloadFiles(string _file)
+    /// <summary></summary>
+    /// <param name="_remotePath"></param>
+    /// <param name="_file"></param>
+    public static bool DownloadFiles(string _remotePath, string _file)
     {
         try
         {
             // create a FTP web request to remote host to initialize
             // connection with host.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{ServerIP}/Users/Users.txt");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
 
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -215,9 +214,11 @@ public class Networking
         }
     }
 
-    /// <summary>Uploads given file to path on remote host.</summary>
-    /// <param name="_file">The name of the file to upload.</param>
-    public static bool UploadFiles(string _localPath, string _remotePath, string _file)
+    /// <summary></summary>
+    /// <param name="_file"></param>
+    /// <param name="_localPath"></param>
+    /// <param name="_remotePath"></param>
+    public static bool UploadFiles(string _file, string _localPath, string _remotePath)
     {
         try
         {
@@ -225,19 +226,19 @@ public class Networking
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.UploadFile;
 
-            using(Stream fileStream = File.OpenRead($"{_localPath}/{_file}"))
-                using(Stream ftpStream = request.GetRequestStream())
-                    fileStream.CopyTo(ftpStream);
+            using (Stream fileStream = File.OpenRead($"{_localPath}/{_file}"))
+            using (Stream ftpStream = request.GetRequestStream())
+                fileStream.CopyTo(ftpStream);
 
             Debug.Log($"Successfully uploaded user data to remote host.");
             return true;
         }
-        catch(FileNotFoundException ex)
+        catch (FileNotFoundException ex)
         {
             Debug.Log(ex.Message);
             return false;
         }
-        catch(WebException ex)
+        catch (WebException ex)
         {
             Debug.Log(ex.Message);
             return false;

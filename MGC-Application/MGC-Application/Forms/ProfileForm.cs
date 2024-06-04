@@ -22,14 +22,7 @@ public partial class ProfileForm : Form
 
     #region UI Events
 
-    /// <summary>Event for ProfileForm close.</summary>
-    private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        // close the profile form.
-        this.Close();
-    }
-
-    /// <summary>Event for profileIconListView click.</summary>
+    /// <summary>Event for profile icon list view click.</summary>
     private void profileIconListView_Click(object sender, EventArgs e)
     {
         // from list view, when selected, change icon
@@ -42,11 +35,18 @@ public partial class ProfileForm : Form
         mainMenuForm.ProfileIcon = profileIconPictureBox.Image;
     }
 
+    /// <summary>Event for profile form close.</summary>
+    private void ProfileForm_Closed(object sender, FormClosedEventArgs e)
+    {
+        // close the profile form.
+        this.Close();
+    }
+
     #endregion
 
     #region Button Events
 
-    /// <summary>Event for returnButton click.</summary>
+    /// <summary>Event for return button click.</summary>
     private void returnButton_Click(object sender, EventArgs e)
     {
         // close the profile form.

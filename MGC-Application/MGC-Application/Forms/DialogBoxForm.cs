@@ -4,8 +4,6 @@ public partial class DialogBoxForm : Form
 {
     public BoolValue DecisionValue { get; set; }
 
-    private bool isDecisionForm;
-
     public enum MessageSeverity
     {
         MESSAGE,
@@ -27,17 +25,15 @@ public partial class DialogBoxForm : Form
         messageTextBox.Enabled = false;
         messageTextBox.Text = _message;
 
-        isDecisionForm = _isDecisionForm;
+        yesButton.Visible = _isDecisionForm;
+        noButton.Visible = _isDecisionForm;
 
-        yesButton.Visible = isDecisionForm;
-        noButton.Visible = isDecisionForm;
-
-        okayButton.Visible = !isDecisionForm;
+        okayButton.Visible = !_isDecisionForm;
     }
 
     #region Button Events
 
-    /// <summary>Event for yesButton click.</summary>
+    /// <summary>Event for yes button click.</summary>
     private void yesButton_Click(object sender, EventArgs e)
     {
         // returns a positive value for yes.
@@ -46,7 +42,7 @@ public partial class DialogBoxForm : Form
         this.Dispose();
     }
 
-    /// <summary>Event for noButton click.</summary>
+    /// <summary>Event for no button click.</summary>
     private void noButton_Click(object sender, EventArgs e)
     {
         // returns a negative value for no.
@@ -55,7 +51,7 @@ public partial class DialogBoxForm : Form
         this.Dispose();
     }
 
-    /// <summary>Event for okayButton click.</summary>
+    /// <summary>Event for okay button click.</summary>
     private void okayButton_Click(object sender, EventArgs e)
     {
         // closes the dialog box.
@@ -65,7 +61,7 @@ public partial class DialogBoxForm : Form
 
     #endregion
 
-    /// <summary>Event for DialogBoxForm close.</summary>
+    /// <summary>Event for dialog box form closed.</summary>
     private void DialogBoxForm_FormClosed(object sender, FormClosedEventArgs e)
     {
         // close the dialog box

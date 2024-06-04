@@ -10,8 +10,8 @@ public class FileTools
 
     /// <summary>Run executes the exe of the game.</summary>
     /// <param name="_game">The program of to run the exe of.</param>
-    /// <param name="_pathfile">The pathfile of the game.</param>
-    public static bool ExecuteGameFiles(string _game, string _pathfile)
+    /// <param name="_localPath">The pathfile of the game.</param>
+    public static bool ExecuteGameFiles(string _game, string _localPath)
     {
         // try to execute the .exe of the given game,
         // if game cannot be executed, then run exception error.
@@ -20,7 +20,7 @@ public class FileTools
             using (Process process = new Process())
             {
                 process.StartInfo.UseShellExecute = false;
-                process.StartInfo.FileName = $"{_pathfile}/{_game}/{_game}.exe";
+                process.StartInfo.FileName = $"{_localPath}/{_game}/{_game}.exe";
                 process.Start();
             }
 
@@ -36,16 +36,16 @@ public class FileTools
 
     /// <summary>Install extracts and installs the game files in its own directory.</summary>
     /// <param name="_game">The game of which will be installed.</param>
-    /// <param name="_pathfile">The pathfile of which the game files are located at.</param>
-    public static bool InstallGameFiles(string _game, string _pathfile)
+    /// <param name="_localPath">The pathfile of which the game files are located at.</param>
+    public static bool InstallGameFiles(string _game, string _localPath)
     {
         // try to extract the downloaded .zip
         // into its own game directory within pathfile.
         // if it cannot be executed, throw file not found exception.
         try
         {
-            string startFile = $"{_pathfile}/{_game}.zip";
-            string endDir = $"{_pathfile}/{_game}";
+            string startFile = $"{_localPath}/{_game}.zip";
+            string endDir = $"{_localPath}/{_game}";
 
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
@@ -63,13 +63,13 @@ public class FileTools
     /// <summary>Uninstall removes the game files from the games folder.</summary>
     /// <param name="_game">The game of which to remove.</param>
     /// <param name="_pathfile">The filepath of the chosen game.</param>
-    public static bool UninstallGameFiles(string _game, string _pathFile)
+    public static bool UninstallGameFiles(string _game, string _localPath)
     {
         try
         {
-            DeleteFile(_game, _pathFile);
+            DeleteFile(_game, _localPath);
             Thread.Sleep(2000);
-            DeleteDirectory(_game, _pathFile);
+            DeleteDirectory(_game, _localPath);
 
             Debug.Log($"Uninstalled {_game} game files.");
             return true;
@@ -88,10 +88,10 @@ public class FileTools
 
     /// <summary>Verifys if the game is installed.</summary>
     /// <param name="_game">The game of which to check installation of.</param>
-    /// <param name="_pathfile">The pathfile of the installed game.</param>
-    public static bool VerifyGameFiles(string _game, string _pathfile)
+    /// <param name="_localPath">The pathfile of the installed game.</param>
+    public static bool VerifyGameFiles(string _game, string _localPath)
     {
-        string dir = $"{_pathfile}/{_game}";
+        string dir = $"{_localPath}/{_game}";
 
         // verify if the game has been installed in pathfile.
         try
@@ -175,12 +175,12 @@ public class FileTools
 
     /// <summary>This function deletes a given directory.</summary>
     /// <param name="_game">The game directory to delete.</param>
-    /// <param name="_pathFile">The path of the directory to delete.</param>
-    public static void DeleteDirectory(string _game, string _pathFile)
+    /// <param name="_localPath">The path of the directory to delete.</param>
+    public static void DeleteDirectory(string _game, string _localPath)
     {
         try
         {
-            string dir = $"{_pathFile}/{_game}";
+            string dir = $"{_localPath}/{_game}";
             Directory.Delete(dir, true);
             Debug.Log($"{dir}: directory has been deleted.");
         }
@@ -192,12 +192,12 @@ public class FileTools
 
     /// <summary>This function deletes a given file.</summary>
     /// <param name="_game">The game file to delete.</param>
-    /// <param name="_pathFile">The path of the file to delete.</param>
-    public static void DeleteFile(string _game, string _pathFile)
+    /// <param name="_localPath">The path of the file to delete.</param>
+    public static void DeleteFile(string _game, string _localPath)
     {
         try
         {
-            string file = $"{_pathFile}/{_game}.zip";
+            string file = $"{_localPath}/{_game}.zip";
             File.Delete(file);
             Debug.Log($"{file}: file has been deleted.");
         }

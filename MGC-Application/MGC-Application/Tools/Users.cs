@@ -1,6 +1,6 @@
 ﻿namespace MGC_Application.Tools;
 
-public class Credentials
+public class Users
 {
     /// <summary>Checks if account details are correct.</summary>
     /// <param name="_username">Username of account.</param>

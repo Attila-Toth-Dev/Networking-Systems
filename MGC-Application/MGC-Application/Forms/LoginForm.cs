@@ -22,33 +22,21 @@ public partial class LoginForm : Form
 
         passwordTextBox.UseSystemPasswordChar = true;
 
-        Networking.DownloadFiles("Users.txt");
+        Networking.DownloadFiles($"ftp://{Networking.ServerIP}/Users/Users.txt", "Users.txt");
     }
 
     #region UI Events
 
-    /// <summary>Event for passwordTextBox text change.</summary>
-    private void passwordTextBox_TextChanged(object sender, EventArgs e)
-    {
-        // changes password to the characters inside text box.
-        passwordTextBox.MaxLength = 50;
-    }
+    /// <summary>Event for password text box text change.</summary>
+    private void passwordTextBox_TextChanged(object sender, EventArgs e) => passwordTextBox.MaxLength = 50;
 
-    /// <summary>Event for usernameTextBox text change.</summary>
-    private void usernameTextBox_TextChanged(object sender, EventArgs e)
-    {
-        // changes username to the characters inside text box.
-        usernameTextBox.MaxLength = 50;
-    }
+    /// <summary>Event for username text box text change.</summary>
+    private void usernameTextBox_TextChanged(object sender, EventArgs e) => usernameTextBox.MaxLength = 50;
 
-    /// <summary>Event for serverIpTextBox text change.</summary>
-    private void serverIpTextBox_TextChanged(object sender, EventArgs e)
-    {
-        // changes server IP to the characters inside text box.
-        serverIpTextBox.MaxLength = 50;
-    }
+    /// <summary>Event for server IP text box text change.</summary>
+    private void serverIpTextBox_TextChanged(object sender, EventArgs e) => serverIpTextBox.MaxLength = 50;
 
-    /// <summary>Event for clearFieldsLabel click.</summary>
+    /// <summary>Event for clear fields label click.</summary>
     private void clearFieldsLabel_Click(object sender, EventArgs e)
     {
         // clear data inside text boxes.
@@ -59,27 +47,22 @@ public partial class LoginForm : Form
         usernameTextBox.Focus();
     }
 
-
-    /// <summary>Event for passwordPictureBox mouse down.</summary>
+    /// <summary>Event for password picture box mouse down.</summary>
     private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e)
     {
         // allow user to view password with mouse down.
         passwordTextBox.UseSystemPasswordChar = false;
     }
 
-    /// <summary>Event for passwordPictureBox mouse up.</summary>
+    /// <summary>Event for password picture box mouse up.</summary>
     private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e)
     {
         // disable viewing of password back to password characters.
         passwordTextBox.UseSystemPasswordChar = true;
     }
 
-    /// <summary>Event for LoginForm close.</summary>
-    private void LoginForm_Closed(object sender, FormClosedEventArgs e)
-    {
-        // close application.
-        Application.Exit();
-    }
+    /// <summary>Event for login form close.</summary>
+    private void LoginForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
 
     #endregion
 
@@ -96,39 +79,43 @@ public partial class LoginForm : Form
             return;
         }
 
+        // If the user.txt file does not exist, return.
         if (!File.Exists($"{WelcomeForm.usersPathFile}/Users.txt"))
         {
             FileTools.ShowDialogMessage("Something went wrong with Users file.");
             return;
         }
 
-        // check to see if username, password and server IP
-        // match up to FTP server allowed users.
-        uint user = Credentials.BKDRHash(usernameTextBox.Text);
-        uint pass = Credentials.BKDRHash(passwordTextBox.Text);
-        if (Credentials.ValidateLogin(user.ToString(), pass.ToString()))
+        // hash username and password to validate user details
+        uint user = Users.BKDRHash(usernameTextBox.Text);
+        uint pass = Users.BKDRHash(passwordTextBox.Text);
+
+        // validate the hashed login credentials
+        if (Users.ValidateLogin(user.ToString(), pass.ToString()))
         {
+            // if true validate and start a remote connection to host.
             if (Networking.ValidateRemoteConnection(serverIpTextBox.Text))
             {
-                // if true, save username, password and serverIP to network class,
-                // and display main menu form.
                 Networking.ServerIP = serverIpTextBox.Text;
                 
-                if(Networking.UploadFiles($"{WelcomeForm.usersPathFile}", 
-                    $"ftp://{Networking.ServerIP}/Users/Users.txt", "Users.txt"))
+                // start upload process for user.txt file to remote host.
+                if(Networking.UploadFiles("Users.txt", $"{WelcomeForm.usersPathFile}", 
+                    $"ftp://{Networking.ServerIP}/Users/Users.txt"))
                 {
+                    // delete local user file.
                     File.Delete($"{WelcomeForm.usersPathFile}/Users.txt");
 
                     Hide();
 
+                    // display main menu form.
                     MainMenuForm form = new MainMenuForm(usernameTextBox.Text, passwordTextBox.Text);
                     form.Show();
                 }
             }
+            // else if connection was invalid with remote host.
             else
             {
-                // if false, return a dialog box erroring the user credentials.
-                // prompt user to try logging in again.
+                // display error connection popup message.
                 FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
 
                 passwordTextBox.Clear();
@@ -136,10 +123,10 @@ public partial class LoginForm : Form
                 //serverIpTextBox.Clear();
             }
         }
+        // else prompt user that account does not exist or details are wrong.
         else
         {
-            // if false, prompt user to create an account
-            // and to register an account.
+            // display account error popup.
             FileTools.ShowDialogMessage("Account details are incorrect or does not exist, try again.");
 
             passwordTextBox.Clear();
@@ -150,11 +137,8 @@ public partial class LoginForm : Form
         Debug.Break();
     }
 
-    /// <summary>Event for createAccountButton click.</summary>
-    private void createAccountButton_Click(object sender, EventArgs e)
-    {
-        createForm.ShowDialog();
-    }
+    /// <summary>Event for create account button click.</summary>
+    private void createAccountButton_Click(object sender, EventArgs e) => createForm.ShowDialog();
 
     #endregion
 }

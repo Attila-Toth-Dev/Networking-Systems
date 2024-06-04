@@ -36,8 +36,6 @@
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
-            viewToolStripMenuItem = new ToolStripMenuItem();
-            consoleToolStripMenuItem = new ToolStripMenuItem();
             topHeaderPanel = new Panel();
             profilePictureBox = new PictureBox();
             welecomeLabel = new Label();
@@ -76,7 +74,7 @@
             // 
             // toolMenuStrip
             // 
-            toolMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem });
+            toolMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
             toolMenuStrip.Location = new Point(0, 0);
             toolMenuStrip.Name = "toolMenuStrip";
             toolMenuStrip.Size = new Size(984, 24);
@@ -93,30 +91,16 @@
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(112, 22);
+            logoutToolStripMenuItem.Size = new Size(180, 22);
             logoutToolStripMenuItem.Text = "&Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(112, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "&Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            // 
-            // viewToolStripMenuItem
-            // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { consoleToolStripMenuItem });
-            viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            viewToolStripMenuItem.Size = new Size(44, 20);
-            viewToolStripMenuItem.Text = "&View";
-            // 
-            // consoleToolStripMenuItem
-            // 
-            consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
-            consoleToolStripMenuItem.Size = new Size(117, 22);
-            consoleToolStripMenuItem.Text = "&Console";
-            consoleToolStripMenuItem.Click += consoleToolStripMenuItem_Click;
             // 
             // topHeaderPanel
             // 
@@ -460,7 +444,5 @@
         private Panel toolsPanel;
         private Button propertiesButton;
         public TextBox gameFilePathTextBox;
-        private ToolStripMenuItem viewToolStripMenuItem;
-        private ToolStripMenuItem consoleToolStripMenuItem;
     }
 }

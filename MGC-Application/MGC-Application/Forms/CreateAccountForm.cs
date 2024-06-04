@@ -15,15 +15,14 @@ public partial class CreateAccountForm : Form
 
     #region Button Events
 
-    /// <summary>Event for saveButton click.</summary>
+    /// <summary>Event for save button click.</summary>
     private void saveButton_Click(object sender, EventArgs e)
     {
-        // if username already exists, then prompt player
-        // with a different account name,
-        // else add the username if username does not exists.
-        uint hash = Credentials.BKDRHash(usernameTextBox.Text);
-        if (Credentials.UserExists(hash.ToString()))
+        // check if user details are correct, with hashing username
+        uint hash = Users.BKDRHash(usernameTextBox.Text);
+        if (Users.UserExists(hash.ToString()))
         {
+            // if user already exists, clear and prompt again.
             usernameTextBox.Clear();
             passwordTextBox.Clear();
 
@@ -33,9 +32,11 @@ public partial class CreateAccountForm : Form
         }
         else
         {
-            Credentials.AddUser(usernameTextBox.Text, passwordTextBox.Text);
+            // else, add the user to the users file.
+            Users.AddUser(usernameTextBox.Text, passwordTextBox.Text);
             FileTools.ShowDialogMessage($"Successfullt registered account.");
 
+            // then clear fields and close the window.
             usernameTextBox.Clear();
             passwordTextBox.Clear();
 
@@ -43,25 +44,25 @@ public partial class CreateAccountForm : Form
         }
     }
 
-    /// <summary>Event for cancelButton click.</summary>
+    /// <summary>Event for cancel button click.</summary>
     private void cancelButton_Click(object sender, EventArgs e)
     {
+        // clear fields and close form.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
 
-        // close the form
         this.Close();
     }
 
     #endregion
     
-    /// <summary>Event from CreateAccountForm closed.</summary>
+    /// <summary>Event from create account form closed.</summary>
     private void CreateAccountForm_FormClosed(object sender, FormClosedEventArgs e)
     {
+        // clear fields and close form.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
 
-        // close the form
         this.Close();
     }
 }

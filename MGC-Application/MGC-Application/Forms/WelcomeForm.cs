@@ -22,7 +22,7 @@ public partial class WelcomeForm : Form
 
     #region UI Events
 
-    /// <summary>Event for loadBarTimer tick.</summary>
+    /// <summary>Event for load bar timer tick.</summary>
     private void loadBarTimer_Tick(object sender, EventArgs e)
     {
         // change the progress bar load up value
@@ -41,12 +41,12 @@ public partial class WelcomeForm : Form
         }
     }
 
-    #endregion
-
-    /// <summary>Event for WelcomeForm close.</summary>
+    /// <summary>Event for welcome form close.</summary>
     private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)
     {
         // close the application.
         Application.Exit();
     }
+
+    #endregion
 }
