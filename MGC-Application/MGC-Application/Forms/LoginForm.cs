@@ -17,9 +17,6 @@ public partial class LoginForm : Form
         Networking.Password = "mn1-237A";
         Networking.ServerIP = "58.169.146.100";
 
-        serverIpTextBox.Enabled = false;
-        serverIpTextBox.Text = "58.169.146.100";
-
         passwordTextBox.UseSystemPasswordChar = true;
 
         Networking.DownloadFiles($"ftp://{Networking.ServerIP}/Users/Users.txt", "Users.txt");
@@ -42,7 +39,7 @@ public partial class LoginForm : Form
         // clear data inside text boxes.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
-        //serverIpTextBox.Clear();
+        serverIpTextBox.Clear();
 
         usernameTextBox.Focus();
     }

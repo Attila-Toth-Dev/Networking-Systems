@@ -2,15 +2,18 @@ namespace MGC_Application;
 
 public partial class WelcomeForm : Form
 {
-    public static string logPathFile = @"Logs";
-    public static string usersPathFile = @"Users";
+    public static string logPathFile = @"";
+    public static string usersPathFile = @"";
     public static string gamesPathFile = @"";
 
     public WelcomeForm()
     {
         InitializeComponent();
 
-        logPathFile = Environment.ExpandEnvironmentVariables(logPathFile);
+        logPathFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        logPathFile = $@"{logPathFile}\MGC-Data";
+
+        usersPathFile = $@"{logPathFile}\Users";
 
         gamesPathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         gamesPathFile = $@"{gamesPathFile}\Games";
