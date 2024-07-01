@@ -34,26 +34,26 @@ int main(int argc, const char* argv)
 		{
 			switch (event.type)
 			{
-				case ENET_EVENT_TYPE_CONNECT:
-					printf("A new client connected from %x:%u.\n", 
-						event.peer->address.host,
-						event.peer->address.port);
-					break;
+			case ENET_EVENT_TYPE_CONNECT:
+				printf("A new client connected from %x:%u.\n",
+					event.peer->address.host,
+					event.peer->address.port);
+				break;
 
-				case ENET_EVENT_TYPE_RECEIVE:
-					printf("A packet of length %u containing %s was recieved from %x:%u on channel %u.\n",
-						event.packet->dataLength,
-						event.packet->data,
-						event.peer->address.host,
-						event.peer->address.port,
-						event.channelID);
-					break;
+			case ENET_EVENT_TYPE_RECEIVE:
+				printf("A packet of length %u containing %s was recieved from %x:%u on channel %u.\n",
+					event.packet->dataLength,
+					event.packet->data,
+					event.peer->address.host,
+					event.peer->address.port,
+					event.channelID);
+				break;
 
-				case ENET_EVENT_TYPE_DISCONNECT:
-					printf("%x:%u disconnected.\n",
-						event.peer->address.host,
-						event.peer->address.port);
-					break;
+			case ENET_EVENT_TYPE_DISCONNECT:
+				printf("%x:%u disconnected.\n",
+					event.peer->address.host,
+					event.peer->address.port);
+				break;
 			}
 		}
 	}

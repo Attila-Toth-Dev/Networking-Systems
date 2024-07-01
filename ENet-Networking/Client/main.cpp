@@ -35,7 +35,7 @@ int main(int argc, const char* argv)
 
 	if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 		puts("Connection to 192.168.0.51:7777 succeeded.\n");
-	
+
 	else
 	{
 		enet_peer_reset(peer);
@@ -51,14 +51,14 @@ int main(int argc, const char* argv)
 	{
 		switch (event.type)
 		{
-			case ENET_EVENT_TYPE_RECEIVE:
-				printf("A packet of length %u containing %s was recieved from %x:%u on channel %u.\n",
-					event.packet->dataLength,
-					event.packet->data,
-					event.peer->address.host,
-					event.peer->address.port,
-					event.channelID);
-				break;
+		case ENET_EVENT_TYPE_RECEIVE:
+			printf("A packet of length %u containing %s was recieved from %x:%u on channel %u.\n",
+				event.packet->dataLength,
+				event.packet->data,
+				event.peer->address.host,
+				event.peer->address.port,
+				event.channelID);
+			break;
 		}
 	}
 
@@ -70,12 +70,12 @@ int main(int argc, const char* argv)
 	{
 		switch (event.type)
 		{
-			case ENET_EVENT_TYPE_RECEIVE:
-				enet_packet_destroy(event.packet);
-				break;
+		case ENET_EVENT_TYPE_RECEIVE:
+			enet_packet_destroy(event.packet);
+			break;
 
-			case ENET_EVENT_TYPE_DISCONNECT:
-				puts("Disconnection succeeded.");
+		case ENET_EVENT_TYPE_DISCONNECT:
+			puts("Disconnection succeeded.");
 		}
 	}
 
