@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\attil\Desktop\GitHub Projects\Networking-Systems\ENet-Networking\Server\main.cpp(44,12): warning C4477: 'printf' : format string '%u' requires an argument of type 'unsigned int', but variadic argument 1 has type 'size_t'
+  Server.vcxproj -> C:\Users\attil\Desktop\GitHub Projects\Networking-Systems\ENet-Networking\x64\Debug\Server.exe
