@@ -77,7 +77,7 @@ public partial class LoginForm : Form
         }
 
         // If the user.txt file does not exist, return.
-        if (!File.Exists($"{WelcomeForm.usersPathFile}/Users.txt"))
+        if (!File.Exists($"{WelcomeForm.UsersPathFile}/Users.txt"))
         {
             FileTools.ShowDialogMessage("Something went wrong with Users file.");
             return;
@@ -96,11 +96,11 @@ public partial class LoginForm : Form
                 Networking.ServerIP = serverIpTextBox.Text;
                 
                 // start upload process for user.txt file to remote host.
-                if(Networking.UploadFiles("Users.txt", $"{WelcomeForm.usersPathFile}", 
+                if(Networking.UploadFiles("Users.txt", $"{WelcomeForm.UsersPathFile}", 
                     $"ftp://{Networking.ServerIP}/Users/Users.txt"))
                 {
                     // delete local user file.
-                    File.Delete($"{WelcomeForm.usersPathFile}/Users.txt");
+                    File.Delete($"{WelcomeForm.UsersPathFile}/Users.txt");
 
                     Hide();
 

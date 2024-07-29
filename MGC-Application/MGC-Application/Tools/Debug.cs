@@ -1,8 +1,10 @@
-﻿namespace MGC_Application;
+﻿using MGC_Application.Forms;
+
+namespace MGC_Application;
 
 public class Debug
 {
-    private static string logPath = $"{WelcomeForm.logPathFile}/Logs.txt";
+    private static string logPath = $"{WelcomeForm.LogPathFile}/Logs.txt";
 
     /// <summary>Log allows for application to log special changes or errors within application.</summary>
     /// <param name="_message">The message of which to log.</param>

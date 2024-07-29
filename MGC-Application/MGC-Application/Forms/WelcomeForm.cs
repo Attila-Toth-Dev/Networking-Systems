@@ -1,26 +1,27 @@
-namespace MGC_Application;
+using MGC_Application.Tools;
+
+namespace MGC_Application.Forms;
 
 public partial class WelcomeForm : Form
 {
-    public static string logPathFile = @"";
-    public static string usersPathFile = @"";
-    public static string gamesPathFile = @"";
+    public static string LogPathFile = @"";
+    public static string UsersPathFile = @"";
+
+    public static string GamesDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/MGC-Games";
+    public static string DataDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/MGC-Data";
 
     public WelcomeForm()
     {
         InitializeComponent();
 
-        logPathFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        logPathFile = $@"{logPathFile}\MGC-Data";
+        LogPathFile = $@"{DataDirectory}/";
+        UsersPathFile = $@"{DataDirectory}/";
 
-        usersPathFile = $@"{logPathFile}\Users";
+        if (!Directory.Exists(DataDirectory))
+            FileTools.CreateDirectory(DataDirectory);
 
-        gamesPathFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        gamesPathFile = $@"{gamesPathFile}\Games";
-
-        FileTools.CreateDirectory(logPathFile, true);
-        FileTools.CreateDirectory(usersPathFile);
-        FileTools.CreateDirectory(gamesPathFile);
+        if(!Directory.Exists(GamesDirectory))
+            FileTools.CreateDirectory(GamesDirectory);
     }
 
     #region UI Events
@@ -45,7 +46,7 @@ public partial class WelcomeForm : Form
     }
 
     /// <summary>Event for welcome form close.</summary>
-    private void WelcomeForm_Closed(object sender, FormClosedEventArgs e)
+    private void WelcomeForm_Closed(object _sender, FormClosedEventArgs e)
     {
         // close the application.
         Application.Exit();

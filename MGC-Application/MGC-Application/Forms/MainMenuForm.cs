@@ -1,7 +1,6 @@
-﻿using MGC_Application.Forms;
-using System.Xml.Linq;
+﻿using MGC_Application.Tools;
 
-namespace MGC_Application;
+namespace MGC_Application.Forms;
 
 public partial class MainMenuForm : Form
 {
@@ -13,32 +12,25 @@ public partial class MainMenuForm : Form
         set => profilePictureBox.Image = value;
     }
 
-    public string GamePathFile 
-    { 
-        get => gameFilePathTextBox.Text;
-    }
+    public string GamePathFile => gameFilePathTextBox.Text;
 
-    public bool IsInProcess 
-    { 
-        get; 
-        set; 
-    }
+    public bool IsInProcess { get; set; }
 
     #endregion
     
-    private ProfileForm profileForm;
-    private PropertiesForm propertiesForm;
-
-    private string currentSelectedGame;
+    private readonly ProfileForm profileForm;
+    private readonly PropertiesForm propertiesForm;
 
     private string username;
+    private string currentSelectedGame;
+
 
     public MainMenuForm(string _username, string _password)
     {
         InitializeComponent();
 
         currentSelectedGame = string.Empty;
-        gameFilePathTextBox.Text = WelcomeForm.gamesPathFile;
+        gameFilePathTextBox.Text = WelcomeForm.GamesDirectory;
         installedIcon.BackColor = Color.Gray;
 
         cancelButton.Enabled = false;
@@ -60,17 +52,15 @@ public partial class MainMenuForm : Form
     {
         // current selected game is the game that has been
         // selected in list views name.
-        ListViewItem item = gameListView.SelectedItems[0];
+        var item = gameListView.SelectedItems[0];
         currentSelectedGame = item.Text;
-        FileTools.currentGame = currentSelectedGame;
+        FileTools.CurrentGame = currentSelectedGame;
 
         // verify if game has been installed in location.
         // if true, set game installed? icon colour to green.
         // if false, set game installed? icon colour to red.
-        if (FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text))
-            installedIcon.BackColor = Color.Green;
-        else
-            installedIcon.BackColor = Color.Red;
+        installedIcon.BackColor = FileTools.VerifyGameFiles(currentSelectedGame, gameFilePathTextBox.Text)
+            ? Color.Green : Color.Red;
     }
 
     /// <summary>Event for the game folder path button click.</summary>
@@ -78,7 +68,7 @@ public partial class MainMenuForm : Form
     {
         // allow users to change install location path file
         // with opening a dialog browser.
-        FolderBrowserDialog diag = new FolderBrowserDialog();
+        using var diag = new FolderBrowserDialog();
         if (diag.ShowDialog() == DialogResult.OK)
         {
             // set the pathfile text to the designated path chosen
@@ -93,7 +83,7 @@ public partial class MainMenuForm : Form
     {
         // show a decision dialog box for player
         // to choose if they would like to log out or not.
-        DialogBoxForm result = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
+        var result = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
             "Are you sure you want to logout?", true);
         result.ShowDialog();
 
@@ -105,7 +95,7 @@ public partial class MainMenuForm : Form
 
             this.Hide();
 
-            LoginForm form = new LoginForm();
+            var form = new LoginForm();
             form.Show();
         }
     }

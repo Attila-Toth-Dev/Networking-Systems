@@ -1,4 +1,4 @@
-﻿namespace MGC_Application
+﻿namespace MGC_Application.Forms
 {
     partial class MainMenuForm
     {

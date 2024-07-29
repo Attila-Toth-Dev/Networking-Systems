@@ -1,24 +1,26 @@
-﻿namespace MGC_Application.Forms;
+﻿using MGC_Application.Tools;
+
+namespace MGC_Application.Forms;
 
 public partial class PropertiesForm : Form
 {
-    private MainMenuForm mainMenuForm;
+    private readonly MainMenuForm mainMenuForm;
 
     public PropertiesForm(MainMenuForm _mainMenuForm)
     {
         InitializeComponent();
 
-        this.Text = $"{FileTools.currentGame} Properties";
-        headerLabel.Text = $"{FileTools.currentGame} Properties";
+        this.Text = $"{FileTools.CurrentGame} Properties";
+        headerLabel.Text = $"{FileTools.CurrentGame} Properties";
 
-        configDescTextBox.Text = $"Properties and settings for {FileTools.currentGame}.";
+        configDescTextBox.Text = $"Properties and settings for {FileTools.CurrentGame}.";
 
         mainMenuForm = _mainMenuForm;
     }
 
     #region UI Events
 
-    /// <summary>Event for properties form form closed.</summary>
+    /// <summary>Event for properties form closed.</summary>
     private void PropertiesForm_FormClosed(object sender, FormClosedEventArgs e)
     {
         // closes the form.
@@ -34,23 +36,23 @@ public partial class PropertiesForm : Form
     {
         if (!mainMenuForm.IsInProcess)
         {
-            configDescTextBox.Text = $"Clicking this button will purge any installed files for {FileTools.currentGame}.";
+            configDescTextBox.Text = $"Clicking this button will purge any installed files for {FileTools.CurrentGame}.";
 
             DialogBoxForm decision = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
-                $"Are you sure you would like to purge {FileTools.currentGame} game files?", true);
+                $"Are you sure you would like to purge {FileTools.CurrentGame} game files?", true);
             decision.ShowDialog();
 
             if (decision.DecisionValue == DialogBoxForm.BoolValue.YES)
             {
                 Debug.Log($"Started file purge process...");
 
-                FileTools.DeleteDirectory(FileTools.currentGame, mainMenuForm.GamePathFile);
+                FileTools.DeleteDirectory(FileTools.CurrentGame, mainMenuForm.GamePathFile);
                 Thread.Sleep(2000);
-                FileTools.DeleteFile(FileTools.currentGame, mainMenuForm.GamePathFile);
+                FileTools.DeleteFile(FileTools.CurrentGame, mainMenuForm.GamePathFile);
                 Thread.Sleep(1000);
 
-                FileTools.ShowDialogMessage($"Successfully purged all {FileTools.currentGame} game files.");
-                Debug.Log($"Successfully purged {FileTools.currentGame} files.");
+                FileTools.ShowDialogMessage($"Successfully purged all {FileTools.CurrentGame} game files.");
+                Debug.Log($"Successfully purged {FileTools.CurrentGame} files.");
             }
         }
         else
@@ -58,7 +60,7 @@ public partial class PropertiesForm : Form
     }
 
     /// <summary>Event for closeButton click.</summary>
-    private void closeButton_Click(object sender, EventArgs e)
+    private void closeButton_Click(object _sender, EventArgs e)
     {
         // closes the form.
         this.Close();

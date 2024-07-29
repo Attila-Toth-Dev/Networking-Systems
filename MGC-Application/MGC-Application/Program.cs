@@ -1,3 +1,5 @@
+using MGC_Application.Forms;
+
 namespace MGC_Application
 {
     internal static class Program

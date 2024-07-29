@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
+using MGC_Application.Forms;
 
 namespace MGC_Application;
 
@@ -92,7 +93,7 @@ public class Networking
             // server to local machine local pathfile.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
-                string dir = $"{WelcomeForm.gamesPathFile}/{_game}.zip";
+                string dir = $"{WelcomeForm.GamesDirectory}/{_game}.zip";
             
                 long length = response.ContentLength;
                 int bufferSize = 2048;
@@ -179,7 +180,7 @@ public class Networking
             // server to local machine local pathfile.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
-                string dir = $"{WelcomeForm.usersPathFile}/Users.txt";
+                string dir = $"{WelcomeForm.UsersPathFile}/Users.txt";
 
                 long length = response.ContentLength;
                 int bufferSize = 2048;

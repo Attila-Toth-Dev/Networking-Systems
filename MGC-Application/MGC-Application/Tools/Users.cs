@@ -1,4 +1,6 @@
-﻿namespace MGC_Application.Tools;
+﻿using MGC_Application.Forms;
+
+namespace MGC_Application.Tools;
 
 public class Users
 {
@@ -9,7 +11,7 @@ public class Users
     {
         try
         {
-            using(StreamReader reader = new StreamReader($"{WelcomeForm.usersPathFile}/Users.txt"))
+            using(StreamReader reader = new StreamReader($"{WelcomeForm.UsersPathFile}/Users.txt"))
             {
                 string? line;
                 while((line = reader.ReadLine()) != null)
@@ -40,7 +42,7 @@ public class Users
     {
         try
         {
-            using (StreamReader reader = new StreamReader($"{WelcomeForm.usersPathFile}/Users.txt"))
+            using (StreamReader reader = new StreamReader($"{WelcomeForm.UsersPathFile}/Users.txt"))
             {
                 string? line;
                 while ((line = reader.ReadLine()) != null)
@@ -73,7 +75,7 @@ public class Users
         try
         {
             string usersPathName = $"Users.txt";
-            string usersPath = $"{WelcomeForm.usersPathFile}/{usersPathName}";
+            string usersPath = $"{WelcomeForm.UsersPathFile}/{usersPathName}";
 
             using(StreamWriter writer = new StreamWriter(usersPath, true))
             {
