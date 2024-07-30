@@ -18,7 +18,7 @@ public partial class WelcomeForm : Form
         UsersPathFile = $@"{DataDirectory}/";
 
         if (!Directory.Exists(DataDirectory))
-            FileTools.CreateDirectory(DataDirectory);
+            FileTools.CreateDirectory(DataDirectory, true);
 
         if(!Directory.Exists(GamesDirectory))
             FileTools.CreateDirectory(GamesDirectory);

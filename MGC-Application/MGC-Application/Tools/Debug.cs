@@ -16,6 +16,12 @@ public class Debug
             writer.WriteLine($"{DateTime.Now} : {_message}");
     }
 
+    public static void LogException(Exception _ex)
+    {
+        using (StreamWriter writer = new StreamWriter(logPath, true))
+            writer.WriteLine($"{DateTime.Now} : {_ex.Message}");
+    }
+
     /// <summary>Break makes a empty line of space in log files for ease of reading.</summary>
     public static void Break()
     {

@@ -24,12 +24,12 @@ public class FileTools
                 process.Start();
             }
 
-            Debug.Log($"Executing {_game}.exe");
+            Debug.Log($"Booting {_game} files.");
             return true;
         }
         catch(FileNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -50,12 +50,12 @@ public class FileTools
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
 
-            Debug.Log($"Installed {_game} game files.");
+            Debug.Log($"Finished installing {_game} files.");
             return true;
         }
         catch(FileNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -67,21 +67,25 @@ public class FileTools
     {
         try
         {
-            DeleteFile(_game, _localPath);
-            Thread.Sleep(2000);
             DeleteDirectory(_game, _localPath);
+            Thread.Sleep(2000);
 
-            Debug.Log($"Uninstalled {_game} game files.");
+            try
+            {
+                DeleteFile(_game, _localPath);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Debug.LogException(ex);
+                throw;
+            }
+
+            Debug.Log($"Finished uninstalling {_game} files.");
             return true;
-        }
-        catch(FileNotFoundException ex)
-        {
-            Debug.Log(ex.Message);
-            return false;
         }
         catch(DirectoryNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -109,7 +113,7 @@ public class FileTools
         }
         catch(DirectoryNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -139,7 +143,7 @@ public class FileTools
         }
         catch(DirectoryNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
         }
     }
 
@@ -174,7 +178,7 @@ public class FileTools
         }
         catch(DirectoryNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
         }
     }
 
@@ -191,7 +195,7 @@ public class FileTools
         }
         catch(FileNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
         }
     }
 }
