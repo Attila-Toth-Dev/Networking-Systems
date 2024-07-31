@@ -91,7 +91,7 @@ public partial class MainMenuForm : Form
         // then open the login form menu.
         if (result.DecisionValue == DialogBoxForm.BoolValue.YES)
         {
-            Debug.Log($"{Networking.Username} disconnected from {Networking.ServerIP}. (Line 97)");
+            Debug.Log($"{Networking.Username} disconnected from {Networking.ServerIp}. (Line 97)");
 
             this.Hide();
 
@@ -179,7 +179,7 @@ public partial class MainMenuForm : Form
             // if installed, grab the file size of the local copy of the game,
             // and also grab the file size of the remote hosts copy of the game.
             long localFileLength = new FileInfo($"{gameFilePathTextBox.Text}/{currentSelectedGame}.zip").Length;
-            long remoteFileLength = Networking.ValidateUpdate(currentSelectedGame, $"ftp://{Networking.ServerIP}/Games/");
+            long remoteFileLength = Networking.ValidateUpdate(currentSelectedGame, $"ftp://{Networking.ServerIp}/Games/");
 
             // if both have the same size, return no update.
             if (localFileLength == remoteFileLength)
@@ -364,7 +364,7 @@ public partial class MainMenuForm : Form
 
             // once completely uninstalled, download the new copy
             // of the updated game.
-            if (Networking.DownloadGameFiles(currentSelectedGame, $"ftp://{Networking.ServerIP}/Games/") && !updateWorker.CancellationPending)
+            if (Networking.DownloadGameFiles(currentSelectedGame, $"ftp://{Networking.ServerIp}/Games/") && !updateWorker.CancellationPending)
             {
                 Debug.Log($"Downloaded newer updated copy of {currentSelectedGame} games files.");
                 updateWorker.ReportProgress(0);
@@ -436,7 +436,7 @@ public partial class MainMenuForm : Form
 
         // then download the copy of the game from
         // the remote host.
-        if (Networking.DownloadGameFiles(currentSelectedGame, $"ftp://{Networking.ServerIP}/Games/") && !updateWorker.CancellationPending)
+        if (Networking.DownloadGameFiles(currentSelectedGame, $"ftp://{Networking.ServerIp}/Games/") && !updateWorker.CancellationPending)
         {
             Debug.Log($"Install worker cancel request: {e.Cancel}");
 

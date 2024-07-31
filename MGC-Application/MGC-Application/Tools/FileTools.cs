@@ -6,7 +6,7 @@ namespace MGC_Application.Tools;
 
 public class FileTools
 {
-    public static string? CurrentGame;
+    //private static string? CurrentGame;
 
     /// <summary>Run executes the exe of the game.</summary>
     /// <param name="_game">The program of to run the exe of.</param>

@@ -6,14 +6,14 @@ public partial class DialogBoxForm : Form
 
     public enum MessageSeverity
     {
-        MESSAGE,
+        MESSAGE = 0,
         WARNING,
         ERROR
     }
 
     public enum BoolValue
     {
-        YES,
+        YES = 0,
         NO
     }
 
@@ -73,21 +73,14 @@ public partial class DialogBoxForm : Form
     /// <param name="_headerMessage">The severity level of dialog box.</param>
     private void DialogBoxText(MessageSeverity _headerMessage)
     {
-        // dependent on the messageseverity, change the forms
+        // dependent on the message severity, change the forms
         // text to the severity level.
-        switch (_headerMessage)
+        this.Text = _headerMessage switch
         {
-            case MessageSeverity.MESSAGE:
-                this.Text = "Message";
-                break;
-
-            case MessageSeverity.WARNING:
-                this.Text = "Warning";
-                break;
-
-            case MessageSeverity.ERROR:
-                this.Text = "ERROR";
-                break;
-        }
+            MessageSeverity.MESSAGE => "Message",
+            MessageSeverity.WARNING => "Warning",
+            MessageSeverity.ERROR => "ERROR",
+            _ => this.Text
+        };
     }
 }

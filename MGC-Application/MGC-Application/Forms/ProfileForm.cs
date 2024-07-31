@@ -1,4 +1,6 @@
-﻿namespace MGC_Application.Forms;
+﻿using MGC_Application.Tools;
+
+namespace MGC_Application.Forms;
 
 public partial class ProfileForm : Form
 {

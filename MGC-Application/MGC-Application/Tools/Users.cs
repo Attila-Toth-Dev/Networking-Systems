@@ -88,13 +88,7 @@ public class Users
         }
         catch(FileNotFoundException ex)
         {
-            Debug.Log(ex.Message);
-            return;
-        }
-        catch(FileFormatException ex)
-        {
-            Debug.Log(ex.Message);
-            return;
+            Debug.LogException(ex);
         }
     }
 

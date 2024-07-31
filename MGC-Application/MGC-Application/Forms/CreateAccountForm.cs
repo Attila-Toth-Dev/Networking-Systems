@@ -8,8 +8,6 @@ public partial class CreateAccountForm : Form
     {
         InitializeComponent();
 
-        this.Text = "Create User Account";
-
         passwordTextBox.UseSystemPasswordChar = true;
     }
 
@@ -19,7 +17,7 @@ public partial class CreateAccountForm : Form
     private void saveButton_Click(object sender, EventArgs e)
     {
         // check if user details are correct, with hashing username
-        uint hash = Users.BKDRHash(usernameTextBox.Text);
+        var hash = Users.BKDRHash(usernameTextBox.Text);
         if (Users.UserExists(hash.ToString()))
         {
             // if user already exists, clear and prompt again.
@@ -34,7 +32,7 @@ public partial class CreateAccountForm : Form
         {
             // else, add the user to the users file.
             Users.AddUser(usernameTextBox.Text, passwordTextBox.Text);
-            FileTools.ShowDialogMessage($"Successfullt registered account.");
+            FileTools.ShowDialogMessage($"Successfully registered account.");
 
             // then clear fields and close the window.
             usernameTextBox.Clear();

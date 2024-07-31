@@ -2,13 +2,13 @@
 using System.Net.NetworkInformation;
 using MGC_Application.Forms;
 
-namespace MGC_Application;
+namespace MGC_Application.Tools;
 
 public class Networking
 {
     #region Getters/Setters
 
-    public static string? ServerIP { get; set; }
+    public static string? ServerIp { get; set; }
 
     public static string? Username { get; set; }
     

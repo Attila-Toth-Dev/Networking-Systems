@@ -15,11 +15,11 @@ public partial class LoginForm : Form
 
         Networking.Username = "ftp-user";
         Networking.Password = "mn1-237A";
-        Networking.ServerIP = "58.169.146.100";
+        Networking.ServerIp = "58.169.146.100";
 
         passwordTextBox.UseSystemPasswordChar = true;
 
-        Networking.DownloadFiles($"ftp://{Networking.ServerIP}/Users/Users.txt", "Users.txt");
+        Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users/Users.txt", "Users.txt");
     }
 
     #region UI Events
@@ -93,11 +93,11 @@ public partial class LoginForm : Form
             // if true validate and start a remote connection to host.
             if (Networking.ValidateRemoteConnection(serverIpTextBox.Text))
             {
-                Networking.ServerIP = serverIpTextBox.Text;
+                Networking.ServerIp = serverIpTextBox.Text;
                 
                 // start upload process for user.txt file to remote host.
                 if(Networking.UploadFiles("Users.txt", $"{WelcomeForm.UsersPathFile}", 
-                    $"ftp://{Networking.ServerIP}/Users/Users.txt"))
+                    $"ftp://{Networking.ServerIp}/Users/Users.txt"))
                 {
                     // delete local user file.
                     File.Delete($"{WelcomeForm.UsersPathFile}/Users.txt");
