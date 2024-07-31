@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
-using MGC_Application.Forms;
 
 namespace MGC_Application.Tools;
 
@@ -17,17 +16,17 @@ public class Networking
     #endregion
 
     /// <summary>Checks if there is a valid connection between client and server.</summary>
-    /// <param name="_serverIP">The server IP.</param>
-    public static bool ValidateRemoteConnection(string _serverIP)
+    /// <param name="_serverIp">The server IP.</param>
+    public static bool ValidateRemoteConnection(string _serverIp)
     {
         // check to see if the given IP is a valid address.
-        if (ValidateAddress(_serverIP, 5))
+        if (ValidateAddress(_serverIp, 5))
         {
+            // if true, create an FTP web request to remote host
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIp}/Games");
+            
             try
             {
-                // if true, create a FTP web request to remote host
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIP}/Games");
-
                 request.Credentials = new NetworkCredential(Username, Password);
                 request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
                 request.ServicePoint.ConnectionLimit = 4;
@@ -36,18 +35,18 @@ public class Networking
                 // try to get response from remote host
                 request.GetResponse();
 
-                Debug.Log($"{_serverIP}: connection has been made.");
+                Debug.Log($"Connection to {ServerIp} was made.");
                 return true;
             }
             catch (WebException ex)
             {
                 // else, prompt with web exception error.
-                Debug.Log(ex.Message);
+                Debug.LogException(ex);
                 return false;
             }
         }
-        else
-            return false;
+            
+        return false;
     }
 
     /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
@@ -61,13 +60,13 @@ public class Networking
             Ping ping = new Ping();
             PingReply pingReply = ping.Send(_serverIP, _timeout);
 
-            Debug.Log($"Ping connection recieved with remote server.");
+            Debug.Log($"Remote server {ServerIp} received ping.");
             return true;
         }
         catch (PingException ex)
         {
             // catch return ping exception error.
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -77,12 +76,12 @@ public class Networking
     /// <param name="_remotePath"></param>
     public static bool DownloadGameFiles(string _game, string _remotePath)
     {
+        // create a FTP web request to remote host to initialize
+        // connection with host.
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
+
         try
         {
-            // create a FTP web request to remote host to initialize
-            // connection with host.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
-
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.ServicePoint.ConnectionLimit = 4;
@@ -93,7 +92,7 @@ public class Networking
             // server to local machine local pathfile.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
-                string dir = $"{WelcomeForm.GamesDirectory}/{_game}.zip";
+                string dir = $"{FileTools.GamesDirectory}/{_game}.zip";
             
                 long length = response.ContentLength;
                 int bufferSize = 2048;
@@ -116,13 +115,13 @@ public class Networking
 
             Thread.Sleep(1000);
 
-            Debug.Log($"{_game} has been downloaded from remote host.");
+            Debug.Log($"{_game} files successfully downloaded.");
             return true;
         }
         catch (WebException ex)
         {
-            // else throw a webexception error. 
-            Debug.Log(ex.Message);
+            // else throw a web exception error. 
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -132,11 +131,11 @@ public class Networking
     /// <param name="_remotePath"></param>
     public static long ValidateUpdate(string _game, string _remotePath)
     {
+        // create a FTP web request connection to address
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
+
         try
         {
-            // create a FTP web request connection to address
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
-
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.KeepAlive = false;
@@ -146,6 +145,7 @@ public class Networking
             // of game from remote host for update sizing.
             FtpWebResponse responseSize = (FtpWebResponse)request.GetResponse();
             long fileSize = responseSize.ContentLength;
+            
             responseSize.Close();
 
             Debug.Log($"File size is {fileSize}.");
@@ -154,8 +154,8 @@ public class Networking
         catch(WebException ex)
         {
             // else return web exception error.
-            Debug.Log(ex.Message);
-            return 0;
+            Debug.LogException(ex);
+            return -1;
         }
     }
 
@@ -164,12 +164,12 @@ public class Networking
     /// <param name="_file"></param>
     public static bool DownloadFiles(string _remotePath, string _file)
     {
+        // create an FTP web request to remote host to initialize
+        // connection with host.
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
+
         try
         {
-            // create a FTP web request to remote host to initialize
-            // connection with host.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
-
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.ServicePoint.ConnectionLimit = 4;
@@ -177,10 +177,10 @@ public class Networking
             request.KeepAlive = false;
 
             // try to write the data of the .zip from
-            // server to local machine local pathfile.
+            // server to local machine local path file.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
-                string dir = $"{WelcomeForm.UsersPathFile}/Users.txt";
+                string dir = $"{_remotePath}/{_file}";
 
                 long length = response.ContentLength;
                 int bufferSize = 2048;
@@ -203,14 +203,9 @@ public class Networking
 
             return true;
         }
-        catch(FileNotFoundException ex)
-        {
-            Debug.Log(ex.Message);
-            return false;
-        }
         catch(WebException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -221,9 +216,10 @@ public class Networking
     /// <param name="_remotePath"></param>
     public static bool UploadFiles(string _file, string _localPath, string _remotePath)
     {
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
+        
         try
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.UploadFile;
 
@@ -231,13 +227,8 @@ public class Networking
             using (Stream ftpStream = request.GetRequestStream())
                 fileStream.CopyTo(ftpStream);
 
-            Debug.Log($"Successfully uploaded user data to remote host.");
+            Debug.Log($"Uploaded {_file} to remote host.");
             return true;
-        }
-        catch (FileNotFoundException ex)
-        {
-            Debug.Log(ex.Message);
-            return false;
         }
         catch (WebException ex)
         {

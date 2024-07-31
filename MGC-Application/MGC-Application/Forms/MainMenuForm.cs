@@ -12,6 +12,12 @@ public partial class MainMenuForm : Form
         set => profilePictureBox.Image = value;
     }
 
+    public string CurrentGame
+    {
+        get => currentSelectedGame;
+        set => currentSelectedGame = value;
+    }
+
     public string GamePathFile => gameFilePathTextBox.Text;
 
     public bool IsInProcess { get; set; }
@@ -30,7 +36,7 @@ public partial class MainMenuForm : Form
         InitializeComponent();
 
         currentSelectedGame = string.Empty;
-        gameFilePathTextBox.Text = WelcomeForm.GamesDirectory;
+        gameFilePathTextBox.Text = FileTools.GamesDirectory;
         installedIcon.BackColor = Color.Gray;
 
         cancelButton.Enabled = false;
@@ -54,7 +60,6 @@ public partial class MainMenuForm : Form
         // selected in list views name.
         var item = gameListView.SelectedItems[0];
         currentSelectedGame = item.Text;
-        FileTools.CurrentGame = currentSelectedGame;
 
         // verify if game has been installed in location.
         // if true, set game installed? icon colour to green.
@@ -476,7 +481,7 @@ public partial class MainMenuForm : Form
         progressBar.Value = 100;
         percentLabel.Text = $"{progressBar.Value}%";
 
-        FileTools.ShowDialogMessage($"Succesfully installed {currentSelectedGame} game files.");
+        FileTools.ShowDialogMessage($"Successfully installed {currentSelectedGame} game files.");
 
         progressBar.Value = 0;
         percentLabel.Text = $"{progressBar.Value}%";

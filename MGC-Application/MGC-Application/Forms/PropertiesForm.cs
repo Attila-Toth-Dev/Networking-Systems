@@ -10,10 +10,10 @@ public partial class PropertiesForm : Form
     {
         InitializeComponent();
 
-        this.Text = $"{FileTools.CurrentGame} Properties";
-        headerLabel.Text = $"{FileTools.CurrentGame} Properties";
+        this.Text = $"{_mainMenuForm.CurrentGame} Properties";
+        headerLabel.Text = $"{_mainMenuForm.CurrentGame} Properties";
 
-        configDescTextBox.Text = $"Properties and settings for {FileTools.CurrentGame}.";
+        configDescTextBox.Text = $"Properties and settings for {_mainMenuForm.CurrentGame}.";
 
         mainMenuForm = _mainMenuForm;
     }
@@ -36,23 +36,23 @@ public partial class PropertiesForm : Form
     {
         if (!mainMenuForm.IsInProcess)
         {
-            configDescTextBox.Text = $"Clicking this button will purge any installed files for {FileTools.CurrentGame}.";
+            configDescTextBox.Text = $"Clicking this button will purge any installed files for {mainMenuForm.CurrentGame}.";
 
             DialogBoxForm decision = new DialogBoxForm(DialogBoxForm.MessageSeverity.MESSAGE,
-                $"Are you sure you would like to purge {FileTools.CurrentGame} game files?", true);
+                $"Are you sure you would like to purge {mainMenuForm.CurrentGame} game files?", true);
             decision.ShowDialog();
 
             if (decision.DecisionValue == DialogBoxForm.BoolValue.YES)
             {
                 Debug.Log($"Started file purge process...");
 
-                FileTools.DeleteDirectory(FileTools.CurrentGame, mainMenuForm.GamePathFile);
+                FileTools.DeleteDirectory(mainMenuForm.CurrentGame, mainMenuForm.GamePathFile);
                 Thread.Sleep(2000);
-                FileTools.DeleteFile(FileTools.CurrentGame, mainMenuForm.GamePathFile);
+                FileTools.DeleteFile(mainMenuForm.CurrentGame, mainMenuForm.GamePathFile);
                 Thread.Sleep(1000);
 
-                FileTools.ShowDialogMessage($"Successfully purged all {FileTools.CurrentGame} game files.");
-                Debug.Log($"Successfully purged {FileTools.CurrentGame} files.");
+                FileTools.ShowDialogMessage($"Successfully purged all {mainMenuForm.CurrentGame} game files.");
+                Debug.Log($"Successfully purged {mainMenuForm.CurrentGame} files.");
             }
         }
         else

@@ -12,14 +12,13 @@ public partial class LoginForm : Form
         InitializeComponent();
 
         createForm = new CreateAccountForm();
+        passwordTextBox.UseSystemPasswordChar = true;
 
         Networking.Username = "ftp-user";
         Networking.Password = "mn1-237A";
         Networking.ServerIp = "58.169.146.100";
 
-        passwordTextBox.UseSystemPasswordChar = true;
-
-        Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users/Users.txt", "Users.txt");
+        Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users/", "Users.txt");
     }
 
     #region UI Events
@@ -69,7 +68,8 @@ public partial class LoginForm : Form
     private void loginButton_Click(object sender, EventArgs e)
     {
         // If text box space is empty, return null value.
-        if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || string.IsNullOrWhiteSpace(passwordTextBox.Text) ||
+        if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || 
+           string.IsNullOrWhiteSpace(passwordTextBox.Text) ||
            string.IsNullOrWhiteSpace(serverIpTextBox.Text))
         {
             FileTools.ShowDialogMessage("Please fill out all text boxes.");
@@ -77,15 +77,15 @@ public partial class LoginForm : Form
         }
 
         // If the user.txt file does not exist, return.
-        if (!File.Exists($"{WelcomeForm.UsersPathFile}/Users.txt"))
+        if (!File.Exists($"{FileTools.UsersPathFile}/Users.txt"))
         {
-            FileTools.ShowDialogMessage("Something went wrong with Users file.");
+            FileTools.ShowDialogMessage("Error validating users file.");
             return;
         }
 
         // hash username and password to validate user details
-        uint user = Users.BKDRHash(usernameTextBox.Text);
-        uint pass = Users.BKDRHash(passwordTextBox.Text);
+        uint user = Users.BkdrHash(usernameTextBox.Text);
+        uint pass = Users.BkdrHash(passwordTextBox.Text);
 
         // validate the hashed login credentials
         if (Users.ValidateLogin(user.ToString(), pass.ToString()))
@@ -96,11 +96,11 @@ public partial class LoginForm : Form
                 Networking.ServerIp = serverIpTextBox.Text;
                 
                 // start upload process for user.txt file to remote host.
-                if(Networking.UploadFiles("Users.txt", $"{WelcomeForm.UsersPathFile}", 
+                if(Networking.UploadFiles("Users.txt", $"{FileTools.UsersPathFile}", 
                     $"ftp://{Networking.ServerIp}/Users/Users.txt"))
                 {
                     // delete local user file.
-                    File.Delete($"{WelcomeForm.UsersPathFile}/Users.txt");
+                    File.Delete($"{FileTools.UsersPathFile}/Users.txt");
 
                     Hide();
 
@@ -117,7 +117,7 @@ public partial class LoginForm : Form
 
                 passwordTextBox.Clear();
                 usernameTextBox.Focus();
-                //serverIpTextBox.Clear();
+                serverIpTextBox.Clear();
             }
         }
         // else prompt user that account does not exist or details are wrong.
@@ -128,14 +128,21 @@ public partial class LoginForm : Form
 
             passwordTextBox.Clear();
             usernameTextBox.Clear();
-            //serverIpTextBox.Clear();
+            serverIpTextBox.Clear();
         }
 
         Debug.Break();
     }
 
     /// <summary>Event for create account button click.</summary>
-    private void createAccountButton_Click(object sender, EventArgs e) => createForm.ShowDialog();
+    private void createAccountButton_Click(object sender, EventArgs e)
+    {
+        usernameTextBox.Clear();
+        passwordTextBox.Clear();
+        serverIpTextBox.Clear();
+
+        createForm.ShowDialog();
+    }
 
     #endregion
 }

@@ -4,24 +4,18 @@ namespace MGC_Application.Forms;
 
 public partial class WelcomeForm : Form
 {
-    public static string LogPathFile = @"";
-    public static string UsersPathFile = @"";
-
-    public static string GamesDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/MGC-Games";
-    public static string DataDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/MGC-Data";
-
     public WelcomeForm()
     {
         InitializeComponent();
 
-        LogPathFile = $@"{DataDirectory}/";
-        UsersPathFile = $@"{DataDirectory}/";
+        FileTools.LogPathFile = $@"{FileTools.DataDirectory}/";
+        FileTools.UsersPathFile = $@"{FileTools.DataDirectory}/";
 
-        if (!Directory.Exists(DataDirectory))
-            FileTools.CreateDirectory(DataDirectory, true);
+        if (!Directory.Exists(FileTools.DataDirectory))
+            FileTools.CreateDirectory(FileTools.DataDirectory, true);
 
-        if(!Directory.Exists(GamesDirectory))
-            FileTools.CreateDirectory(GamesDirectory);
+        if(!Directory.Exists(FileTools.GamesDirectory))
+            FileTools.CreateDirectory(FileTools.GamesDirectory);
     }
 
     #region UI Events

@@ -1,4 +1,4 @@
-﻿namespace MGC_Application.Data
+﻿namespace MGC_Application.Tools.Data
 {
     public class UserData(string _username, string _password)
     {

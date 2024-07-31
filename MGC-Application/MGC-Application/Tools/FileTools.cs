@@ -6,7 +6,11 @@ namespace MGC_Application.Tools;
 
 public class FileTools
 {
-    //private static string? CurrentGame;
+    public static string GamesDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/MGC-Games";
+    public static string DataDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/MGC-Data";
+    
+    public static string? LogPathFile;
+    public static string? UsersPathFile;
 
     /// <summary>Run executes the exe of the game.</summary>
     /// <param name="_game">The program of to run the exe of.</param>
@@ -39,14 +43,14 @@ public class FileTools
     /// <param name="_localPath">The path file of which the game files are located at.</param>
     public static bool InstallGameFiles(string _game, string _localPath)
     {
+        var startFile = $"{_localPath}/{_game}.zip";
+        var endDir = $"{_localPath}/{_game}";
+
         // try to extract the downloaded .zip
         // into its own game directory within path file.
         // if it cannot be executed, throw file not found exception.
         try
         {
-            var startFile = $"{_localPath}/{_game}.zip";
-            var endDir = $"{_localPath}/{_game}";
-
             ZipFile.ExtractToDirectory(startFile, endDir);
             Thread.Sleep(1000);
 
@@ -102,7 +106,7 @@ public class FileTools
         {
             if (Directory.Exists(dir))
             {
-                Debug.Log($"{dir} directory has been found.");
+                Debug.Log($"{dir} path is valid.");
                 return true;
             }
             else
@@ -170,9 +174,10 @@ public class FileTools
     /// <param name="_localPath">The path of the directory to delete.</param>
     public static void DeleteDirectory(string _game, string _localPath)
     {
+        var dir = $"{_localPath}/{_game}";
+     
         try
         {
-            var dir = $"{_localPath}/{_game}";
             Directory.Delete(dir, true);
             Debug.Log($"{dir}: directory has been deleted.");
         }
@@ -187,11 +192,13 @@ public class FileTools
     /// <param name="_localPath">The path of the file to delete.</param>
     public static void DeleteFile(string _game, string _localPath)
     {
+        var file = $"{_localPath}/{_game}.zip";
+
         try
         {
-            var file = $"{_localPath}/{_game}.zip";
             File.Delete(file);
-            Debug.Log($"{file}: file has been deleted.");
+            
+            Debug.Log($"{file} has been deleted.");
         }
         catch(FileNotFoundException ex)
         {

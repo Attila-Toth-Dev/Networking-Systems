@@ -17,7 +17,7 @@ public partial class CreateAccountForm : Form
     private void saveButton_Click(object sender, EventArgs e)
     {
         // check if user details are correct, with hashing username
-        var hash = Users.BKDRHash(usernameTextBox.Text);
+        uint hash = Users.BkdrHash(usernameTextBox.Text);
         if (Users.UserExists(hash.ToString()))
         {
             // if user already exists, clear and prompt again.

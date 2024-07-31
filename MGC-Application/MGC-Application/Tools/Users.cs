@@ -11,7 +11,7 @@ public class Users
     {
         try
         {
-            using(StreamReader reader = new StreamReader($"{WelcomeForm.UsersPathFile}/Users.txt"))
+            using(StreamReader reader = new StreamReader($"{FileTools.UsersPathFile}/Users.txt"))
             {
                 string? line;
                 while((line = reader.ReadLine()) != null)
@@ -26,12 +26,12 @@ public class Users
                 }
             }
 
-            Debug.Log("Account details do not match, please try again.");
+            Debug.Log("Account details not registered, try again.");
             return false;
         }
         catch(FileNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -42,7 +42,7 @@ public class Users
     {
         try
         {
-            using (StreamReader reader = new StreamReader($"{WelcomeForm.UsersPathFile}/Users.txt"))
+            using (StreamReader reader = new StreamReader($"{FileTools.UsersPathFile}/Users.txt"))
             {
                 string? line;
                 while ((line = reader.ReadLine()) != null)
@@ -62,7 +62,7 @@ public class Users
         }
         catch(FileNotFoundException ex)
         {
-            Debug.Log(ex.Message);
+            Debug.LogException(ex);
             return false;
         }
     }
@@ -75,12 +75,12 @@ public class Users
         try
         {
             string usersPathName = $"Users.txt";
-            string usersPath = $"{WelcomeForm.UsersPathFile}/{usersPathName}";
+            string usersPath = $"{FileTools.UsersPathFile}/{usersPathName}";
 
             using(StreamWriter writer = new StreamWriter(usersPath, true))
             {
-                string pass = BKDRHash(_password).ToString();
-                string user = BKDRHash(_username).ToString();
+                string pass = BkdrHash(_password).ToString();
+                string user = BkdrHash(_username).ToString();
                 writer.Write($"{user},{pass}{Environment.NewLine}");
 
                 Debug.Log($"Successfully registered account.");
@@ -94,7 +94,7 @@ public class Users
 
     /// <summary>Hashing function that securely hashes the password for an account.</summary>
     /// <param name="_string">The password to hash for account.</param>
-    public static uint BKDRHash(string _string)
+    public static uint BkdrHash(string _string)
     {
         uint seed = 1313;
         uint hash = 0;
