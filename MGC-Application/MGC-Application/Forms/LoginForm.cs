@@ -14,10 +14,6 @@ public partial class LoginForm : Form
         createForm = new CreateAccountForm();
         passwordTextBox.UseSystemPasswordChar = true;
 
-        Networking.Username = "ftp-user";
-        Networking.Password = "mn1-237A";
-        Networking.ServerIp = "58.169.146.100";
-
         Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users/", "Users.txt");
     }
 
@@ -93,8 +89,6 @@ public partial class LoginForm : Form
             // if true validate and start a remote connection to host.
             if (Networking.ValidateRemoteConnection(serverIpTextBox.Text))
             {
-                Networking.ServerIp = serverIpTextBox.Text;
-                
                 // start upload process for user.txt file to remote host.
                 if(Networking.UploadFiles("Users.txt", $"{FileTools.UsersPathFile}", 
                     $"ftp://{Networking.ServerIp}/Users/Users.txt"))

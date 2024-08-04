@@ -7,11 +7,9 @@ public class Networking
 {
     #region Getters/Setters
 
-    public static string? ServerIp { get; set; }
-
-    public static string? Username { get; set; }
-    
-    public static string? Password { get; set; }
+    public static string ServerIp = "58.169.146.100";
+    public static string Username = "ftp-user";
+    public static string Password = "mn1-237A";
     
     #endregion
 
