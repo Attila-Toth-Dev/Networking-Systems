@@ -1,11 +1,10 @@
-﻿using MGC_Application.Forms;
-using MGC_Application.Tools;
+﻿using MGC_Application.Tools;
 
-namespace MGC_Application;
+namespace MGC_Application.Forms;
 
 public partial class LoginForm : Form
 {
-    private CreateAccountForm createForm;
+    private readonly CreateAccountForm createForm;
 
     public LoginForm()
     {
@@ -14,7 +13,9 @@ public partial class LoginForm : Form
         createForm = new CreateAccountForm();
         passwordTextBox.UseSystemPasswordChar = true;
 
-        Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users/", "Users.txt");
+        Debug.Log(Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users", "Users.txt")
+            ? "Successfully downloaded users file."
+            : "Error with users file.");
     }
 
     #region UI Events
@@ -25,16 +26,12 @@ public partial class LoginForm : Form
     /// <summary>Event for username text box text change.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e) => usernameTextBox.MaxLength = 50;
 
-    /// <summary>Event for server IP text box text change.</summary>
-    private void serverIpTextBox_TextChanged(object sender, EventArgs e) => serverIpTextBox.MaxLength = 50;
-
     /// <summary>Event for clear fields label click.</summary>
     private void clearFieldsLabel_Click(object sender, EventArgs e)
     {
         // clear data inside text boxes.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
-        serverIpTextBox.Clear();
 
         usernameTextBox.Focus();
     }
@@ -64,9 +61,7 @@ public partial class LoginForm : Form
     private void loginButton_Click(object sender, EventArgs e)
     {
         // If text box space is empty, return null value.
-        if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || 
-           string.IsNullOrWhiteSpace(passwordTextBox.Text) ||
-           string.IsNullOrWhiteSpace(serverIpTextBox.Text))
+        if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || string.IsNullOrWhiteSpace(passwordTextBox.Text))
         {
             FileTools.ShowDialogMessage("Please fill out all text boxes.");
             return;
@@ -87,7 +82,7 @@ public partial class LoginForm : Form
         if (Users.ValidateLogin(user.ToString(), pass.ToString()))
         {
             // if true validate and start a remote connection to host.
-            if (Networking.ValidateRemoteConnection(serverIpTextBox.Text))
+            if (Networking.ValidateRemoteConnection(Networking.ServerIp))
             {
                 // start upload process for user.txt file to remote host.
                 if(Networking.UploadFiles("Users.txt", $"{FileTools.UsersPathFile}", 
@@ -109,9 +104,8 @@ public partial class LoginForm : Form
                 // display error connection popup message.
                 FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
 
+                usernameTextBox.Clear();
                 passwordTextBox.Clear();
-                usernameTextBox.Focus();
-                serverIpTextBox.Clear();
             }
         }
         // else prompt user that account does not exist or details are wrong.
@@ -120,9 +114,10 @@ public partial class LoginForm : Form
             // display account error popup.
             FileTools.ShowDialogMessage("Account details are incorrect or does not exist, try again.");
 
-            passwordTextBox.Clear();
             usernameTextBox.Clear();
-            serverIpTextBox.Clear();
+            passwordTextBox.Clear();
+
+            usernameTextBox.Focus();
         }
 
         Debug.Break();
@@ -133,7 +128,6 @@ public partial class LoginForm : Form
     {
         usernameTextBox.Clear();
         passwordTextBox.Clear();
-        serverIpTextBox.Clear();
 
         createForm.ShowDialog();
     }

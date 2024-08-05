@@ -28,81 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             launcherPictureBox = new PictureBox();
-            loadingProgressBar = new ProgressBar();
-            loadBarTimer = new System.Windows.Forms.Timer(components);
-            loadProgressLabel = new Label();
-            loadingValueLabel = new Label();
+            serverIPLabel = new Label();
             backgroundPanel = new Panel();
+            connectButton = new Button();
+            serverIPTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)launcherPictureBox).BeginInit();
+            backgroundPanel.SuspendLayout();
             SuspendLayout();
             // 
             // launcherPictureBox
             // 
             launcherPictureBox.BackColor = Color.LightBlue;
             launcherPictureBox.Image = (Image)resources.GetObject("launcherPictureBox.Image");
-            launcherPictureBox.Location = new Point(220, 64);
+            launcherPictureBox.Location = new Point(121, 51);
             launcherPictureBox.Name = "launcherPictureBox";
             launcherPictureBox.Size = new Size(140, 140);
             launcherPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             launcherPictureBox.TabIndex = 0;
             launcherPictureBox.TabStop = false;
             // 
-            // loadingProgressBar
+            // serverIPLabel
             // 
-            loadingProgressBar.Location = new Point(140, 290);
-            loadingProgressBar.Name = "loadingProgressBar";
-            loadingProgressBar.Size = new Size(300, 23);
-            loadingProgressBar.TabIndex = 1;
-            // 
-            // loadBarTimer
-            // 
-            loadBarTimer.Enabled = true;
-            loadBarTimer.Tick += loadBarTimer_Tick;
-            // 
-            // loadProgressLabel
-            // 
-            loadProgressLabel.AutoSize = true;
-            loadProgressLabel.BackColor = Color.LightBlue;
-            loadProgressLabel.Location = new Point(140, 254);
-            loadProgressLabel.Name = "loadProgressLabel";
-            loadProgressLabel.Size = new Size(234, 22);
-            loadProgressLabel.TabIndex = 2;
-            loadProgressLabel.Text = "Loading MGC Laucncher...";
-            // 
-            // loadingValueLabel
-            // 
-            loadingValueLabel.AutoSize = true;
-            loadingValueLabel.BackColor = Color.LightBlue;
-            loadingValueLabel.Location = new Point(391, 254);
-            loadingValueLabel.Name = "loadingValueLabel";
-            loadingValueLabel.RightToLeft = RightToLeft.Yes;
-            loadingValueLabel.Size = new Size(49, 22);
-            loadingValueLabel.TabIndex = 3;
-            loadingValueLabel.Text = "00%";
-            loadingValueLabel.TextAlign = ContentAlignment.MiddleRight;
+            serverIPLabel.AutoSize = true;
+            serverIPLabel.BackColor = Color.LightBlue;
+            serverIPLabel.ImageAlign = ContentAlignment.MiddleLeft;
+            serverIPLabel.Location = new Point(23, 213);
+            serverIPLabel.Name = "serverIPLabel";
+            serverIPLabel.Size = new Size(141, 33);
+            serverIPLabel.TabIndex = 2;
+            serverIPLabel.Text = "Server IP:";
             // 
             // backgroundPanel
             // 
             backgroundPanel.BorderStyle = BorderStyle.Fixed3D;
+            backgroundPanel.Controls.Add(connectButton);
+            backgroundPanel.Controls.Add(launcherPictureBox);
+            backgroundPanel.Controls.Add(serverIPTextBox);
+            backgroundPanel.Controls.Add(serverIPLabel);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(584, 361);
+            backgroundPanel.Size = new Size(378, 344);
             backgroundPanel.TabIndex = 5;
+            // 
+            // connectButton
+            // 
+            connectButton.Location = new Point(121, 270);
+            connectButton.Name = "connectButton";
+            connectButton.Size = new Size(140, 46);
+            connectButton.TabIndex = 4;
+            connectButton.Text = "Connect";
+            connectButton.UseVisualStyleBackColor = true;
+            connectButton.Click += connectButton_Click;
+            // 
+            // serverIPTextBox
+            // 
+            serverIPTextBox.Location = new Point(170, 213);
+            serverIPTextBox.Name = "serverIPTextBox";
+            serverIPTextBox.Size = new Size(164, 40);
+            serverIPTextBox.TabIndex = 3;
             // 
             // WelcomeForm
             // 
-            AutoScaleDimensions = new SizeF(11F, 22F);
+            AutoScaleDimensions = new SizeF(17F, 33F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
-            ClientSize = new Size(584, 361);
-            Controls.Add(loadingValueLabel);
-            Controls.Add(loadProgressLabel);
-            Controls.Add(loadingProgressBar);
-            Controls.Add(launcherPictureBox);
+            ClientSize = new Size(378, 344);
             Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -114,17 +107,17 @@
             Text = "MGC-Launcher";
             FormClosed += WelcomeForm_Closed;
             ((System.ComponentModel.ISupportInitialize)launcherPictureBox).EndInit();
+            backgroundPanel.ResumeLayout(false);
+            backgroundPanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private PictureBox launcherPictureBox;
-        private ProgressBar loadingProgressBar;
-        private System.Windows.Forms.Timer loadBarTimer;
-        private Label loadProgressLabel;
-        private Label loadingValueLabel;
+        private Label serverIPLabel;
         private Panel backgroundPanel;
+        private TextBox serverIPTextBox;
+        private Button connectButton;
     }
 }

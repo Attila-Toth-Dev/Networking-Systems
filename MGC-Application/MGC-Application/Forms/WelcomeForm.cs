@@ -14,28 +14,45 @@ public partial class WelcomeForm : Form
         if (!Directory.Exists(FileTools.DataDirectory))
             FileTools.CreateDirectory(FileTools.DataDirectory, true);
 
-        if(!Directory.Exists(FileTools.GamesDirectory))
+        if (!Directory.Exists(FileTools.GamesDirectory))
             FileTools.CreateDirectory(FileTools.GamesDirectory);
     }
 
     #region UI Events
 
-    /// <summary>Event for load bar timer tick.</summary>
-    private void loadBarTimer_Tick(object sender, EventArgs e)
+    private void connectButton_Click(object sender, EventArgs e)
     {
-        // change the progress bar load up value
-        // using the timer tick.
-        loadingValueLabel.Text = $"{loadingProgressBar.Value}%";
-        loadingProgressBar.Value += 10;
-
-        // when loading bar is maximum, open up login form.
-        if (loadingProgressBar.Value >= loadingProgressBar.Maximum)
+        // If text box space is empty, return null value.
+        if(string.IsNullOrWhiteSpace(serverIPTextBox.Text))
         {
-            loadBarTimer.Enabled = false;
-            this.Hide();
+            FileTools.ShowDialogMessage("Please fill out all text boxes.");
+            return;
+        }
 
+        // If the user.txt file does not exist, return.
+        if (!File.Exists($"{FileTools.UsersPathFile}/Users.txt"))
+        {
+            FileTools.ShowDialogMessage("Error validating users file.");
+            return;
+        }
+
+        // if true validate and start a remote connection to host.
+        if (Networking.ValidateRemoteConnection(serverIPTextBox.Text))
+        {
+            Networking.ServerIp = serverIPTextBox.Text;
+
+            Hide();
+
+            // display main menu form.
             LoginForm form = new LoginForm();
             form.Show();
+        }
+        // else if connection was invalid with remote host.
+        else
+        {
+            // display error connection popup message.
+            FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
+            serverIPTextBox.Clear();
         }
     }
 
@@ -47,4 +64,5 @@ public partial class WelcomeForm : Form
     }
 
     #endregion
+    
 }

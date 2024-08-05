@@ -1,4 +1,4 @@
-﻿namespace MGC_Application
+﻿namespace MGC_Application.Forms
 {
     partial class LoginForm
     {
@@ -33,8 +33,6 @@
             usernameTextBox = new TextBox();
             usernameLabel = new Label();
             loginButton = new Button();
-            serverIpTextBox = new TextBox();
-            serverIpLabel = new Label();
             passwordTextBox = new TextBox();
             passwordLabel = new Label();
             backgroundPanel = new Panel();
@@ -60,7 +58,7 @@
             // 
             usernameTextBox.Location = new Point(198, 150);
             usernameTextBox.Name = "usernameTextBox";
-            usernameTextBox.Size = new Size(200, 29);
+            usernameTextBox.Size = new Size(200, 40);
             usernameTextBox.TabIndex = 1;
             usernameTextBox.TextAlign = HorizontalAlignment.Center;
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
@@ -70,7 +68,7 @@
             usernameLabel.AutoSize = true;
             usernameLabel.Location = new Point(76, 153);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(102, 22);
+            usernameLabel.Size = new Size(158, 33);
             usernameLabel.TabIndex = 3;
             usernameLabel.Text = "Username:";
             // 
@@ -84,29 +82,11 @@
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
             // 
-            // serverIpTextBox
-            // 
-            serverIpTextBox.Location = new Point(198, 246);
-            serverIpTextBox.Name = "serverIpTextBox";
-            serverIpTextBox.Size = new Size(200, 29);
-            serverIpTextBox.TabIndex = 3;
-            serverIpTextBox.TextAlign = HorizontalAlignment.Center;
-            serverIpTextBox.TextChanged += serverIpTextBox_TextChanged;
-            // 
-            // serverIpLabel
-            // 
-            serverIpLabel.AutoSize = true;
-            serverIpLabel.Location = new Point(76, 249);
-            serverIpLabel.Name = "serverIpLabel";
-            serverIpLabel.Size = new Size(110, 22);
-            serverIpLabel.TabIndex = 8;
-            serverIpLabel.Text = "IP Address:";
-            // 
             // passwordTextBox
             // 
             passwordTextBox.Location = new Point(198, 197);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.Size = new Size(200, 29);
+            passwordTextBox.Size = new Size(200, 40);
             passwordTextBox.TabIndex = 2;
             passwordTextBox.TextAlign = HorizontalAlignment.Center;
             passwordTextBox.TextChanged += passwordTextBox_TextChanged;
@@ -116,7 +96,7 @@
             passwordLabel.AutoSize = true;
             passwordLabel.Location = new Point(76, 200);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(99, 22);
+            passwordLabel.Size = new Size(151, 33);
             passwordLabel.TabIndex = 10;
             passwordLabel.Text = "Password:";
             // 
@@ -128,9 +108,7 @@
             backgroundPanel.Controls.Add(loginButton);
             backgroundPanel.Controls.Add(passwordLabel);
             backgroundPanel.Controls.Add(passwordTextBox);
-            backgroundPanel.Controls.Add(serverIpLabel);
             backgroundPanel.Controls.Add(passwordPictureBox);
-            backgroundPanel.Controls.Add(serverIpTextBox);
             backgroundPanel.Controls.Add(usernameTextBox);
             backgroundPanel.Controls.Add(usernameLabel);
             backgroundPanel.Dock = DockStyle.Fill;
@@ -142,9 +120,9 @@
             // clearFieldsLabel
             // 
             clearFieldsLabel.AutoSize = true;
-            clearFieldsLabel.Location = new Point(404, 249);
+            clearFieldsLabel.Location = new Point(210, 257);
             clearFieldsLabel.Name = "clearFieldsLabel";
-            clearFieldsLabel.Size = new Size(112, 22);
+            clearFieldsLabel.Size = new Size(172, 33);
             clearFieldsLabel.TabIndex = 11;
             clearFieldsLabel.Text = "Clear Fields";
             clearFieldsLabel.Click += clearFieldsLabel_Click;
@@ -173,7 +151,7 @@
             // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(11F, 22F);
+            AutoScaleDimensions = new SizeF(17F, 33F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
@@ -201,8 +179,6 @@
         private TextBox usernameTextBox;
         private Label usernameLabel;
         private Button loginButton;
-        private TextBox serverIpTextBox;
-        private Label serverIpLabel;
         private TextBox passwordTextBox;
         private Label passwordLabel;
         private Panel backgroundPanel;

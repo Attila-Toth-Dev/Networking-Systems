@@ -164,7 +164,7 @@ public class Networking
     {
         // create an FTP web request to remote host to initialize
         // connection with host.
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_file}");
 
         try
         {
@@ -178,7 +178,7 @@ public class Networking
             // server to local machine local path file.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
-                string dir = $"{_remotePath}/{_file}";
+                string dir = $"{FileTools.UsersPathFile}/{_file}";
 
                 long length = response.ContentLength;
                 int bufferSize = 2048;
