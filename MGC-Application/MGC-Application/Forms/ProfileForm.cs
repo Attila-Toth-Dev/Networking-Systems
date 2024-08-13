@@ -8,18 +8,22 @@ public partial class ProfileForm : Form
 
     private readonly MainMenuForm mainMenuForm;
 
-    public ProfileForm(MainMenuForm _form)
+    private string username;
+
+    public ProfileForm(MainMenuForm _form, string _username)
     {
         InitializeComponent();
 
-        profileNameLabel.Text = $"{Networking.Username}";
-        profileBioTextBox.Text = $"Hey there! I'm {Networking.Username} and I love to play video games, especially MS Paint.";
+        username = _username;
+
+        profileNameLabel.Text = $"{username}";
+        profileBioTextBox.Text = $"Hey there! I'm {username} and I love to play video games, especially MS Paint.";
 
         currentSelectedProfilePicture = string.Empty;
 
         mainMenuForm = _form;
 
-        this.Text = $"{Networking.Username} profile";
+        this.Text = $"{username} profile";
     }
 
     #region UI Events

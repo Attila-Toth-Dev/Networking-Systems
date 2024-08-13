@@ -21,7 +21,7 @@ public class Networking
         if (ValidateAddress(_serverIp, 5))
         {
             // if true, create an FTP web request to remote host
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIp}/Games");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIp}/");
             
             try
             {

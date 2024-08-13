@@ -57,61 +57,48 @@ public partial class LoginForm : Form
 
     #region Button Events
 
-    /// <summary>Event for loginButton click.</summary>
     private void loginButton_Click(object sender, EventArgs e)
     {
-        // If text box space is empty, return null value.
         if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || string.IsNullOrWhiteSpace(passwordTextBox.Text))
         {
             FileTools.ShowDialogMessage("Please fill out all text boxes.");
             return;
         }
 
-        // If the user.txt file does not exist, return.
         if (!File.Exists($"{FileTools.UsersPathFile}/Users.txt"))
         {
             FileTools.ShowDialogMessage("Error validating users file.");
             return;
         }
 
-        // hash username and password to validate user details
         uint user = Users.BkdrHash(usernameTextBox.Text);
         uint pass = Users.BkdrHash(passwordTextBox.Text);
 
-        // validate the hashed login credentials
         if (Users.ValidateLogin(user.ToString(), pass.ToString()))
         {
-            // if true validate and start a remote connection to host.
             if (Networking.ValidateRemoteConnection(Networking.ServerIp))
             {
-                // start upload process for user.txt file to remote host.
                 if(Networking.UploadFiles("Users.txt", $"{FileTools.UsersPathFile}", 
                     $"ftp://{Networking.ServerIp}/Users/Users.txt"))
                 {
-                    // delete local user file.
                     File.Delete($"{FileTools.UsersPathFile}/Users.txt");
 
                     Hide();
 
-                    // display main menu form.
-                    MainMenuForm form = new MainMenuForm(usernameTextBox.Text, passwordTextBox.Text);
+                    MainMenuForm form = new MainMenuForm(usernameTextBox.Text);
                     form.Show();
                 }
             }
-            // else if connection was invalid with remote host.
             else
             {
-                // display error connection popup message.
                 FileTools.ShowDialogMessage($"Error logging into server, please try again. (Line 74)", 1);
 
                 usernameTextBox.Clear();
                 passwordTextBox.Clear();
             }
         }
-        // else prompt user that account does not exist or details are wrong.
         else
         {
-            // display account error popup.
             FileTools.ShowDialogMessage("Account details are incorrect or does not exist, try again.");
 
             usernameTextBox.Clear();
@@ -123,7 +110,6 @@ public partial class LoginForm : Form
         Debug.Break();
     }
 
-    /// <summary>Event for create account button click.</summary>
     private void createAccountButton_Click(object sender, EventArgs e)
     {
         usernameTextBox.Clear();

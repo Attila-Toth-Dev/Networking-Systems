@@ -30,11 +30,11 @@ public partial class WelcomeForm : Form
         }
 
         // If the user.txt file does not exist, return.
-        if (!File.Exists($"{FileTools.UsersPathFile}/Users.txt"))
+        /*if (!File.Exists($"{FileTools.UsersPathFile}/Users.txt"))
         {
             FileTools.ShowDialogMessage("Error validating users file.");
             return;
-        }
+        }*/
 
         // if true validate and start a remote connection to host.
         if (Networking.ValidateRemoteConnection(serverIPTextBox.Text))
