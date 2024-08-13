@@ -13,14 +13,11 @@ public partial class CreateAccountForm : Form
 
     #region Button Events
 
-    /// <summary>Event for save button click.</summary>
     private void saveButton_Click(object sender, EventArgs e)
     {
-        // check if user details are correct, with hashing username
         uint hash = Users.BkdrHash(usernameTextBox.Text);
         if (Users.UserExists(hash.ToString()))
         {
-            // if user already exists, clear and prompt again.
             usernameTextBox.Clear();
             passwordTextBox.Clear();
 
@@ -30,11 +27,9 @@ public partial class CreateAccountForm : Form
         }
         else
         {
-            // else, add the user to the users file.
             Users.AddUser(usernameTextBox.Text, passwordTextBox.Text);
             FileTools.ShowDialogMessage($"Successfully registered account.");
 
-            // then clear fields and close the window.
             usernameTextBox.Clear();
             passwordTextBox.Clear();
 
