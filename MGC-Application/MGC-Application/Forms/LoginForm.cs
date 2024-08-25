@@ -20,37 +20,28 @@ public partial class LoginForm : Form
 
     #region UI Events
 
-    /// <summary>Event for password text box text change.</summary>
     private void passwordTextBox_TextChanged(object sender, EventArgs e) => passwordTextBox.MaxLength = 50;
 
-    /// <summary>Event for username text box text change.</summary>
     private void usernameTextBox_TextChanged(object sender, EventArgs e) => usernameTextBox.MaxLength = 50;
 
-    /// <summary>Event for clear fields label click.</summary>
     private void clearFieldsLabel_Click(object sender, EventArgs e)
     {
-        // clear data inside text boxes.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
 
         usernameTextBox.Focus();
     }
 
-    /// <summary>Event for password picture box mouse down.</summary>
     private void passwordPictureBox_MouseDown(object sender, MouseEventArgs e)
     {
-        // allow user to view password with mouse down.
         passwordTextBox.UseSystemPasswordChar = false;
     }
 
-    /// <summary>Event for password picture box mouse up.</summary>
     private void passwordPictureBox_MouseUp(object sender, MouseEventArgs e)
     {
-        // disable viewing of password back to password characters.
         passwordTextBox.UseSystemPasswordChar = true;
     }
 
-    /// <summary>Event for login form close.</summary>
     private void LoginForm_Closed(object sender, FormClosedEventArgs e) => Application.Exit();
 
     #endregion

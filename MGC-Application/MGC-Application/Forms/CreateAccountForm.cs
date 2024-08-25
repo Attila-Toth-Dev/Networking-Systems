@@ -37,10 +37,8 @@ public partial class CreateAccountForm : Form
         }
     }
 
-    /// <summary>Event for cancel button click.</summary>
     private void cancelButton_Click(object sender, EventArgs e)
     {
-        // clear fields and close form.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
 
@@ -49,10 +47,8 @@ public partial class CreateAccountForm : Form
 
     #endregion
     
-    /// <summary>Event from create account form closed.</summary>
     private void CreateAccountForm_FormClosed(object sender, FormClosedEventArgs e)
     {
-        // clear fields and close form.
         usernameTextBox.Clear();
         passwordTextBox.Clear();
 
