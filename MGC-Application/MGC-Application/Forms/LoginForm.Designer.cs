@@ -58,7 +58,7 @@
             // 
             usernameTextBox.Location = new Point(198, 150);
             usernameTextBox.Name = "usernameTextBox";
-            usernameTextBox.Size = new Size(200, 40);
+            usernameTextBox.Size = new Size(200, 29);
             usernameTextBox.TabIndex = 1;
             usernameTextBox.TextAlign = HorizontalAlignment.Center;
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
@@ -68,7 +68,7 @@
             usernameLabel.AutoSize = true;
             usernameLabel.Location = new Point(76, 153);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(158, 33);
+            usernameLabel.Size = new Size(102, 22);
             usernameLabel.TabIndex = 3;
             usernameLabel.Text = "Username:";
             // 
@@ -86,7 +86,7 @@
             // 
             passwordTextBox.Location = new Point(198, 197);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.Size = new Size(200, 40);
+            passwordTextBox.Size = new Size(200, 29);
             passwordTextBox.TabIndex = 2;
             passwordTextBox.TextAlign = HorizontalAlignment.Center;
             passwordTextBox.TextChanged += passwordTextBox_TextChanged;
@@ -96,7 +96,7 @@
             passwordLabel.AutoSize = true;
             passwordLabel.Location = new Point(76, 200);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(151, 33);
+            passwordLabel.Size = new Size(99, 22);
             passwordLabel.TabIndex = 10;
             passwordLabel.Text = "Password:";
             // 
@@ -120,9 +120,9 @@
             // clearFieldsLabel
             // 
             clearFieldsLabel.AutoSize = true;
-            clearFieldsLabel.Location = new Point(210, 257);
+            clearFieldsLabel.Location = new Point(248, 268);
             clearFieldsLabel.Name = "clearFieldsLabel";
-            clearFieldsLabel.Size = new Size(172, 33);
+            clearFieldsLabel.Size = new Size(112, 22);
             clearFieldsLabel.TabIndex = 11;
             clearFieldsLabel.Text = "Clear Fields";
             clearFieldsLabel.Click += clearFieldsLabel_Click;
@@ -151,8 +151,9 @@
             // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(17F, 33F);
+            AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.LightBlue;
             ClientSize = new Size(584, 361);
             Controls.Add(logoPictureBox);

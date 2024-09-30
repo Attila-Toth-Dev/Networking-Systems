@@ -1,12 +1,7 @@
-﻿using MGC_Application.Forms;
-
-namespace MGC_Application.Tools;
+﻿namespace MGC_Application.Tools;
 
 public class Users
 {
-    /// <summary>Checks if account details are correct.</summary>
-    /// <param name="_username">Username of account.</param>
-    /// <param name="_password">Password of account.</param>
     public static bool ValidateLogin(string _username, string _password)
     {
         try
@@ -36,8 +31,6 @@ public class Users
         }
     }
 
-    /// <summary>Checks to see if username already exists.</summary>
-    /// <param name="_username">Username of the account to check.</param>
     public static bool UserExists(string _username)
     {
         try
@@ -67,20 +60,16 @@ public class Users
         }
     }
 
-    /// <summary>Function that adds the username and password details of account.</summary>
-    /// <param name="_username">Username of the account.</param>
-    /// <param name="_password">Password of the account.</param>
     public static void AddUser(string _username, string _password)
     {
         try
         {
-            string usersPathName = $"Users.txt";
-            string usersPath = $"{FileTools.UsersPathFile}/{usersPathName}";
+            string usersPath = $"{FileTools.UsersPathFile}/Users.txt";
 
             using(StreamWriter writer = new StreamWriter(usersPath, true))
             {
-                string pass = BkdrHash(_password).ToString();
-                string user = BkdrHash(_username).ToString();
+                string pass = BKDRHash(_password).ToString();
+                string user = BKDRHash(_username).ToString();
                 writer.Write($"{user},{pass}{Environment.NewLine}");
 
                 Debug.Log($"Successfully registered account.");
@@ -92,9 +81,7 @@ public class Users
         }
     }
 
-    /// <summary>Hashing function that securely hashes the password for an account.</summary>
-    /// <param name="_string">The password to hash for account.</param>
-    public static uint BkdrHash(string _string)
+    public static uint BKDRHash(string _string)
     {
         uint seed = 1313;
         uint hash = 0;

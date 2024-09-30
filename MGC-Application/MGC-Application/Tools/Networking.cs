@@ -13,14 +13,10 @@ public class Networking
     
     #endregion
 
-    /// <summary>Checks if there is a valid connection between client and server.</summary>
-    /// <param name="_serverIp">The server IP.</param>
     public static bool ValidateRemoteConnection(string _serverIp)
     {
-        // check to see if the given IP is a valid address.
-        if (ValidateAddress(_serverIp, 5))
+        if (ValidateAddress(_serverIp, 20))
         {
-            // if true, create an FTP web request to remote host
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIp}/");
             
             try
@@ -30,7 +26,6 @@ public class Networking
                 request.ServicePoint.ConnectionLimit = 4;
                 request.KeepAlive = false;
 
-                // try to get response from remote host
                 request.GetResponse();
 
                 Debug.Log($"Connection to {ServerIp} was made.");
@@ -38,7 +33,6 @@ public class Networking
             }
             catch (WebException ex)
             {
-                // else, prompt with web exception error.
                 Debug.LogException(ex);
                 return false;
             }
@@ -47,61 +41,74 @@ public class Networking
         return false;
     }
 
-    /// <summary>Checks to see if the IP address entered is correctly formatted and is valid.</summary>
-    /// <param name="_serverIP">The IP address to check validation.</param>
-    /// <param name="_timeout">The timeout time for the ping.</param>
-    public static bool ValidateAddress(string _serverIP, int _timeout)
+    public static bool ValidateAddress(string _serverIp, int _timeout)
     {
         try
         {
-            // try to ping the address to check if it is a true address,
-            Ping ping = new Ping();
-            PingReply pingReply = ping.Send(_serverIP, _timeout);
+            Debug.Log("--- Validating Server IP ---");
 
-            Debug.Log($"Remote server {ServerIp} received ping.");
+            Ping[] pings = new Ping[10];
+
+            for (int i = 0; i < pings.Length; i++)
+            {
+                pings[i] = new Ping();
+            }
+
+            long totalPingTime = 0;
+            for (int i = 0; i < pings.Length; i++)
+            {
+                Ping ping = pings[i];
+                PingReply pingReply = ping.Send(_serverIp, _timeout);
+
+                Debug.Log($"Ping {i} Round Trip Time: {pingReply.RoundtripTime}");
+                Debug.Log($"Ping {i} Status: {pingReply.Status}");
+                totalPingTime += pingReply.RoundtripTime;
+            }
+
+            long averagePingTime = totalPingTime / pings.Length;
+
+            Debug.Log("--- Round Trip Times ---");
+            Debug.Log($"Total ping time : {totalPingTime}");
+            Debug.Log($"Average ping time : {averagePingTime}");
+            Debug.Break();
+
             return true;
         }
         catch (PingException ex)
         {
-            // catch return ping exception error.
             Debug.LogException(ex);
             return false;
         }
     }
 
-    /// <summary></summary>
-    /// <param name="_game"></param>
-    /// <param name="_remotePath"></param>
     public static bool DownloadGameFiles(string _game, string _remotePath)
     {
-        // create a FTP web request to remote host to initialize
-        // connection with host.
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
-
         try
         {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
+            
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.ServicePoint.ConnectionLimit = 4;
             request.UseBinary = true;
             request.KeepAlive = false;
 
-            // try to write the data of the .zip from
-            // server to local machine local pathfile.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
                 string dir = $"{FileTools.GamesDirectory}/{_game}.zip";
             
                 long length = response.ContentLength;
+                Debug.Log($"{_game} content size: {length}");
+
                 int bufferSize = 2048;
-                int readCount;
+                //int readCount;
                 byte[] buffer = new byte[2048];
 
                 using (Stream responseStream = response.GetResponseStream())
                 {
                     using (FileStream writer = new FileStream(dir, FileMode.Create))
                     {
-                        readCount = responseStream.Read(buffer, 0, bufferSize);
+                        int readCount = responseStream.Read(buffer, 0, bufferSize);
                         while (readCount > 0)
                         {
                             writer.Write(buffer, 0, readCount);
@@ -114,33 +121,27 @@ public class Networking
             Thread.Sleep(1000);
 
             Debug.Log($"{_game} files successfully downloaded.");
+            Debug.Break();
             return true;
         }
         catch (WebException ex)
         {
-            // else throw a web exception error. 
             Debug.LogException(ex);
             return false;
         }
     }
 
-    /// <summary></summary>
-    /// <param name="_game"></param>
-    /// <param name="_remotePath"></param>
     public static long ValidateUpdate(string _game, string _remotePath)
     {
-        // create a FTP web request connection to address
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
-
         try
         {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_game}.zip");
+            
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.KeepAlive = false;
             request.Proxy = null;
 
-            // try to get the file size of the copy
-            // of game from remote host for update sizing.
             FtpWebResponse responseSize = (FtpWebResponse)request.GetResponse();
             long fileSize = responseSize.ContentLength;
             
@@ -151,31 +152,23 @@ public class Networking
         }
         catch(WebException ex)
         {
-            // else return web exception error.
             Debug.LogException(ex);
             return -1;
         }
     }
 
-    /// <summary></summary>
-    /// <param name="_remotePath"></param>
-    /// <param name="_file"></param>
     public static bool DownloadFiles(string _remotePath, string _file)
     {
-        // create an FTP web request to remote host to initialize
-        // connection with host.
-        FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_file}");
-
         try
         {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"{_remotePath}/{_file}");
+            
             request.Credentials = new NetworkCredential(Username, Password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.ServicePoint.ConnectionLimit = 4;
             request.UseBinary = true;
             request.KeepAlive = false;
 
-            // try to write the data of the .zip from
-            // server to local machine local path file.
             using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
             {
                 string dir = $"{FileTools.UsersPathFile}/{_file}";
@@ -208,10 +201,6 @@ public class Networking
         }
     }
 
-    /// <summary></summary>
-    /// <param name="_file"></param>
-    /// <param name="_localPath"></param>
-    /// <param name="_remotePath"></param>
     public static bool UploadFiles(string _file, string _localPath, string _remotePath)
     {
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);

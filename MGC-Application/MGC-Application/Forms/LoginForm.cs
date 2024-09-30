@@ -13,9 +13,7 @@ public partial class LoginForm : Form
         createForm = new CreateAccountForm();
         passwordTextBox.UseSystemPasswordChar = true;
 
-        Debug.Log(Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users", "Users.txt")
-            ? "Successfully downloaded users file."
-            : "Error with users file.");
+        Networking.DownloadFiles($"ftp://{Networking.ServerIp}/Users", "Users.txt");
     }
 
     #region UI Events
@@ -62,8 +60,8 @@ public partial class LoginForm : Form
             return;
         }
 
-        uint user = Users.BkdrHash(usernameTextBox.Text);
-        uint pass = Users.BkdrHash(passwordTextBox.Text);
+        uint user = Users.BKDRHash(usernameTextBox.Text);
+        uint pass = Users.BKDRHash(passwordTextBox.Text);
 
         if (Users.ValidateLogin(user.ToString(), pass.ToString()))
         {

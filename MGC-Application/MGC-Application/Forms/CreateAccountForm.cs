@@ -15,7 +15,7 @@ public partial class CreateAccountForm : Form
 
     private void saveButton_Click(object sender, EventArgs e)
     {
-        uint hash = Users.BkdrHash(usernameTextBox.Text);
+        uint hash = Users.BKDRHash(usernameTextBox.Text);
         if (Users.UserExists(hash.ToString()))
         {
             usernameTextBox.Clear();
