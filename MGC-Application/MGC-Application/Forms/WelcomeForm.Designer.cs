@@ -42,9 +42,9 @@
             // 
             launcherPictureBox.BackColor = Color.LightBlue;
             launcherPictureBox.Image = (Image)resources.GetObject("launcherPictureBox.Image");
-            launcherPictureBox.Location = new Point(121, 51);
+            launcherPictureBox.Location = new Point(143, 20);
             launcherPictureBox.Name = "launcherPictureBox";
-            launcherPictureBox.Size = new Size(140, 140);
+            launcherPictureBox.Size = new Size(98, 97);
             launcherPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             launcherPictureBox.TabIndex = 0;
             launcherPictureBox.TabStop = false;
@@ -54,9 +54,9 @@
             serverIPLabel.AutoSize = true;
             serverIPLabel.BackColor = Color.LightBlue;
             serverIPLabel.ImageAlign = ContentAlignment.MiddleLeft;
-            serverIPLabel.Location = new Point(23, 213);
+            serverIPLabel.Location = new Point(72, 147);
             serverIPLabel.Name = "serverIPLabel";
-            serverIPLabel.Size = new Size(141, 33);
+            serverIPLabel.Size = new Size(95, 22);
             serverIPLabel.TabIndex = 2;
             serverIPLabel.Text = "Server IP:";
             // 
@@ -70,14 +70,14 @@
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(378, 344);
+            backgroundPanel.Size = new Size(384, 261);
             backgroundPanel.TabIndex = 5;
             // 
             // connectButton
             // 
-            connectButton.Location = new Point(121, 270);
+            connectButton.Location = new Point(143, 192);
             connectButton.Name = "connectButton";
-            connectButton.Size = new Size(140, 46);
+            connectButton.Size = new Size(98, 31);
             connectButton.TabIndex = 4;
             connectButton.Text = "Connect";
             connectButton.UseVisualStyleBackColor = true;
@@ -85,17 +85,18 @@
             // 
             // serverIPTextBox
             // 
-            serverIPTextBox.Location = new Point(170, 213);
+            serverIPTextBox.Location = new Point(187, 144);
             serverIPTextBox.Name = "serverIPTextBox";
-            serverIPTextBox.Size = new Size(164, 40);
+            serverIPTextBox.Size = new Size(126, 29);
             serverIPTextBox.TabIndex = 3;
             // 
             // WelcomeForm
             // 
-            AutoScaleDimensions = new SizeF(17F, 33F);
+            AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.LightBlue;
-            ClientSize = new Size(378, 344);
+            ClientSize = new Size(384, 261);
             Controls.Add(backgroundPanel);
             Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
