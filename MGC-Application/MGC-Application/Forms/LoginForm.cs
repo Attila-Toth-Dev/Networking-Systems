@@ -10,6 +10,8 @@ public partial class LoginForm : Form
     {
         InitializeComponent();
 
+        this.Text = "<Temp Name>";
+
         createForm = new CreateAccountForm();
         passwordTextBox.UseSystemPasswordChar = true;
 

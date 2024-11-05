@@ -14,10 +14,12 @@ public partial class ProfileForm : Form
     {
         InitializeComponent();
 
+        this.Text = "<Temp Name>";
+
         username = _username;
 
         profileNameLabel.Text = $"{username}";
-        profileBioTextBox.Text = $"Hey there! I'm {username} and I love to play video games, especially MS Paint.";
+        profileBioTextBox.Text = $"This is where player info for profiles is stored!";
 
         currentSelectedProfilePicture = string.Empty;
 
@@ -31,9 +33,6 @@ public partial class ProfileForm : Form
     /// <summary>Event for profile icon list view click.</summary>
     private void profileIconListView_Click(object _sender, EventArgs e)
     {
-        // from list view, when selected, change icon
-        // image from the profile file directory to
-        // the corresponding image.
         var item = profileIconListView.SelectedItems[0];
         currentSelectedProfilePicture = item.Text;
 

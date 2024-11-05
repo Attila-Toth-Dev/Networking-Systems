@@ -10,7 +10,9 @@ public partial class PropertiesForm : Form
     {
         InitializeComponent();
 
-        this.Text = $"{_mainMenuForm.CurrentGame} Properties";
+        this.Text = "<Temp Name>";
+        //this.Text = $"{_mainMenuForm.CurrentGame} Properties";
+
         headerLabel.Text = $"{_mainMenuForm.CurrentGame} Properties";
 
         configDescTextBox.Text = $"Properties and settings for {_mainMenuForm.CurrentGame}.";

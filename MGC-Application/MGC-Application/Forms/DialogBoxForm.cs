@@ -22,6 +22,8 @@ public partial class DialogBoxForm : Form
         InitializeComponent();
         DialogBoxText(_headerMessage);
 
+        this.Text = "<Temp Name>";
+
         messageTextBox.Enabled = false;
         messageTextBox.Text = _message;
 

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
-            ListViewItem listViewItem1 = new ListViewItem("Force Reboot");
-            ListViewItem listViewItem2 = new ListViewItem("Hell Bullet");
-            ListViewItem listViewItem3 = new ListViewItem("Mindustry");
+            ListViewItem listViewItem1 = new ListViewItem(new string[] { "--- Game Name ---" }, -1, Color.Black, Color.Empty, null);
+            ListViewItem listViewItem2 = new ListViewItem("--- Game Name ---");
+            ListViewItem listViewItem3 = new ListViewItem("--- Game Name ---");
             toolMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             logoutToolStripMenuItem = new ToolStripMenuItem();
@@ -91,14 +91,14 @@
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(180, 22);
+            logoutToolStripMenuItem.Size = new Size(112, 22);
             logoutToolStripMenuItem.Text = "&Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(112, 22);
             exitToolStripMenuItem.Text = "&Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -167,6 +167,7 @@
             gameListView.TabIndex = 0;
             gameListView.UseCompatibleStateImageBehavior = false;
             gameListView.View = View.Details;
+            gameListView.SelectedIndexChanged += gameListView_SelectedIndexChanged;
             gameListView.Click += gameListView_Click;
             // 
             // gameListHeader

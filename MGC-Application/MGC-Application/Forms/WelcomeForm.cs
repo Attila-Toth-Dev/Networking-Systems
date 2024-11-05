@@ -8,6 +8,8 @@ public partial class WelcomeForm : Form
     {
         InitializeComponent();
 
+        this.Text = "<Temp Name>";
+
         FileTools.CreateDirectory(FileTools.DataDirectory);
 
         Thread.Sleep(1000);

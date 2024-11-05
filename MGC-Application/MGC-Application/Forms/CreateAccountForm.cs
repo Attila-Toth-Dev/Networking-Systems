@@ -8,6 +8,8 @@ public partial class CreateAccountForm : Form
     {
         InitializeComponent();
 
+        this.Text = "<Temp Name>";
+
         passwordTextBox.UseSystemPasswordChar = true;
     }
 

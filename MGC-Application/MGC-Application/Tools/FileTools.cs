@@ -6,7 +6,8 @@ namespace MGC_Application.Tools;
 
 public class FileTools
 {
-    public static string GamesDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/MGC-Games";
+    /** Replace MGC-Data with own file names **/
+    public static string GamesDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/MGC-Data";
     public static string DataDirectory = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/MGC-Data";
     
     public static string LogPathFile = $@"{DataDirectory}/Logs";

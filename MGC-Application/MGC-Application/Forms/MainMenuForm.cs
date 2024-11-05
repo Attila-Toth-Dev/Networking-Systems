@@ -23,8 +23,9 @@ public partial class MainMenuForm : Form
     public bool IsInProcess { get; set; }
 
     #endregion
-    
+
     private readonly ProfileForm profileForm;
+
     private readonly PropertiesForm propertiesForm;
 
     private readonly string username;
@@ -34,7 +35,11 @@ public partial class MainMenuForm : Form
     {
         InitializeComponent();
 
+        this.Text = "<Temp Name>";
+
         username = _username;
+
+        gameListView.Columns[0].Text = $"{username}'s Library";
 
         currentSelectedGame = string.Empty;
         gameFilePathTextBox.Text = FileTools.GamesDirectory;
@@ -45,9 +50,9 @@ public partial class MainMenuForm : Form
         propertiesForm = new PropertiesForm(this);
         profileForm = new ProfileForm(this, username);
 
-        welecomeLabel.Text = $"{_username}'s Library";
+        welecomeLabel.Text = $"{username}'s Library";
 
-        FileTools.ShowDialogMessage($"Welcome to the MGC Client Launcher {username}!");
+        FileTools.ShowDialogMessage($"Welcome to the <Replace with app name> {username}!");
     }
 
     #region UI Event Functions
@@ -100,9 +105,12 @@ public partial class MainMenuForm : Form
 
     private void profilePictureBox_Click(object sender, EventArgs e)
     {
-        profileForm.ShowDialog();
-
-        Debug.Break();
+        // Uncomment to get profiles to get working. //
+        //
+        //profileForm.ShowDialog();
+        //
+        //Debug.Break();
+        //
     }
 
     private void MainMenuForm_Closed(object sender, FormClosedEventArgs e)
@@ -134,12 +142,12 @@ public partial class MainMenuForm : Form
 
         Debug.Break();
     }
-    
+
     private void updateButton_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(currentSelectedGame))
         {
-            FileTools.ShowDialogMessage($"Please select a game before proceeding. (Line 196)");
+            FileTools.ShowDialogMessage("Please select a game before proceeding. (Line 196)");
             return;
         }
 
@@ -396,4 +404,9 @@ public partial class MainMenuForm : Form
     }
 
     #endregion
+
+    private void gameListView_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
 }

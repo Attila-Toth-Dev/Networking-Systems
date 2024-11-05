@@ -7,9 +7,11 @@ public class Networking
 {
     #region Getters/Setters
 
-    public static string ServerIp = "58.169.146.100";
-    public static string Username = "ftp-user";
-    public static string Password = "mn1-237A";
+    /** Replace FTP server info with your
+     * own server account details and IP **/
+    public static string ServerIp = "";
+    public static string Username = "";
+    public static string Password = "";
     
     #endregion
 
@@ -60,7 +62,7 @@ public class Networking
                 Ping ping = pings[i];
                 PingReply pingReply = ping.Send(_serverIp, _timeout);
 
-                Debug.Log($"Ping {i} Round Trip Time: {pingReply.RoundtripTime}");
+                Debug.Log($"Ping {i} Round Trip Time: {pingReply.RoundtripTime}ms");
                 Debug.Log($"Ping {i} Status: {pingReply.Status}");
                 totalPingTime += pingReply.RoundtripTime;
             }
@@ -68,8 +70,8 @@ public class Networking
             long averagePingTime = totalPingTime / pings.Length;
 
             Debug.Log("--- Round Trip Times ---");
-            Debug.Log($"Total ping time : {totalPingTime}");
-            Debug.Log($"Average ping time : {averagePingTime}");
+            Debug.Log($"Total ping time : {totalPingTime}ms");
+            Debug.Log($"Average ping time : {averagePingTime}ms");
             Debug.Break();
 
             return true;
