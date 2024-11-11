@@ -15,9 +15,14 @@ public class Networking
     
     #endregion
 
+    /// <summary>
+    /// Validates the remote connection with the given IP address.
+    /// </summary>
+    /// <param name="_serverIp">The IP Address to validate.</param>
+    /// <returns>Returns true of IP connection is true, false otherwise.</returns>
     public static bool ValidateRemoteConnection(string _serverIp)
     {
-        if (ValidateAddress(_serverIp, 20))
+        if (PingRemoteAddress(_serverIp, 20))
         {
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create($"ftp://{_serverIp}/");
             
@@ -43,7 +48,13 @@ public class Networking
         return false;
     }
 
-    public static bool ValidateAddress(string _serverIp, int _timeout)
+    /// <summary>
+    /// Ping the remote address and check to see if it sends and receives data.
+    /// </summary>
+    /// <param name="_serverIp">The Server IP address to ping.</param>
+    /// <param name="_timeout">The time of which the function should time out to prevent freezing program.</param>
+    /// <returns>Returns true if all packet data is sent and received, false otherwise.</returns>
+    public static bool PingRemoteAddress(string _serverIp, int _timeout)
     {
         try
         {
@@ -83,6 +94,12 @@ public class Networking
         }
     }
 
+    /// <summary>
+    /// Download game files from remote address FTP server.
+    /// </summary>
+    /// <param name="_game">Game of which to download.</param>
+    /// <param name="_remotePath">The remote path of which game files are located.</param>
+    /// <returns>Return true if game files were successfully downloaded, false otherwise.</returns>
     public static bool DownloadGameFiles(string _game, string _remotePath)
     {
         try
@@ -133,6 +150,12 @@ public class Networking
         }
     }
 
+    /// <summary>
+    /// Update function that checks to see if game size has changed across remote and local machine.
+    /// </summary>
+    /// <param name="_game">Game of which to check updates for.</param>
+    /// <param name="_remotePath">Remote Path of game files.</param>
+    /// <returns>Returns true if game files have a valid update and is installed, false otherwise.</returns>
     public static long ValidateUpdate(string _game, string _remotePath)
     {
         try
@@ -158,7 +181,13 @@ public class Networking
             return -1;
         }
     }
-
+        
+    /// <summary>
+    /// Downloads files from remote address to local machine.
+    /// </summary>
+    /// <param name="_remotePath">The remote path of which game files are located.</param>
+    /// <param name="_file">File of which to download from remote address.</param>
+    /// <returns>Return true if game files have been downloaded, false otherwise.</returns>
     public static bool DownloadFiles(string _remotePath, string _file)
     {
         try
@@ -203,6 +232,13 @@ public class Networking
         }
     }
 
+    /// <summary>
+    /// Uploads any local files that required to be uploaded to remote address.
+    /// </summary>
+    /// <param name="_file">File of which to upload from local machine.</param>
+    /// <param name="_localPath">Local path of which files are situated.</param>
+    /// <param name="_remotePath">Remote file path address of which to upload files to.</param>
+    /// <returns>Returns true if files have been successfully uploaded, false otherwise.</returns>
     public static bool UploadFiles(string _file, string _localPath, string _remotePath)
     {
         FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_remotePath);
