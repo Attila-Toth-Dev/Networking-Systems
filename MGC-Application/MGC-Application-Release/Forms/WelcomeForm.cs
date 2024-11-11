@@ -10,6 +10,8 @@ namespace MGC_Application_Release.Forms
 
             this.Text = "MGC";
 
+            serverIPTextBox.Text = "58.169.146.100";
+
             FileTools.CreateDirectory(FileTools.DataDirectory);
 
             Thread.Sleep(1000);
